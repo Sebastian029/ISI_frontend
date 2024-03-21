@@ -1,13 +1,13 @@
-import styles from './Content.module.css'
+import styles from './Footer.module.css'
 
-function Content(){
+function Footer(){
     return(
         <>
             <div className={styles.mainBox}>
-                   Fotka
+                    Footer
             </div>
         </>
     );
 }
 
-export default Content
+export default Footer

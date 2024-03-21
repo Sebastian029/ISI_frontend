@@ -5,6 +5,7 @@
     height: 20vh;
     background-color: rgb(129, 189, 218);
     gap:10px;
+    align-items: center;
 }
 
 .box{

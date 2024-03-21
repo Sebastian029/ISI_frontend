@@ -1,0 +1,13 @@
+.mainBox{
+    display: flex;
+    width: 100%;
+    background-color: rgba(180, 180, 180, 0.904);
+    justify-content: center;
+    gap:10px;
+    flex-grow: 1;
+}
+
+.box{
+    padding: 10px;
+    border: 1px solid black;
+}

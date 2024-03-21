@@ -1,9 +1,10 @@
 import styles from './MainFinder.module.css'
+import PropTypes from 'prop-types';
 
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import TuneIcon from '@mui/icons-material/Tune';
 
-function TopBar(){
+function MainFinder({activateFinder}){
     return(
         <>
             <div className={styles.mainBox}>
@@ -27,7 +28,8 @@ function TopBar(){
                 <div>
                     <input type="text"></input>
                     <input type="text"></input>
-                    <input type="button" value={"asd"}></input>
+                    <input type="button" value={"Search"} onClick={() => activateFinder(true)}></input>
+                    <input type="button" value={"Clear"} onClick={() => activateFinder(false)}></input>
                 </div>
                 
                 <div>
@@ -44,4 +46,8 @@ function TopBar(){
     );
 }
 
-export default TopBar
+MainFinder.propTypes = {
+    activateFinder: PropTypes.func.isRequired
+  };
+
+export default MainFinder
