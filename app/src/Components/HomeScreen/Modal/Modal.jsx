@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import "./Modal.css";
+import GoogleIcon from '@mui/icons-material/Google';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function Modal() {
   const [modal, setModal] = useState(false);
   const [login, setLogin] = useState(true);
+
+  const [loginInput, setLoginInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
+
 
   const toggleModal = () => {
     setModal(!modal);
@@ -27,18 +33,28 @@ export default function Modal() {
 
           {login &&( <div className="modal-content">
 
-              <h2>Login</h2>
+             <h2>Login</h2>
 
-              Email
-              <input type="text" placeholder="Login"></input>
+             <p> Hey, enter your details to get <br/> sign in to your account </p>  
 
-              Password
-              <input type="password" placeholder="Password"></input>
 
-              <input type="button" value="Login"></input>
+                <input type="text" placeholder="Login" className="data-field" value={loginInput} onChange={(e) => setLoginInput(e.target.value)}/>
+
+                <input type="password" placeholder="Password" className="data-field" value={passwordInput} onChange={(e) => setPasswordInput(e.target.value)}/>
+
+                <input type="button" value="Sign in" className="confirm-button"/>
+              
+              <p>- or log in with-</p>
+              <div className="google-auth">
+                <GoogleIcon/>
+                Google
+              </div>
+
+              <p className="register-reference" onClick={() => setLogin(false)}>Don't have an account? <b>Register now</b></p>
+
 
               <button className="close-modal" onClick={toggleModal}>
-                CLOSE
+                <CloseIcon/>
               </button>
               </div>)}
 
@@ -55,7 +71,7 @@ export default function Modal() {
               <input type="button" value="Login"></input>
 
               <button className="close-modal" onClick={toggleModal}>
-                CLOSE
+                <CloseIcon/>
               </button>
               </div>)}   
                     
