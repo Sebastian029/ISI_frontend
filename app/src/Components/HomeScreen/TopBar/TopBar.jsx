@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import styles from './TopBar.module.css'
+import styles from './TopBar.module.css';
+
+import Modal from '../Modal/Modal.jsx'
 
 function TopBar(){
     const navigate = useNavigate();
@@ -12,6 +14,8 @@ function TopBar(){
                     <div className={styles.box}>Favourites</div>
                     <div className={styles.box}>My reservations</div>
                     <div className={styles.box} onClick={() => navigate('/account')} >Account</div>
+                    <Modal/>
+
             </div>
         </>
     );

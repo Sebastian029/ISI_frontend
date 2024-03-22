@@ -28,10 +28,10 @@ function MainFinder({activateFinder}){
                     </div>
                 </div>
 
-                <div>
-                    <input type="text" value={value1} onChange={(e) => setValue1(e.target.value)}/>
-                    <SwapHorizIcon onClick={handleSwap} />
-                    <input type="text" value={value2} onChange={(e) => setValue2(e.target.value)}/>
+                <div className={styles.destinationInputRow}>
+                    <input className={styles.textInput} type="text" value={value1} onChange={(e) => setValue1(e.target.value)} placeholder='Depature'/>
+                    <SwapHorizIcon className={styles.icon}  onClick={handleSwap} />
+                    <input className={styles.textInput} type="text" value={value2} onChange={(e) => setValue2(e.target.value)} placeholder='Arrival'/>
                 </div>
 
                 <div>

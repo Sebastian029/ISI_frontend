@@ -15,5 +15,26 @@
 
 .checkBoxRow{
     display: flex;
-    border:1px solid black;
+}
+
+.destinationInputRow{
+    display: flex;
+}
+
+.textInput{
+    border:0px;
+    border-radius: 5px;
+    padding: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+}
+
+input:focus {
+    outline: none;
+}
+
+.icon{
+    color:white;
+    cursor: pointer;
+    font-size: 50px !important;
 }
