@@ -17,7 +17,8 @@ function App() {
     <BrowserRouter>
       <Routes>
           <Route path="account" element={<AccountScreen />} />
-          <Route path="/" element={<HomeScreen/>}>
+          <Route path="/" element={<HomeScreen/>}/>
+          <Route path="*" element={<HomeScreen/>}>
         </Route>
       </Routes>
     </BrowserRouter>

@@ -3,6 +3,7 @@ import styles from './TopBar.module.css'
 
 function TopBar(){
     const navigate = useNavigate();
+
     return(
         <>
             <div className={styles.mainBox}>

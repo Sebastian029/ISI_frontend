@@ -3,8 +3,17 @@ import PropTypes from 'prop-types';
 
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import TuneIcon from '@mui/icons-material/Tune';
+import { useState } from 'react';
 
 function MainFinder({activateFinder}){
+    const [value1, setValue1] = useState('');
+    const [value2, setValue2] = useState('');
+
+    const handleSwap = () => {
+        const temp = value1;
+        setValue1(value2);
+        setValue2(temp);
+    };
     return(
         <>
             <div className={styles.mainBox}>
@@ -20,9 +29,9 @@ function MainFinder({activateFinder}){
                 </div>
 
                 <div>
-                    <input type="text"></input>
-                    <SwapHorizIcon />
-                    <input type="text"></input>
+                    <input type="text" value={value1} onChange={(e) => setValue1(e.target.value)}/>
+                    <SwapHorizIcon onClick={handleSwap} />
+                    <input type="text" value={value2} onChange={(e) => setValue2(e.target.value)}/>
                 </div>
 
                 <div>
