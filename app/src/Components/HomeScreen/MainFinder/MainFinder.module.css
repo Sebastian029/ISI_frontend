@@ -1,40 +1,98 @@
-.mainBox{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 20vh;
-    background-color: rgb(129, 189, 218);
-    gap:10px;
-    align-items: center;
+.mainBox {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 20vh;
+  background-color: rgb(255, 255, 255);
+  gap: 10px;
+  align-items: center;
 }
 
-.box{
-    padding: 10px;
-    border: 1px solid black;
+.box {
+  padding: 10px;
+  border: 1px solid black;
 }
 
-.checkBoxRow{
-    display: flex;
+.checkBoxRow {
+  display: flex;
 }
 
-.destinationInputRow{
-    display: flex;
+.destinationInputRow {
+  display: flex;
+  justify-content: space-between;
 }
 
-.textInput{
-    border:0px;
-    border-radius: 5px;
-    padding: 10px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 20px;
+.textInput {
+  border: 0px;
+  border-radius: 5px;
+  padding: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  background-color: #e4e4e4;
+}
+.destinationInputRow > input {
+  flex: 3;
 }
 
 input:focus {
-    outline: none;
+  outline: none;
 }
 
-.icon{
-    color:white;
-    cursor: pointer;
-    font-size: 50px !important;
+.iconSwap {
+  color: #e4e4e4;
+  cursor: pointer;
+  font-size: 50px !important;
+}
+
+.globalInputBox {
+  width: 35%;
+}
+
+.datePickerBox {
+  display: flex;
+  margin-top: 10px;
+  justify-content: space-between;
+  max-width: 100%;
+  align-items: center;
+}
+
+.dateInput {
+  border: 0px;
+  border-radius: 5px;
+  padding: 8px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  background-color: #e4e4e4;
+  margin-left: 5px;
+  margin-right: 10px;
+}
+
+.abc {
+  border: 0px;
+  border-radius: 5px;
+  padding: 8px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  background-color: #e4e4e4;
+}
+
+.confirmButton {
+  flex: 1;
+  margin-left: 10px;
+  background-color: var(--main-color);
+  border: 0px;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 8px;
+  cursor: pointer;
+}
+.confirmButton:hover {
+  background-color: var(--main-color-2);
+}
+
+.icon {
+  color: #e4e4e4;
+  cursor: pointer;
+  font-size: 30px !important;
 }
