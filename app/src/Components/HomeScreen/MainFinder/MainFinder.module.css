@@ -13,8 +13,19 @@
 
 .checkBoxRow {
   padding-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
 }
-.checkBoxRow > * {
+.checkbox {
+  height: 15px;
+  width: 15px;
+  cursor: pointer;
+}
+
+.checkboxText {
+  cursor: pointer;
 }
 
 .destinationInputRow {

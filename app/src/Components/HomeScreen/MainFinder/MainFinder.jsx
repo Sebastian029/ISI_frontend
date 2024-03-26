@@ -17,6 +17,7 @@ function MainFinder({ activateFinder, setFlights }) {
   const [arrivalTextInput, setArrivalTextInput] = useState("");
   const [departureDateInput, setDepartureDateInput] = useState("");
   const [arrivalDateInput, setArrivaleDateInput] = useState("");
+  const [singleWayCheckbox, setSingleWayCheckbox] = useState(true);
   const datePickerRefDeparture = useRef(null);
   const datePickerRefArrival = useRef(null);
 
@@ -69,10 +70,26 @@ function MainFinder({ activateFinder, setFlights }) {
       <div className={styles.mainBox}>
         <div className={styles.globalInputBox}>
           <div className={styles.checkBoxRow}>
-            <input type="checkbox"></input>
-            One direction
-            <input type="checkbox"></input>
-            Two direction
+            <input
+              type="checkbox"
+              id="singleWayCheckbox"
+              className={styles.checkbox}
+              checked={singleWayCheckbox === true}
+              onChange={() => setSingleWayCheckbox(true)}
+            />
+            <label htmlFor="singleWayCheckbox" className={styles.checkboxText}>
+              One direction
+            </label>
+            <input
+              type="checkbox"
+              id="twoWayCheckbox"
+              className={styles.checkbox}
+              checked={singleWayCheckbox === false}
+              onChange={() => setSingleWayCheckbox(false)}
+            />
+            <label htmlFor="twoWayCheckbox" className={styles.checkboxText}>
+              Two direction
+            </label>
           </div>
 
           <div className={styles.destinationInputRow}>
