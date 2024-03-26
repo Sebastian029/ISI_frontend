@@ -67,17 +67,14 @@ function MainFinder({ activateFinder, setFlights }) {
   return (
     <>
       <div className={styles.mainBox}>
-        <div className={styles.checkBoxRow}>
-          <div>
+        <div className={styles.globalInputBox}>
+          <div className={styles.checkBoxRow}>
             <input type="checkbox"></input>
             One direction
-          </div>
-          <div>
             <input type="checkbox"></input>
             Two direction
           </div>
-        </div>
-        <div className={styles.globalInputBox}>
+
           <div className={styles.destinationInputRow}>
             <input
               className={styles.textInput}
@@ -108,7 +105,7 @@ function MainFinder({ activateFinder, setFlights }) {
                 selected={departureDateInput}
                 onChange={(date) => setDepartureDateInput(date)}
                 dateFormat="yyyy-MM-dd"
-                placeholderText="Select departure date"
+                placeholderText="Departure date"
               />
               <CalendarMonthIcon
                 className={styles.icon}
@@ -120,17 +117,29 @@ function MainFinder({ activateFinder, setFlights }) {
                 selected={arrivalDateInput}
                 onChange={(date) => setArrivaleDateInput(date)}
                 dateFormat="yyyy-MM-d"
-                placeholderText="Select arrival date"
+                placeholderText="Arrival date"
               />
               <PersonIcon className={styles.icon} />
-              <input type="text" placeholder="asd" className={styles.abc} />
+              <input
+                type="text"
+                placeholder="People number"
+                className={styles.personInput}
+              />
               <input
                 type="button"
                 className={styles.confirmButton}
                 value={"Search"}
                 onClick={() => getFlights()}
               />
+
+              <input
+                type="button"
+                className={styles.confirmButton}
+                value={"Clear"}
+                onClick={() => activateFinder(false)}
+              />
             </div>
+
             <div>
               Filtry
               <TuneIcon />
@@ -138,12 +147,6 @@ function MainFinder({ activateFinder, setFlights }) {
                 <option>asd</option>
               </select>
             </div>
-
-            <input
-              type="button"
-              value={"Clear"}
-              onClick={() => activateFinder(false)}
-            />
           </div>
         </div>
       </div>

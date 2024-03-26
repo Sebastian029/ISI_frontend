@@ -7,13 +7,84 @@ export default function Modal() {
   const [modal, setModal] = useState(false);
   const [login, setLogin] = useState(true);
 
-  const [loginInput, setLoginInput] = useState("");
+  const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
 
+  const [nameRegister, setNameRegister] = useState("");
+  const [lastNameRegister, setLastNameRegister] = useState("");
+  const [phoneNumberRegister, setPhoneNumberRegister] = useState("");
+  const [emailRegister, setEmailRegister] = useState("");
+  const [passwordRegister, setPasswordRegister] = useState("");
+  const [repeatPasswordRegister, setRepearPasswordRegister] = useState("");
+  const [registerOutput, setRegisterOutput] = useState("");
   const toggleModal = () => {
     setModal(!modal);
   };
 
+  const registerAccount = () => {
+    if (!nameRegister.trim()) {
+      setRegisterOutput("Please enter your name.");
+      return;
+    }
+    if (!lastNameRegister.trim()) {
+      setRegisterOutput("Please enter your last name.");
+      return;
+    }
+    if (!phoneNumberRegister.trim()) {
+      setRegisterOutput("Please enter your phone number.");
+      return;
+    }
+    const phoneRegex = /^\d{9}$/;
+    if (!phoneRegex.test(phoneNumberRegister)) {
+      setRegisterOutput("Please enter a valid 9-digit phone number.");
+      return;
+    }
+    if (!emailRegister.trim()) {
+      setRegisterOutput("Please enter your email.");
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailRegister)) {
+      setRegisterOutput("Please enter a valid email address.");
+      return;
+    }
+    if (!passwordRegister) {
+      setRegisterOutput("Please enter your password.");
+      return;
+    }
+    if (passwordRegister !== repeatPasswordRegister) {
+      setRegisterOutput("Passwords do not match.");
+      return;
+    }
+
+    axios
+      .post("/register", {
+        firstName: nameRegister,
+        lastName: lastNameRegister,
+        email: emailRegister,
+        phoneNumber: phoneNumberRegister,
+        password: passwordRegister,
+      })
+      .then((response) => {
+        setRegisterOutput("Registration successful!");
+      })
+      .catch((error) => {
+        console.error("Registration error:", error);
+        setRegisterOutput("Registration failed. Please try again.");
+      });
+
+    {
+      registerOutput ? <p>{registerOutput}</p> : <p></p>;
+    }
+
+    setNameRegister("");
+    setLastNameRegister("");
+    setPhoneNumberRegister("");
+    setEmailRegister("");
+    setPasswordRegister("");
+    setRepeatPasswordRegister("");
+    setRegisterOutput("");
+  };
   if (modal) {
     document.body.classList.add("active-modal");
   } else {
@@ -35,16 +106,15 @@ export default function Modal() {
               <h2>Login</h2>
 
               <p>
-                {" "}
-                Hey, enter your details to get <br /> sign in to your account{" "}
+                Hey, enter your details to get <br /> sign in to your account
               </p>
 
               <input
                 type="text"
-                placeholder="Login"
+                placeholder="Email"
                 className="data-field"
-                value={loginInput}
-                onChange={(e) => setLoginInput(e.target.value)}
+                value={emailInput}
+                onChange={(e) => setEmailInput(e.target.value)}
               />
 
               <input
@@ -76,11 +146,62 @@ export default function Modal() {
           {!login && (
             <div className="modal-content">
               <h2>Register</h2>
-              Email
-              <input type="text" placeholder="Login"></input>
-              Password
-              <input type="password" placeholder="Password"></input>
-              <input type="button" value="Login"></input>
+              <p>
+                Enter your account details
+                <br />
+              </p>
+              <input
+                type="text"
+                placeholder="First name"
+                className="data-field"
+                value={nameRegister}
+                onChange={(e) => setNameRegister(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Last name"
+                className="data-field"
+                value={lastNameRegister}
+                onChange={(e) => setLastNameRegister(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Phone number"
+                className="data-field"
+                value={phoneNumberRegister}
+                onChange={(e) => setPhoneNumberRegister(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Email"
+                className="data-field"
+                value={emailRegister}
+                onChange={(e) => setEmailRegister(e.target.value)}
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                className="data-field"
+                value={passwordRegister}
+                onChange={(e) => setPasswordRegister(e.target.value)}
+              />
+              <input
+                type="password"
+                placeholder="Repeat password"
+                className="data-field"
+                value={repeatPasswordRegister}
+                onChange={(e) => setRepearPasswordRegister(e.target.value)}
+              />
+              <input
+                type="button"
+                value="Sign up"
+                className="confirm-button"
+                onClick={() => registerAccount()}
+              />
+              {registerOutput ? <p>{registerOutput}</p> : <p></p>}
+              <p className="register-reference" onClick={() => setLogin(true)}>
+                Have an account already? <b>Sign in</b>
+              </p>
               <button className="close-modal" onClick={toggleModal}>
                 <CloseIcon />
               </button>

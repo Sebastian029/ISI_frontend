@@ -1,9 +1,8 @@
 .mainBox{
     display: flex;
     width: 100%;
-    background-color: rgba(180, 180, 180, 0.904);
+    background-color: rgba(180, 180, 180);
     justify-content: center;
-    gap:10px;
     flex-grow: 1;
 }
 
