@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./Modal.css";
 import GoogleIcon from "@mui/icons-material/Google";
 import CloseIcon from "@mui/icons-material/Close";
+import axios from "../../../axiosInstance";
 
 export default function Modal() {
   const [modal, setModal] = useState(false);
@@ -9,16 +10,33 @@ export default function Modal() {
 
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
+  const [loginOutput, setLoginOutput] = useState("");
 
   const [nameRegister, setNameRegister] = useState("");
   const [lastNameRegister, setLastNameRegister] = useState("");
   const [phoneNumberRegister, setPhoneNumberRegister] = useState("");
   const [emailRegister, setEmailRegister] = useState("");
   const [passwordRegister, setPasswordRegister] = useState("");
-  const [repeatPasswordRegister, setRepearPasswordRegister] = useState("");
+  const [repeatPasswordRegister, setRepeatPasswordRegister] = useState("");
   const [registerOutput, setRegisterOutput] = useState("");
   const toggleModal = () => {
     setModal(!modal);
+  };
+  const handleLogin = async () => {
+    axios
+      .post("/login", {
+        email: emailInput,
+        password: passwordInput,
+      })
+      .then((response) => {
+        setLoginOutput("Login successful!");
+        setEmailInput("");
+        setPasswordInput("");
+      })
+      .catch((error) => {
+        console.error("Login error:", error);
+        setLoginOutput("Login failed. Please try again.");
+      });
   };
 
   const registerAccount = () => {
@@ -67,23 +85,27 @@ export default function Modal() {
       })
       .then((response) => {
         setRegisterOutput("Registration successful!");
+        setNameRegister("");
+        setLastNameRegister("");
+        setPhoneNumberRegister("");
+        setEmailRegister("");
+        setPasswordRegister("");
+        setRepeatPasswordRegister("");
       })
       .catch((error) => {
         console.error("Registration error:", error);
-        setRegisterOutput("Registration failed. Please try again.");
+        if (error.response) {
+          setRegisterOutput(error.response.data.message);
+        } else {
+          setRegisterOutput(
+            "Registration failed. Please check your internet connection."
+          );
+        }
       });
 
     {
       registerOutput ? <p>{registerOutput}</p> : <p></p>;
     }
-
-    setNameRegister("");
-    setLastNameRegister("");
-    setPhoneNumberRegister("");
-    setEmailRegister("");
-    setPasswordRegister("");
-    setRepeatPasswordRegister("");
-    setRegisterOutput("");
   };
   if (modal) {
     document.body.classList.add("active-modal");
@@ -125,8 +147,13 @@ export default function Modal() {
                 onChange={(e) => setPasswordInput(e.target.value)}
               />
 
-              <input type="button" value="Sign in" className="confirm-button" />
-
+              <input
+                type="button"
+                value="Sign in"
+                className="confirm-button"
+                onClick={() => handleLogin()}
+              />
+              {loginOutput ? <p>{loginOutput}</p> : <p></p>}
               <p>- or log in with-</p>
               <div className="google-auth">
                 <GoogleIcon />
@@ -190,7 +217,7 @@ export default function Modal() {
                 placeholder="Repeat password"
                 className="data-field"
                 value={repeatPasswordRegister}
-                onChange={(e) => setRepearPasswordRegister(e.target.value)}
+                onChange={(e) => setRepeatPasswordRegister(e.target.value)}
               />
               <input
                 type="button"
