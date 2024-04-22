@@ -3,8 +3,10 @@ import "./Modal.css";
 import GoogleIcon from "@mui/icons-material/Google";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "../../../axiosInstance";
+import useAuth from "../../../hooks/useAuth";
 
 export default function Modal() {
+  const { setAuth } = useAuth();
   const [modal, setModal] = useState(false);
   const [login, setLogin] = useState(true);
 
@@ -29,6 +31,11 @@ export default function Modal() {
         password: passwordInput,
       })
       .then((response) => {
+        const accessToken = response?.data?.token;
+        const roles = response?.data?.roles;
+        console.log(accessToken);
+        console.log(roles);
+        setAuth({ emailInput, passwordInput, roles, accessToken });
         setLoginOutput("Login successful!");
         setEmailInput("");
         setPasswordInput("");

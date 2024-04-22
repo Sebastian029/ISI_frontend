@@ -1,8 +1,9 @@
 import { useState } from "react";
 
 import TopBar from "../HomeScreen/TopBar/TopBar";
+import Users from "../../comp/Users.jsx";
 
-function AccountScreen() {
+function ReservationsScreen() {
   const appStyles = {
     height: "100vh",
     display: "flex",
@@ -12,9 +13,10 @@ function AccountScreen() {
   return (
     <>
       <TopBar />
-      Account Screen
+      RESERVATIONS PAGE
+      <Users />
     </>
   );
 }
 
-export default AccountScreen;
+export default ReservationsScreen;

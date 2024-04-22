@@ -1,15 +1,19 @@
-import axios from 'axios';
+import axios from "axios";
 
-const instance = axios.create({
-  baseURL: 'http://127.0.0.1:5000/', 
-  timeout: 5000, 
-  headers: {
-    'Content-Type': 'application/json',
-  },
+const BASE_URL = "http://127.0.0.1:5000/";
+const axiosInstance = axios.create({
+  baseURL: BASE_URL,
 });
 
+export const axiosPrivate = axios.create({
+  baseURL: BASE_URL,
+  // headers: { "Content-Type": "application/json" },
+  //withCredentials: true,
+});
 
-instance.interceptors.response.use(
+export default axiosInstance;
+/*
+axiosPrivate.interceptors.response.use(
   response => {
     return response;
   },
@@ -17,5 +21,4 @@ instance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-export default instance;
+*/
