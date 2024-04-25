@@ -20,7 +20,7 @@ function TopBar() {
         <div className={styles.box} onClick={() => navigate("/account")}>
           Account
         </div>
-        <Modal />
+        <Modal></Modal>
       </div>
     </>
   );

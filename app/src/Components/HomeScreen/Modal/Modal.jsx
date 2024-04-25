@@ -7,7 +7,7 @@ import useAuth from "../../../hooks/useAuth";
 
 export default function Modal() {
   const { setAuth } = useAuth();
-  const [modal, setModal] = useState(false);
+  const { modal, setModal } = useAuth();
   const [login, setLogin] = useState(true);
 
   const [emailInput, setEmailInput] = useState("");
@@ -22,7 +22,7 @@ export default function Modal() {
   const [repeatPasswordRegister, setRepeatPasswordRegister] = useState("");
   const [registerOutput, setRegisterOutput] = useState("");
   const toggleModal = () => {
-    setModal(!modal);
+    setModal(false);
   };
   const handleLogin = async () => {
     axios
@@ -39,6 +39,7 @@ export default function Modal() {
         setLoginOutput("Login successful!");
         setEmailInput("");
         setPasswordInput("");
+        setModal(false);
       })
       .catch((error) => {
         console.error("Login error:", error);
@@ -122,10 +123,6 @@ export default function Modal() {
 
   return (
     <>
-      <div onClick={toggleModal} className="btn-modal">
-        Account
-      </div>
-
       {modal && (
         <div className="modal">
           <div onClick={toggleModal} className="overlay"></div>

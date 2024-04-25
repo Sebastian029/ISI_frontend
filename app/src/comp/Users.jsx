@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 const Users = () => {
   const [users, setUsers] = useState();
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const location = useLocation();
+  const { setModal } = useAuth();
 
   useEffect(() => {
     let isMounted = true;
@@ -25,7 +27,8 @@ const Users = () => {
           return;
         }
         console.error(err);
-        navigate("/login", { state: { from: location }, replace: true });
+        setModal(true);
+        navigate("/", { state: { from: location }, replace: true });
       }
     };
 

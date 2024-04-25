@@ -7,6 +7,7 @@ import "./global.css";
 import HomeScreen from "./Components/HomeScreen/HomeScreen.jsx";
 import AccountScreen from "./Components/AccountScreen/AccountScreen.jsx";
 import ReservationsScreen from "./Components/ReservationsScreen/ReservationsScreen.jsx";
+import UnauthorizedScreen from "./Components/UnauthorizedScreen/UnauthorizedScreen.jsx";
 import ErrorPage from "./errorPage.jsx";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="account" element={<AccountScreen />} />
         </Route>
         <Route path="reservations" element={<ReservationsScreen />} />
+        <Route path="/unauthorized" element={<UnauthorizedScreen />} />
         <Route path="/" element={<HomeScreen />} />
         <Route path="*" element={<ErrorPage />}></Route>
       </Routes>
