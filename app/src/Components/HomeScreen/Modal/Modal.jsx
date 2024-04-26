@@ -4,8 +4,11 @@ import GoogleIcon from "@mui/icons-material/Google";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "../../../axiosInstance";
 import useAuth from "../../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 export default function Modal() {
+  const navigate = useNavigate();
+
   const { setAuth } = useAuth();
   const { modal, setModal } = useAuth();
   const [login, setLogin] = useState(true);
@@ -40,6 +43,10 @@ export default function Modal() {
         setEmailInput("");
         setPasswordInput("");
         setModal(false);
+
+        if (roles.includes("admin")) {
+          navigate("/admin");
+        }
       })
       .catch((error) => {
         console.error("Login error:", error);
