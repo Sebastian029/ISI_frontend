@@ -40,31 +40,19 @@ function NewFlight({ activateFinder }) {
     try {
       console.log(departureTextInput);
       const data = {
-        // departure_airport: departureTextInput,
-        // arrive_airport: arrivalTextInput,
-        // travel_time: travelTime,
-        // distance: distance,
-        // plane_name: plane,
-        // airline_name: airline,
-        // data_lotu: departureDateInput
-
-        departure_airport: "Lotnisko Tegel",
-    arrive_airport: "Lotnisko Monachium",
-    travel_time: "02:30:00",
-    distance: 1500.75,
-    plane_name: "Airbus A330",
-    airline_name: "WizzAir",
-    data_lotu: "2024-06-20"
-   
+        departure_airport: departureTextInput,
+        arrive_airport: arrivalTextInput,
+        travel_time: travelTime,
+        distance: distance,
+        plane_name: plane,
+        airline_name: airline,
+        data_lotu: formatDate(departureDateInput)
       };
   
       const response = await axiosPrivate.post('/flight_register', data);
-      console.log(response.data); // Wyświetla odpowiedź z serwera
-      // Możesz dodać logikę obsługi odpowiedzi tutaj
-  
+      console.log(response.data);
     } catch (error) {
       console.error('Error registering flight:', error);
-      // Obsługa błędu tutaj
     }
   };
 
