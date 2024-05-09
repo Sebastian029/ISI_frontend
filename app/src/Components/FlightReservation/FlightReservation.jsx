@@ -3,6 +3,7 @@ import TopBar from "../HomeScreen/TopBar/TopBar.jsx";
 import './FlightReservation.css';
 import { useEffect, useState } from "react";
 import axios from "../../axiosInstance"; 
+import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
 
 const FlightReservation = () => {
   const { flightId } = useParams();
@@ -14,6 +15,7 @@ const FlightReservation = () => {
   const flightDate = queryParams.get('flightDate');
   const [tickets, setTickets] = useState([{}]);
   const [selectedTickets, setSelectedTickets] = useState([]);
+  const axiosPrivate = useAxiosPrivate();
 
 
   const appStyles = {
@@ -54,6 +56,22 @@ const FlightReservation = () => {
       setSelectedTickets([...selectedTickets, ticket]);
     }
   }
+
+
+  const handleConfirmation = async () => {
+    try {
+      console.log(selectedTickets);
+      const response = await axiosPrivate.post("/ticket_buy", {
+        tickets: selectedTickets.map(ticket => ({ ticket_id: ticket.ticket_id })),
+      });
+
+      console.log("Tickets bought successfully:", response.data);
+      // Clear selected tickets after successful purchase
+      setSelectedTickets([]);
+    } catch (error) {
+      console.error("Error buying tickets:", error);
+    }
+  };
   
   
 
@@ -78,6 +96,7 @@ const FlightReservation = () => {
                 <li key={index}>
                   <h3>Ticket {index + 1}</h3>
                   <ul>
+                    <li>TicketId: {ticket.ticket_id}</li>
                     <li>Class: {ticket.ticket_class}</li>
                     <li>Row: {ticket.row}</li>
                     <li>Seat: {ticket.column}</li>
@@ -102,6 +121,11 @@ const FlightReservation = () => {
               </li>
             ))}
           </ul>
+          <input 
+            type="button"
+            value="Confirm reservation"
+            onClick={handleConfirmation}
+            disabled={selectedTickets.length === 0} />
         </div>
       </div>
     </>
