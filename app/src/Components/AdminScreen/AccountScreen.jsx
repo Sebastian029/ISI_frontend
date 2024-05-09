@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import TopBar from "../HomeScreen/TopBar/TopBar";
+import TopBar from "../AdminScreen/TopBar/TopBar";
 
 function AdminScreen() {
   const appStyles = {
@@ -9,7 +9,14 @@ function AdminScreen() {
     flexDirection: "column",
   };
 
-  return <>ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN</>;
+  return (
+    <>
+      <div style={appStyles}>
+        <TopBar />
+      </div>
+      Admin Admin
+    </>
+  );
 }
 
 export default AdminScreen;
