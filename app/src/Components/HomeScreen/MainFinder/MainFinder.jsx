@@ -98,12 +98,14 @@ function MainFinder({ activateFinder, setFlights }) {
               value={departureTextInput}
               onChange={setDepartureTextInput}
               placeholder="Departure"
+              className={styles.textInput}
             />
             <SwapHorizIcon className={styles.iconSwap} onClick={handleSwap} />
             <AutocompleteTextInput
               value={arrivalTextInput}
               onChange={setArrivalTextInput}
               placeholder="Arrival"
+              className={styles.textInput}
             />
           </div>
 

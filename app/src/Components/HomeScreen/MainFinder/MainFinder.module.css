@@ -40,20 +40,16 @@
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
   background-color: #e4e4e4;
+  flex: 1;
 }
-.destinationInputRow {
-  flex-direction: "column";
-  background-color: rebeccapurple;
-}
-
-input:focus {
-  outline: none;
-}
-
 .iconSwap {
   color: #e4e4e4;
   cursor: pointer;
   font-size: 50px !important;
+}
+
+input:focus {
+  outline: none;
 }
 
 .globalInputBox {

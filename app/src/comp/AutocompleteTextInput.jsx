@@ -1,6 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 
-const AutocompleteTextInput = ({ value, onChange, placeholder, styles }) => {
+const AutocompleteTextInput = ({
+  value,
+  onChange,
+  placeholder,
+  style,
+  ...props
+}) => {
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const suggestions = ["Apple", "Banana", "Orange", "Pineapple", "Grapes"];
@@ -62,13 +68,14 @@ const AutocompleteTextInput = ({ value, onChange, placeholder, styles }) => {
   };
 
   return (
-    <div ref={wrapperRef} style={containerStyle}>
+    <div style={{ ...containerStyle, flex: 1 }}>
       <input
         type="text"
         value={value}
         onChange={handleChange}
         placeholder={placeholder}
-        style={{ ...defaultStyles.textInput, ...styles.textInput }}
+        style={{ ...textInputStyle, ...style }}
+        {...props}
       />
       {renderSuggestions()}
     </div>
@@ -77,7 +84,18 @@ const AutocompleteTextInput = ({ value, onChange, placeholder, styles }) => {
 
 // Styles
 const containerStyle = {
-  position: "relative", // Ensure positioning context for suggestions
+  position: "relative",
+  display: "flex",
+  flexDirection: "column",
+};
+
+const textInputStyle = {
+  flex: 1,
+  border: "0px",
+  borderRadius: "5px",
+  padding: "10px",
+  fontFamily: "Arial, Helvetica, sans-serif",
+  fontSize: "20px",
 };
 
 const suggestionsListStyle = {
@@ -89,7 +107,7 @@ const suggestionsListStyle = {
   top: "100%",
   left: 0,
   zIndex: 999,
-  backgroundColor: "red",
+  backgroundColor: "lime",
 };
 
 const suggestionItemStyle = {
