@@ -41,8 +41,9 @@
   font-size: 20px;
   background-color: #e4e4e4;
 }
-.destinationInputRow > input {
-  flex: 3;
+.destinationInputRow {
+  flex-direction: "column";
+  background-color: rebeccapurple;
 }
 
 input:focus {

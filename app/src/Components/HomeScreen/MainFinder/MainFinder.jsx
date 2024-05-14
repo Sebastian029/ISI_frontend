@@ -9,6 +9,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import PersonIcon from "@mui/icons-material/Person";
 import { useState } from "react";
 import { useRef } from "react";
+import AutocompleteTextInput from "../../../comp/AutocompleteTextInput";
 
 import axios from "./../../../axiosInstance";
 
@@ -93,19 +94,15 @@ function MainFinder({ activateFinder, setFlights }) {
           </div>
 
           <div className={styles.destinationInputRow}>
-            <input
-              className={styles.textInput}
-              type="text"
+            <AutocompleteTextInput
               value={departureTextInput}
-              onChange={(e) => setDepartureTextInput(e.target.value)}
-              placeholder="Depature"
+              onChange={setDepartureTextInput}
+              placeholder="Departure"
             />
             <SwapHorizIcon className={styles.iconSwap} onClick={handleSwap} />
-            <input
-              className={styles.textInput}
-              type="text"
+            <AutocompleteTextInput
               value={arrivalTextInput}
-              onChange={(e) => setArrivalTextInput(e.target.value)}
+              onChange={setArrivalTextInput}
               placeholder="Arrival"
             />
           </div>
