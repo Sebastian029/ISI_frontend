@@ -98,7 +98,7 @@ export default function Modal() {
         phoneNumber: phoneNumberRegister,
         password: passwordRegister,
       })
-      .then((response) => {
+      .then(() => {
         setRegisterOutput("Registration successful!");
         setNameRegister("");
         setLastNameRegister("");

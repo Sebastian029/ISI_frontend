@@ -37,13 +37,13 @@ function MainFinder({ activateFinder, setFlights }) {
 
   const getFlights = async () => {
     try {
-      console.log(departureTextInput);
-      console.log(arrivalTextInput);
+      console.log(departureTextInput.split(": ")[1]);
+      console.log(arrivalTextInput.split(": ")[1]);
       console.log(formatDate(departureDateInput));
       const response = await axios.get("/flights_with_airports", {
         params: {
-          departure_airport: departureTextInput,
-          arrive_airport: arrivalTextInput,
+          departure_airport: departureTextInput.split(": ")[1],
+          arrive_airport: arrivalTextInput.split(": ")[1],
           data_lotu: formatDate(departureDateInput),
         },
       });
@@ -64,6 +64,14 @@ function MainFinder({ activateFinder, setFlights }) {
     } finally {
       activateFinder(true);
     }
+  };
+  const clearInputs = () => {
+    setDepartureTextInput("");
+    setArrivalTextInput("");
+    setDepartureDateInput("");
+    setArrivaleDateInput("");
+    setDepartureDateInput("");
+    activateFinder(false);
   };
 
   return (
@@ -97,14 +105,14 @@ function MainFinder({ activateFinder, setFlights }) {
             <AutocompleteTextInput
               value={departureTextInput}
               onChange={setDepartureTextInput}
-              placeholder="Departure"
+              placeholder="Departure airport"
               className={styles.textInput}
             />
             <SwapHorizIcon className={styles.iconSwap} onClick={handleSwap} />
             <AutocompleteTextInput
               value={arrivalTextInput}
               onChange={setArrivalTextInput}
-              placeholder="Arrival"
+              placeholder="Arrival airport"
               className={styles.textInput}
             />
           </div>
@@ -152,7 +160,7 @@ function MainFinder({ activateFinder, setFlights }) {
                 type="button"
                 className={styles.confirmButton}
                 value={"Clear"}
-                onClick={() => activateFinder(false)}
+                onClick={() => clearInputs()}
               />
             </div>
 

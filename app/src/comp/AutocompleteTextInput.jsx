@@ -1,4 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
+import PropTypes from "prop-types";
+import axiosInstance from "../axiosInstance";
+
 
 const AutocompleteTextInput = ({
   value,
@@ -9,31 +12,39 @@ const AutocompleteTextInput = ({
 }) => {
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const suggestions = ["Apple", "Banana", "Orange", "Pineapple", "Grapes"];
+  const [suggestions, setSuggestions] = useState([]);
   const wrapperRef = useRef(null);
 
   useEffect(() => {
-    // Function to handle clicks outside of component
     function handleClickOutside(event) {
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
         setShowSuggestions(false);
       }
     }
 
-    // Bind the event listener
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      // Unbind the event listener on component unmount
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [wrapperRef]);
 
+  useEffect(() => {
+    axiosInstance
+      .get("/city_airports")
+      .then((response) => {
+        setSuggestions(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data from /city_airports:", error);
+      });
+  }, []);
+
   const handleChange = (e) => {
     const input = e.target.value;
     onChange(input);
-
     const filtered = suggestions.filter(
-      (suggestion) => suggestion.toLowerCase().indexOf(input.toLowerCase()) > -1
+      (suggestion) =>
+        suggestion.airport.toLowerCase().indexOf(input.toLowerCase()) > -1
     );
     setFilteredSuggestions(filtered);
     setShowSuggestions(true);
@@ -53,9 +64,9 @@ const AutocompleteTextInput = ({
               <li
                 key={index}
                 style={suggestionItemStyle}
-                onClick={() => handleSelectSuggestion(suggestion)}
+                onClick={() => handleSelectSuggestion(suggestion.airport)}
               >
-                {suggestion}
+                {suggestion.airport}
               </li>
             ))}
           </ul>
@@ -82,7 +93,18 @@ const AutocompleteTextInput = ({
   );
 };
 
-// Styles
+AutocompleteTextInput.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
+  style: PropTypes.object,
+};
+
+AutocompleteTextInput.defaultProps = {
+  placeholder: "",
+  style: {},
+};
+
 const containerStyle = {
   position: "relative",
   display: "flex",
@@ -107,12 +129,17 @@ const suggestionsListStyle = {
   top: "100%",
   left: 0,
   zIndex: 999,
-  backgroundColor: "lime",
+  backgroundColor: "lightgray",
+  maxHeight: "50vh",
+  overflowY: "auto",
+  fontFamily: "Lato",
 };
 
 const suggestionItemStyle = {
-  padding: "10px",
+  padding: "8px",
   cursor: "pointer",
+  fontSize: 18,
+  borderBottom: "2px solid orange",
 };
 
 export default AutocompleteTextInput;
