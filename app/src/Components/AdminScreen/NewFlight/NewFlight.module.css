@@ -121,3 +121,10 @@
     width: 7em;
   }
   
+  .departureInput {
+    width: 350px; 
+  }
+  
+  .arrivalInput {
+    width: 350px; 
+  }
