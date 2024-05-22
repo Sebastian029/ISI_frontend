@@ -29,9 +29,9 @@ function NewFlight({ activateFinder }) {
   const datePickerRefDeparture = useRef(null);
   const datePickerRefArrival = useRef(null);
   const axiosPrivate = useAxiosPrivate();
-  const [planeNames, setPlaneNames] = useState([]);
-  const [airlineNames, setAirlineNames] = useState([]);
-  const [airportNames, setAirportNames] = useState([]);
+  const [planes, setPlanes] = useState([]);
+  const [airlines, setAirlines] = useState([]);
+  const [airports, setAirports] = useState([]);
 
   const [open, setOpen] = useState(false);
   const [success, setSuccess] = useState("");
@@ -76,12 +76,12 @@ function NewFlight({ activateFinder }) {
 
     try {
       const data = {
-        departure_airport: departureAirport,
-        arrive_airport: arrivalAirport,
+        departure_airport_id: airports.find(ap => ap.airport_name === departureAirport)?.airport_id,
+        arrive_airport_id: airports.find(ap => ap.airport_name === arrivalAirport)?.airport_id,
         travel_time: travelTime,
         distance: distance,
-        plane_name: plane,
-        airline_name: airline,
+        plane_id: planes.find(p => p.plane_name === plane)?.plane_id,
+        airline_id: airlines.find(al => al.airline_name === airline)?.airline_id,
         data_lotu: formatDate(departureDateInput)
       };
 
@@ -101,8 +101,7 @@ function NewFlight({ activateFinder }) {
     const fetchPlanes = async () => {
       try {
         const response = await axiosPrivate.get("/planes");
-        const names = response.data.map(plane => plane.plane_name);
-        setPlaneNames(names);
+        setPlanes(response.data);
       } catch (error) {
         console.error("Error fetching planes:", error);
       }
@@ -111,8 +110,7 @@ function NewFlight({ activateFinder }) {
     const fetchAirlines = async () => {
       try {
         const response = await axiosPrivate.get("/airlines");
-        const names = response.data.map(airline => airline.airline_name);
-        setAirlineNames(names);
+        setAirlines(response.data);
       } catch (error) {
         console.error("Error fetching airlines:", error);
       }
@@ -121,8 +119,7 @@ function NewFlight({ activateFinder }) {
     const fetchAirports = async () => {
       try {
         const response = await axiosPrivate.get("/airports");
-        const names = response.data.map(airport => airport.airport_name);
-        setAirportNames(names);
+        setAirports(response.data);
       } catch (error) {
         console.error("Error fetching airports:", error);
       }
@@ -151,8 +148,8 @@ function NewFlight({ activateFinder }) {
                 onChange={(e) => setDepartureAirport(e.target.value)}
                 label="Departure"
               >
-                {airportNames.map((name) => (
-                  <MenuItem key={name} value={name}>{name}</MenuItem>
+                {airports.map((airport) => (
+                  <MenuItem key={airport.airport_id} value={airport.airport_name}>{airport.airport_name}</MenuItem>
                 ))}
               </Select>
             </FormControl>
@@ -165,8 +162,8 @@ function NewFlight({ activateFinder }) {
                 onChange={(e) => setArrivalAirport(e.target.value)}
                 label="Arrival"
               >
-                {airportNames.map((name) => (
-                  <MenuItem key={name} value={name}>{name}</MenuItem>
+                {airports.map((airport) => (
+                  <MenuItem key={airport.airport_id} value={airport.airport_name}>{airport.airport_name}</MenuItem>
                 ))}
               </Select>
             </FormControl>
@@ -219,8 +216,8 @@ function NewFlight({ activateFinder }) {
                   onChange={(e) => setPlaneTextInput(e.target.value)}
                   label="Plane"
                 >
-                  {planeNames.map((name) => (
-                    <MenuItem key={name} value={name}>{name}</MenuItem>
+                  {planes.map((plane) => (
+                    <MenuItem key={plane.plane_id} value={plane.plane_name}>{plane.plane_name}</MenuItem>
                   ))}
                 </Select>
               </FormControl>
@@ -235,8 +232,8 @@ function NewFlight({ activateFinder }) {
                   onChange={(e) => setAirlineTextInput(e.target.value)}
                   label="Airline"
                 >
-                  {airlineNames.map((name) => (
-                    <MenuItem key={name} value={name}>{name}</MenuItem>
+                  {airlines.map((airline) => (
+                    <MenuItem key={airline.airline_id} value={airline.airline_name}>{airline.airline_name}</MenuItem>
                   ))}
                 </Select>
               </FormControl>

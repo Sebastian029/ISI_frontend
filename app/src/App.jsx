@@ -11,6 +11,7 @@ import UnauthorizedScreen from "./Components/UnauthorizedScreen/UnauthorizedScre
 import AdminScreen from "./Components/AdminScreen/AccountScreen.jsx";
 import ErrorPage from "./errorPage.jsx";
 import NewFlight from "./Components/AdminScreen/NewFlight/NewFlight.jsx";
+import PaymentAdmin from "./Components/AdminScreen/PaymentAdmin/PaymentAdmin.jsx";
 import FlightReservation from "./Components/FlightReservation/FlightReservation.jsx";
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/unauthorized" element={<UnauthorizedScreen />} />
         <Route element={<RequireAuth allowedRoles={["admin"]} />}>
         <Route path="/newflight" element={<NewFlight />} />
+        <Route path="/paymentadmin" element={<PaymentAdmin />} />
         </Route>
         <Route path="/" element={<HomeScreen />} />
         <Route path="*" element={<ErrorPage />}></Route>

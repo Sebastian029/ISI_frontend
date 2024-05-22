@@ -8,11 +8,14 @@ function TopBar() {
   return (
     <>
       <div className={styles.mainBox}>
-        <div className={styles.box} onClick={() => navigate("/")}>
+        {/* <div className={styles.box} onClick={() => navigate("/")}>
           Home
-        </div>
+        </div> */}
         <div className={styles.box} onClick={() => navigate("/newflight")}> 
           New Flight
+        </div>
+        <div className={styles.box} onClick={() => navigate("/paymentadmin")}> 
+          Payment
         </div>
         <div className={styles.box}>Help</div>
         <div className={styles.box} onClick={() => navigate("/admin")}> 
