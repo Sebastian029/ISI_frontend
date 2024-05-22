@@ -2,10 +2,10 @@ import { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import axiosInstance from "../axiosInstance";
 
-
 const AutocompleteTextInput = ({
   value,
   onChange,
+  setAirportID,
   placeholder,
   style,
   ...props
@@ -51,8 +51,9 @@ const AutocompleteTextInput = ({
   };
 
   const handleSelectSuggestion = (suggestion) => {
-    onChange(suggestion);
+    onChange(suggestion.airport);
     setShowSuggestions(false);
+    setAirportID(suggestion.airport_id);
   };
 
   const renderSuggestions = () => {
@@ -60,11 +61,11 @@ const AutocompleteTextInput = ({
       if (filteredSuggestions.length) {
         return (
           <ul style={suggestionsListStyle}>
-            {filteredSuggestions.map((suggestion, index) => (
+            {filteredSuggestions.map((suggestion) => (
               <li
-                key={index}
+                key={suggestion.airport_id}
                 style={suggestionItemStyle}
-                onClick={() => handleSelectSuggestion(suggestion.airport)}
+                onClick={() => handleSelectSuggestion(suggestion)}
               >
                 {suggestion.airport}
               </li>
@@ -72,14 +73,14 @@ const AutocompleteTextInput = ({
           </ul>
         );
       } else {
-        return <div></div>;
+        return <div>No suggestions available</div>;
       }
     }
     return null;
   };
 
   return (
-    <div style={{ ...containerStyle, flex: 1 }}>
+    <div ref={wrapperRef} style={{ ...containerStyle, flex: 1 }}>
       <input
         type="text"
         value={value}
@@ -96,6 +97,7 @@ const AutocompleteTextInput = ({
 AutocompleteTextInput.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  airportID: PropTypes.number,
   placeholder: PropTypes.string,
   style: PropTypes.object,
 };

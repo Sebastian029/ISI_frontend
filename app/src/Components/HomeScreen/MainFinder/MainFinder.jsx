@@ -19,6 +19,8 @@ function MainFinder({ activateFinder, setFlights }) {
   const [departureDateInput, setDepartureDateInput] = useState("");
   const [arrivalDateInput, setArrivaleDateInput] = useState("");
   const [singleWayCheckbox, setSingleWayCheckbox] = useState(true);
+  const [arrivalID, setArricalID] = useState(null);
+  const [departureID, setDepartureID] = useState(null);
   const datePickerRefDeparture = useRef(null);
   const datePickerRefArrival = useRef(null);
 
@@ -37,13 +39,13 @@ function MainFinder({ activateFinder, setFlights }) {
 
   const getFlights = async () => {
     try {
-      console.log(departureTextInput.split(": ")[1]);
-      console.log(arrivalTextInput.split(": ")[1]);
+      console.log(arrivalID);
+      console.log(departureID);
       console.log(formatDate(departureDateInput));
       const response = await axios.get("/flights_with_airports", {
         params: {
-          departure_airport: departureTextInput.split(": ")[1],
-          arrive_airport: arrivalTextInput.split(": ")[1],
+          departure_airport_id: departureID,
+          arrive_airport_id: arrivalID,
           data_lotu: formatDate(departureDateInput),
         },
       });
@@ -107,6 +109,7 @@ function MainFinder({ activateFinder, setFlights }) {
               onChange={setDepartureTextInput}
               placeholder="Departure airport"
               className={styles.textInput}
+              setAirportID={setDepartureID}
             />
             <SwapHorizIcon className={styles.iconSwap} onClick={handleSwap} />
             <AutocompleteTextInput
@@ -114,6 +117,7 @@ function MainFinder({ activateFinder, setFlights }) {
               onChange={setArrivalTextInput}
               placeholder="Arrival airport"
               className={styles.textInput}
+              setAirportID={setArricalID}
             />
           </div>
 
