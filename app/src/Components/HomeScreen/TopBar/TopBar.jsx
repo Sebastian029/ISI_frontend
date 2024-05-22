@@ -13,7 +13,7 @@ function TopBar() {
     if (auth) {
       setUserEmail(auth.email);
     }
-    console.log(auth);
+    // console.log(auth);
   }, [auth]);
 
   return (

@@ -39,9 +39,9 @@ function MainFinder({ activateFinder, setFlights }) {
 
   const getFlights = async () => {
     try {
-      console.log(arrivalID);
-      console.log(departureID);
-      console.log(formatDate(departureDateInput));
+      //console.log(arrivalID);
+     // console.log(departureID);
+     // console.log(formatDate(departureDateInput));
       const response = await axios.get("/flights_with_airports", {
         params: {
           departure_airport_id: departureID,
@@ -50,7 +50,7 @@ function MainFinder({ activateFinder, setFlights }) {
         },
       });
 
-      console.log("Data posted successfully:", response.data);
+     // console.log("Data posted successfully:", response.data);
       if (response.data) {
         setFlights(response.data);
       }
