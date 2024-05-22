@@ -38,11 +38,18 @@ export default function Modal() {
         const roles = response?.data?.roles;
         console.log(accessToken);
         console.log(roles);
-        setAuth({ emailInput, passwordInput, roles, accessToken });
+        const authData = {
+          email: emailInput,
+          password: passwordInput,
+          roles,
+          accessToken,
+        };
+        setAuth(authData);
         setLoginOutput("Login successful!");
         setEmailInput("");
         setPasswordInput("");
         setModal(false);
+        localStorage.setItem("authData", JSON.stringify(authData));
 
         if (roles.includes("admin")) {
           navigate("/admin");
@@ -98,7 +105,7 @@ export default function Modal() {
         phoneNumber: phoneNumberRegister,
         password: passwordRegister,
       })
-      .then((response) => {
+      .then(() => {
         setRegisterOutput("Registration successful!");
         setNameRegister("");
         setLastNameRegister("");

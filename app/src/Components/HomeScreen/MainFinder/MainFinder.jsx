@@ -9,6 +9,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import PersonIcon from "@mui/icons-material/Person";
 import { useState } from "react";
 import { useRef } from "react";
+import AutocompleteTextInput from "../../../comp/AutocompleteTextInput";
 
 import axios from "./../../../axiosInstance";
 
@@ -18,6 +19,8 @@ function MainFinder({ activateFinder, setFlights }) {
   const [departureDateInput, setDepartureDateInput] = useState("");
   const [arrivalDateInput, setArrivaleDateInput] = useState("");
   const [singleWayCheckbox, setSingleWayCheckbox] = useState(true);
+  const [arrivalID, setArricalID] = useState(null);
+  const [departureID, setDepartureID] = useState(null);
   const datePickerRefDeparture = useRef(null);
   const datePickerRefArrival = useRef(null);
 
@@ -36,13 +39,13 @@ function MainFinder({ activateFinder, setFlights }) {
 
   const getFlights = async () => {
     try {
-      console.log(departureTextInput);
-      console.log(arrivalTextInput);
+      console.log(arrivalID);
+      console.log(departureID);
       console.log(formatDate(departureDateInput));
       const response = await axios.get("/flights_with_airports", {
         params: {
-          departure_airport: departureTextInput,
-          arrive_airport: arrivalTextInput,
+          departure_airport_id: departureID,
+          arrive_airport_id: arrivalID,
           data_lotu: formatDate(departureDateInput),
         },
       });
@@ -63,6 +66,14 @@ function MainFinder({ activateFinder, setFlights }) {
     } finally {
       activateFinder(true);
     }
+  };
+  const clearInputs = () => {
+    setDepartureTextInput("");
+    setArrivalTextInput("");
+    setDepartureDateInput("");
+    setArrivaleDateInput("");
+    setDepartureDateInput("");
+    activateFinder(false);
   };
 
   return (
@@ -93,20 +104,20 @@ function MainFinder({ activateFinder, setFlights }) {
           </div>
 
           <div className={styles.destinationInputRow}>
-            <input
-              className={styles.textInput}
-              type="text"
+            <AutocompleteTextInput
               value={departureTextInput}
-              onChange={(e) => setDepartureTextInput(e.target.value)}
-              placeholder="Depature"
+              onChange={setDepartureTextInput}
+              placeholder="Departure airport"
+              className={styles.textInput}
+              setAirportID={setDepartureID}
             />
             <SwapHorizIcon className={styles.iconSwap} onClick={handleSwap} />
-            <input
-              className={styles.textInput}
-              type="text"
+            <AutocompleteTextInput
               value={arrivalTextInput}
-              onChange={(e) => setArrivalTextInput(e.target.value)}
-              placeholder="Arrival"
+              onChange={setArrivalTextInput}
+              placeholder="Arrival airport"
+              className={styles.textInput}
+              setAirportID={setArricalID}
             />
           </div>
 
@@ -153,7 +164,7 @@ function MainFinder({ activateFinder, setFlights }) {
                 type="button"
                 className={styles.confirmButton}
                 value={"Clear"}
-                onClick={() => activateFinder(false)}
+                onClick={() => clearInputs()}
               />
             </div>
 

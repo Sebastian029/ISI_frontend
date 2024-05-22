@@ -1,26 +1,33 @@
-.mainBox{
-    display: flex;
-    width: 100%;
-    background-color:var(--background-color);
-    justify-content: flex-end;
-    gap:10px;
-    padding: 10px 0px;
+.mainBox {
+  display: flex;
+  width: 100%;
+  background-color: var(--background-color);
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 10px 0px;
 }
 
 .box {
-    font-size: 20px;
-    font-weight: 200;
-    font-family:'Lucida Sans';
-    margin: 0px 10px;
-    padding: 5px 20px;
-    border-bottom: 4px solid transparent; 
-    transition: margin-bottom 0.5s ease, border-bottom-color 0.5s ease; 
-    cursor:pointer;
+  font-size: 20px;
+  font-weight: 400;
+  font-family: "Lato";
+  margin: 0px 10px;
+  padding: 5px 20px;
+  border-bottom: 4px solid transparent;
+  transition: margin-bottom 0.5s ease, border-bottom-color 0.5s ease;
+  cursor: pointer;
 }
 
 .box:hover {
-    margin-bottom: -5px;
-    border-bottom-color: orange; 
-
+  margin-bottom: -5px;
+  border-bottom-color: orange;
 }
 
+.username {
+  position: absolute;
+  left: 10px;
+  color: red;
+  font-family: "Lato";
+  font-size: 24px;
+  font-weight: 400;
+}
