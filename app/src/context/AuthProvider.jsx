@@ -6,6 +6,14 @@ export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({});
   const [modal, setModal] = useState(false);
   useEffect(() => {
+    const storedAuthData = localStorage.getItem("authData");
+    if (storedAuthData) {
+      const parsedAuthData = JSON.parse(storedAuthData);
+      setAuth(parsedAuthData);
+    }
+  }, []);
+
+  useEffect(() => {
     console.log("Auth state changed:", auth);
   }, [auth]);
 
