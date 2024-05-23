@@ -94,7 +94,7 @@ function ReservationsScreen() {
               {currentOrders.map((order, index) => (
                 <li className={styles.order} key={index}>
                   <h2>Order {index + 1 + (currentPage - 1) * ordersPerPage}</h2>
-                  <ul>
+                  <ul className={styles.orderData}>
                     <li>Order number: {order.order_id}</li>
                     <li>Full price: {order.full_price}</li>
                     <li>Payment status: {order.is_payment_completed ? "true" : "false"}</li>
@@ -108,7 +108,7 @@ function ReservationsScreen() {
                         {order.tickets.map((ticket, index) => (
                           <li className={styles.ticket} key={index}>
                             <h3>Ticket {index + 1}</h3>
-                            <ul>
+                            <ul className={styles.ticketData}>
                               <li>Class: {ticket.ticket_class}</li>
                               <li>Row: {ticket.row}</li>
                               <li>Seat: {ticket.column}</li>

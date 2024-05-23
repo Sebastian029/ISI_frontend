@@ -12,7 +12,8 @@
 .order{
     list-style-type: none;
     width:80%;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: center;
     border: 1px solid orange;
     border-radius: 10px;
@@ -20,6 +21,11 @@
     margin: 1%;
 
 
+}
+
+.orderData{
+    margin-left: 5%;
+    width:95%;
 }
 
 .mainList{
@@ -32,6 +38,7 @@
 }
 
 .ticketList{
+    width: 90%;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -40,9 +47,16 @@
 
 .ticket{
     background-color:bisque;
+    flex-direction: column;
+    align-items: flex-start;
     border-radius: 10px;
-    padding: 1%;
+    padding: 2%;
     margin: 1%;
+    min-width: 200px;
+}
+
+.ticketData{
+    margin-left: 10%;
 }
 
 .button{
