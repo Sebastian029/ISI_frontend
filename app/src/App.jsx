@@ -14,6 +14,11 @@ import NewFlight from "./Components/AdminScreen/NewFlight/NewFlight.jsx";
 import PaymentAdmin from "./Components/AdminScreen/PaymentAdmin/PaymentAdmin.jsx";
 import FlightReservation from "./Components/FlightReservation/FlightReservation.jsx";
 import Privileges from "./Components/AdminScreen/Privileges/Privileges.jsx"
+import OrderConfirmation from "./Components/OrderScreen/OrderConfirmation/OrderConfirmation.jsx";
+import OrderCancel from "./Components/OrderScreen/OrderCancel/OrderCancel.jsx";
+import OrderSuccess from "./Components/OrderScreen/OrderSucess/OrderSuccess.jsx";
+import TransferDetails from "./Components/OrderScreen/OrderConfirmation/TransferDetails/TransferDetails.jsx";
+
 
 function App() {
   return (
@@ -24,7 +29,13 @@ function App() {
         </Route>
         <Route element={<RequireAuth allowedRoles={["user"]} />}>
           <Route path="account" element={<AccountScreen />} />
+          <Route path="/checkout" element={<OrderConfirmation />}/>
         </Route>
+          <Route path="/transferdetails" element={<TransferDetails />}/>
+          <Route path="/cancell" element={<OrderCancel />} />
+          <Route path="/success" element={<OrderSuccess />} />
+        
+
         <Route path="reservations" element={<ReservationsScreen />} />
         <Route path="flightReservation/:flightId" element={<FlightReservation />} />
         <Route path="/unauthorized" element={<UnauthorizedScreen />} />

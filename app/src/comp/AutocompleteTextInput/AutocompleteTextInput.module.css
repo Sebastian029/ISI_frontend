@@ -1,0 +1,61 @@
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.textInput {
+  flex: 1;
+  border: 0;
+  border-radius: 5px;
+  padding: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+}
+
+.suggestionsList {
+  list-style: none;
+  padding: 0;
+  margin: 5px 0;
+  border-radius: 4px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 9;
+  background-color: white;
+  max-height: 50vh;
+  overflow-y: auto;
+  font-family: Lato;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(128, 128, 128, 0.253);
+}
+
+/* Scrollbar styles */
+.suggestionsList::-webkit-scrollbar {
+  width: 4px;
+}
+
+.suggestionsList::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 2px;
+}
+
+.suggestionsList::-webkit-scrollbar-thumb {
+  background: var(--main-color);
+  border-radius: 2px;
+}
+
+.suggestionsList::-webkit-scrollbar-thumb:hover {
+  background: var(--main-color-2);
+}
+
+.suggestionItem {
+  padding: 12px;
+  cursor: pointer;
+  font-size: 18px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.253);
+  color: rgb(66, 66, 66);
+}
+.suggestionItem:hover {
+  color: var(--main-color-2);
+}

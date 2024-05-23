@@ -8,7 +8,7 @@ const Users = () => {
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const location = useLocation();
-  const { setModal } = useAuth();
+  const { auth, setModal } = useAuth();
 
   useEffect(() => {
     let isMounted = true;
@@ -19,11 +19,11 @@ const Users = () => {
         const response = await axiosPrivate.get("/users", {
           signal: controller.signal,
         });
-        console.log(response.data);
+        //console.log(response.data);
         isMounted && setUsers(response.data);
       } catch (err) {
         if (err.name === "CanceledError") {
-          console.log("Request canceled:", err.message);
+          // console.log("Request canceled:", err.message);
           return;
         }
         console.error(err);
@@ -38,7 +38,7 @@ const Users = () => {
       isMounted = false;
       controller.abort();
     };
-  }, []);
+  }, [auth]);
 
   return (
     <article>

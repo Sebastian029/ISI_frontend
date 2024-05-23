@@ -34,15 +34,17 @@ export default function Modal() {
         password: passwordInput,
       })
       .then((response) => {
-        const accessToken = response?.data?.token;
+        const accessToken = response?.data?.access_token;
+        const refreshToken = response?.data?.refresh_token;
         const roles = response?.data?.roles;
-        console.log(accessToken);
-        console.log(roles);
+        const username = response?.data?.surname;
         const authData = {
           email: emailInput,
           password: passwordInput,
           roles,
           accessToken,
+          refreshToken,
+          username,
         };
         setAuth(authData);
         setLoginOutput("Login successful!");
@@ -50,6 +52,7 @@ export default function Modal() {
         setPasswordInput("");
         setModal(false);
         localStorage.setItem("authData", JSON.stringify(authData));
+        // console.log(authData);
 
         if (roles.includes("admin")) {
           navigate("/admin");
@@ -59,6 +62,10 @@ export default function Modal() {
         console.error("Login error:", error);
         setLoginOutput("Login failed. Please try again.");
       });
+  };
+
+  const handleGoogle = () => {
+    window.location.href = 'http://localhost:5000/login/google'; // Adjust the URL to match your Flask backend
   };
 
   const registerAccount = () => {
@@ -175,7 +182,7 @@ export default function Modal() {
               <p>- or log in with-</p>
               <div className="google-auth">
                 <GoogleIcon />
-                Google
+                <text onClick={() => handleGoogle()}>jol</text>
               </div>
 
               <p className="register-reference" onClick={() => setLogin(false)}>
