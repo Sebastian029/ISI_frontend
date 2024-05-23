@@ -26,7 +26,7 @@ function Items({ currentItems, handleFlightSelection }) {
             </div>
             <div style={styles.infoBar}>
               <CalendarMonthIcon style={styles.flightIcon} />
-              Flight Date:
+              Flight Date: {item.data_lotu}
             </div>
             <div style={styles.infoBar}>
               <FlightTakeoffIcon style={styles.flightIcon} />
@@ -36,13 +36,15 @@ function Items({ currentItems, handleFlightSelection }) {
               <FlightLandIcon style={styles.flightIcon} />
               Departure Airport: {item.departure_airport}
             </div>
+            {/*
             <div style={styles.infoBar}>
               <DepartureBoardIcon style={styles.flightIcon} />
               Departure Time:
             </div>
+            */}
             <div style={styles.infoBar}>
               <AccessTimeIcon style={styles.flightIcon} />
-              Travel Time:
+              Travel Time: {item.travel_time}
             </div>
             <div style={styles.bottomContainer}>
               <div>
