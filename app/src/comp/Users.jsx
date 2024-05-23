@@ -8,7 +8,7 @@ const Users = () => {
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const location = useLocation();
-  const { setModal } = useAuth();
+  const { auth, setModal } = useAuth();
 
   useEffect(() => {
     let isMounted = true;
@@ -38,7 +38,7 @@ const Users = () => {
       isMounted = false;
       controller.abort();
     };
-  }, []);
+  }, [auth]);
 
   return (
     <article>

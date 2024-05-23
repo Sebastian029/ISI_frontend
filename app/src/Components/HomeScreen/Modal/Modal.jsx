@@ -37,12 +37,14 @@ export default function Modal() {
         const accessToken = response?.data?.access_token;
         const refreshToken = response?.data?.refresh_token;
         const roles = response?.data?.roles;
+        const username = response?.data?.surname;
         const authData = {
           email: emailInput,
           password: passwordInput,
           roles,
           accessToken,
           refreshToken,
+          username,
         };
         setAuth(authData);
         setLoginOutput("Login successful!");
