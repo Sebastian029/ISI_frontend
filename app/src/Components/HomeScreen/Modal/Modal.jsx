@@ -34,15 +34,17 @@ export default function Modal() {
         password: passwordInput,
       })
       .then((response) => {
-        const accessToken = response?.data?.token;
+        const accessToken = response?.data?.access_token;
+        const refreshToken = response?.data?.refresh_token;
         const roles = response?.data?.roles;
-        console.log(accessToken);
-        console.log(roles);
+        const username = response?.data?.surname;
         const authData = {
           email: emailInput,
           password: passwordInput,
           roles,
           accessToken,
+          refreshToken,
+          username,
         };
         setAuth(authData);
         setLoginOutput("Login successful!");
@@ -50,6 +52,7 @@ export default function Modal() {
         setPasswordInput("");
         setModal(false);
         localStorage.setItem("authData", JSON.stringify(authData));
+        // console.log(authData);
 
         if (roles.includes("admin")) {
           navigate("/admin");

@@ -7,19 +7,19 @@ import useAuth from "../../../hooks/useAuth.jsx";
 function TopBar() {
   const navigate = useNavigate();
   const { auth } = useAuth();
-  const [userEmail, setUserEmail] = useState("");
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     if (auth) {
-      setUserEmail(auth.email);
+      setUsername("Welcome " + auth.username + "!");
     }
-    console.log(auth);
+    // console.log(auth);
   }, [auth]);
 
   return (
     <>
       <div className={styles.mainBox}>
-        <div className={styles.username}>{userEmail}</div>
+        <div className={styles.username}>{username}</div>
         <div className={styles.box} onClick={() => navigate("/")}>
           Home
         </div>
