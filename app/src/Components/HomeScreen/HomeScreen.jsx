@@ -5,6 +5,7 @@ import Content from "./Content/Content.jsx";
 import Footer from "./Footer/Footer.jsx";
 import Welcome from "./Welcome/Welcome.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth.jsx";
 
 function HomeScreen() {
   const appStyles = {
@@ -15,16 +16,29 @@ function HomeScreen() {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const {setAuth} = useAuth();
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     console.log(params);
     const accessToken = params.get("access_token");
     const refreshToken = params.get("refresh_token");
+    const roles = [params.get("roles")];
+
 
     if (accessToken && refreshToken) {
       localStorage.setItem("access_token", accessToken);
       localStorage.setItem("refresh_token", refreshToken);
+      const authData = {
+        email: "emailInput",
+        password: "passwordInput",
+        roles,
+        accessToken,
+        refreshToken,
+        username:"a",
+      };
+      setAuth(authData);
+      localStorage.setItem("authData", JSON.stringify(authData));
     }
   }, [location, navigate]);
 
