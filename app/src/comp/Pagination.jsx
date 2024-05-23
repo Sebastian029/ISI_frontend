@@ -1,43 +1,74 @@
 import ReactPaginate from "react-paginate";
 import { useEffect, useState } from "react";
+import FlightIcon from "@mui/icons-material/Flight";
+import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
+import FlightLandIcon from "@mui/icons-material/FlightLand";
+import AirlineSeatReclineExtraIcon from "@mui/icons-material/AirlineSeatReclineExtra";
+import AirlineStopsIcon from "@mui/icons-material/AirlineStops";
+import { margin, maxHeight, width } from "@mui/system";
 
-function Items({ currentItems }) {
+function Items({ currentItems, handleFlightSelection }) {
   return (
-    <div className="items">
+    <div style={styles.globalFlightContainer}>
       {currentItems &&
         currentItems.map((item, index) => (
-          <div key={index}>
-            <h3>Flight {index + 1}</h3>
-            <ul>
-              <li>Departure Airport: {item.departure_airport}</li>
-              <li>Departure City: {item.departure_city}</li>
-              <li>Arrival Airport: {item.arrival_airport}</li>
-              <li>Arrival City: {item.arrival_city}</li>
-              <li>Available Seats: {item.available_seats}</li>
-              <li>Distance: {item.distance} km</li>
-              <li>Flight_id: {item.flight_id}</li>
-            </ul>
-            <input type="button" value="Chose flight" />
+          <div key={index} style={styles.innerFlightContainer}>
+            <div style={styles.topFlightBar}>
+              {item.departure_city}
+              <div style={styles.line}></div>
+              <FlightIcon style={styles.airplaneIcon} />
+              <div style={styles.line}></div>
+              {item.arrival_city}
+            </div>
+            <div style={styles.infoBar}>
+              <FlightTakeoffIcon style={styles.flightIcon} />
+              Arrival Airport: {item.arrival_airport}
+            </div>
+            <div style={styles.infoBar}>
+              <FlightLandIcon style={styles.flightIcon} />
+              Departure Airport: {item.departure_airport}
+            </div>
+            <div style={styles.bottomContainer}>
+              <div>
+                <div style={styles.infoBar}>
+                  <AirlineSeatReclineExtraIcon style={styles.flightIcon} />
+                  Available Seats: {item.available_seats}
+                </div>
+                <div style={styles.infoBar}>
+                  <AirlineStopsIcon style={styles.flightIcon} />
+                  Distance: {item.distance} km
+                </div>
+              </div>
+              <input
+                type="button"
+                value="Book this flight"
+                onClick={() => handleFlightSelection(item)}
+                style={styles.button}
+                className="button"
+              />
+            </div>
           </div>
         ))}
     </div>
   );
 }
 
-export default function PaginatedItems({ flights, itemsPerPage }) {
+export default function PaginatedItems({
+  flights,
+  itemsPerPage,
+  handleFlightSelection,
+}) {
   const [currentItems, setCurrentItems] = useState(flights);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
 
   useEffect(() => {
-    // Fetch items from another resource.
     const endOffset = itemOffset + itemsPerPage;
     console.log(`Loading items from ${itemOffset} to ${endOffset}`);
     setCurrentItems(flights.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(flights.length / itemsPerPage));
   }, [itemOffset, itemsPerPage]);
 
-  // Invoke when user clicks to request another page.
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % flights.length;
     console.log(
@@ -50,7 +81,10 @@ export default function PaginatedItems({ flights, itemsPerPage }) {
     <>
       <div style={styles.mainContainer}>
         <div style={styles.itemsContainer}>
-          <Items currentItems={currentItems} />
+          <Items
+            currentItems={currentItems}
+            handleFlightSelection={handleFlightSelection}
+          />
         </div>
         <div style={styles.paginationBar}>
           <ReactPaginate
@@ -107,6 +141,19 @@ export default function PaginatedItems({ flights, itemsPerPage }) {
           color: white;
           border-color: orange);
         }
+        .button{
+          height: 50%;
+          font-size: 20px;
+          font-family: "Lato";
+          background-color: var(--main-color);
+          border-radius: 10px;
+          border:0px;
+          padding: 15px 20px;
+        }
+        .button:hover {
+          background-color: var(--main-color-2);
+          cursor:pointer;
+        }
       `}</style>
     </>
   );
@@ -114,13 +161,64 @@ export default function PaginatedItems({ flights, itemsPerPage }) {
 
 const styles = {
   mainContainer: {
+    paddingTop: 20,
     display: "flex",
     flexDirection: "column",
+    minWidth: "100%",
+    fontFamily: "Lato",
   },
   itemsContainer: {
     display: "flex",
     justifyContent: "center",
     flex: 1,
   },
-  paginationBar: {},
+  paginationBar: {
+    display: "flex",
+    justifyContent: "center",
+  },
+  globalFlightContainer: {
+    width: "50%",
+    overflowY: "auto",
+    maxHeight: "80vh",
+  },
+  innerFlightContainer: {
+    display: "flex",
+    flexDirection: "column",
+    width: "100%",
+    paddingBottom: 100,
+  },
+  airplaneIcon: {
+    transform: "rotate(90deg)",
+    fontSize: 30,
+  },
+  flightIcon: {
+    fontSize: 30,
+  },
+  flightMainText: {},
+  topFlightBar: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    fontSize: 22,
+    fontWeight: "bold",
+  },
+  line: {
+    flex: 1,
+    height: 2,
+    backgroundColor: "black",
+    margin: 10,
+  },
+  infoBar: {
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+    paddingTop: 15,
+    fontSize: 18,
+  },
+  bottomContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "flex-end",
+  },
 };

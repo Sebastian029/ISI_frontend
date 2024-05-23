@@ -10,6 +10,7 @@ function Content({ flights }) {
   const handleFlightSelection = (flight) => {
     const { departure_airport, departure_city, arrival_airport, arrival_city } =
       flight;
+    console.log("asd");
     navigate(
       `flightReservation/${flight.flight_id}?departureAirport=${departure_airport}&departureCity=${departure_city}&arrivalAirport=${arrival_airport}&arrivalCity=${arrival_city}`
     );
@@ -32,6 +33,7 @@ function Content({ flights }) {
             ...flights,
           ]}
           itemsPerPage={3}
+          handleFlightSelection={handleFlightSelection}
         />
       </div>
     </div>
