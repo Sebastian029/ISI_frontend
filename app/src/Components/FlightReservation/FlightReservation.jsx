@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import TopBar from "../HomeScreen/TopBar/TopBar.jsx";
 import './FlightReservation.css';
 import { useEffect, useState } from "react";
@@ -16,7 +16,7 @@ const FlightReservation = () => {
   const [tickets, setTickets] = useState([{}]);
   const [selectedTickets, setSelectedTickets] = useState([]);
   const axiosPrivate = useAxiosPrivate();
-
+  const navigate=useNavigate();
 
   const appStyles = {
     height: "100vh",
@@ -29,10 +29,10 @@ const FlightReservation = () => {
     const getTickets = async ()=>{
       try {
 
-        const response = await axios.get("/tickets", {
-          params: {
-            flightId: flightId,
-          },
+        const response = await axios.get("/tickets/" + flightId, {
+          // params: {
+          //   flightId: flightId,
+          // },
         });
 
         console.log("Data posted successfully:", response.data);
@@ -61,12 +61,23 @@ const FlightReservation = () => {
   const handleConfirmation = async () => {
     try {
       console.log(selectedTickets);
-      const response = await axiosPrivate.post("/ticket_buy", {
-        tickets: selectedTickets.map(ticket => ({ ticket_id: ticket.ticket_id })),
-      });
+      localStorage.setItem("cart", JSON.stringify(selectedTickets))
 
-      console.log("Tickets bought successfully:", response.data);
-      // Clear selected tickets after successful purchase
+      const flightDetails = {
+        departureAirport,
+        departureCity,
+        arrivalAirport,
+        arrivalCity,
+        flightDate
+      };
+      localStorage.setItem("flightDetails",JSON.stringify(flightDetails))
+      
+      // const response = await axiosPrivate.post("/ticket_buy", {
+      //   tickets: selectedTickets.map(ticket => ({ ticket_id: ticket.ticket_id })),
+      // });
+
+      //console.log("Tickets bought successfully:", response.data);
+      navigate('/checkout');
       setSelectedTickets([]);
     } catch (error) {
       console.error("Error buying tickets:", error);
