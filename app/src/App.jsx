@@ -13,6 +13,7 @@ import ErrorPage from "./errorPage.jsx";
 import NewFlight from "./Components/AdminScreen/NewFlight/NewFlight.jsx";
 import PaymentAdmin from "./Components/AdminScreen/PaymentAdmin/PaymentAdmin.jsx";
 import FlightReservation from "./Components/FlightReservation/FlightReservation.jsx";
+import Privileges from "./Components/AdminScreen/Privileges/Privileges.jsx"
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route element={<RequireAuth allowedRoles={["admin"]} />}>
         <Route path="/newflight" element={<NewFlight />} />
         <Route path="/paymentadmin" element={<PaymentAdmin />} />
+        <Route path="/privileges" element={<Privileges />} />
         </Route>
         <Route path="/" element={<HomeScreen />} />
         <Route path="*" element={<ErrorPage />}></Route>

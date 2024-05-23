@@ -17,6 +17,9 @@ function TopBar() {
         <div className={styles.box} onClick={() => navigate("/paymentadmin")}> 
           Payment
         </div>
+        <div className={styles.box} onClick={() => navigate("/privileges")}> 
+          Privilages
+        </div>
         <div className={styles.box}>Help</div>
         <div className={styles.box} onClick={() => navigate("/admin")}> 
           Admin
