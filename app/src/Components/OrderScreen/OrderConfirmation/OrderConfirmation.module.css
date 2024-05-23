@@ -1,0 +1,115 @@
+
+.orderData{
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    border: 1px solid black;
+    font-size: 18px;
+    font-family: 'Lato';
+    font-weight: 600;
+
+}
+
+
+.ordersList{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border: 1px solid black;
+    font-family: 'Lato';
+    font-size: 18px;
+}
+
+.order{
+    list-style-type: none;
+    width:80%;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid orange;
+    border-radius: 10px;
+    padding: 2%;
+    margin: 1%;
+
+
+}
+
+.mainContainer{
+    width:90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.ticketList{
+    width:100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Lato';
+    font-size: 18px;
+
+}
+
+.ticket{
+    background-color:bisque;
+    border-radius: 10px;
+    padding: 3%;
+    margin: 1%;
+}
+
+.button{
+    padding: 8px 16px;
+    border: 1px solid orange;
+    color: orange;
+    cursor: pointer;
+    text-decoration: none;
+    bottom: 0px;
+    border-radius: 20px;
+    background-color: white;
+}
+
+.button:hover {
+    background-color: orange;
+    color: white;
+    cursor:pointer;
+}
+
+.active{
+    background-color: orange;
+    color: white;
+    border-color: orange;
+}
+
+.payment{
+    width:50%;
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    font-family: 'Lato';
+    align-items: flex-start;
+}
+
+.label{
+    font-family: 'Lato';
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.radio{
+    margin-left: 2%;
+    font-family: 'Lato';
+    font-size: 18px;
+}
+
+li{
+    list-style-type: none;
+}

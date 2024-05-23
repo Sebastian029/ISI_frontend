@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import TopBar from "../HomeScreen/TopBar/TopBar";
-import Users from "../../comp/Users.jsx";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
+import useAuth from "../../hooks/useAuth.jsx";
+import styles from './ReservationsScreen.module.css'
 
 function ReservationsScreen() {
   const appStyles = {
@@ -12,6 +13,9 @@ function ReservationsScreen() {
 
   const axiosPrivate = useAxiosPrivate();
   const [orders, setOrders] = useState([]);
+  const auth = useAuth();
+  const [currentPage, setCurrentPage] = useState(1);
+  const ordersPerPage = 5;
 
   useEffect(()=>{
     const getOrders = async ()=>{
@@ -34,39 +38,77 @@ function ReservationsScreen() {
     getOrders();
       
 
-  },[]);
+  },[auth]);
+
+
+  const indexOfLastOrder = currentPage * ordersPerPage;
+  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+  const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
+  const totalPages = Math.ceil(orders.length / ordersPerPage);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    const startPage = Math.max(1, currentPage - 2);
+    const endPage = Math.min(totalPages, currentPage + 2);
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(
+        <button
+          key={i}
+          className={`${styles.button} ${i === currentPage ? styles.active : ''}`}
+          onClick={() => handlePageChange(i)}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    return pageNumbers;
+  };
 
   return (
     <>
       <TopBar />
-      RESERVATIONS PAGE
-      <Users />
-      <div className="ordersList">
+      <div className={styles.ordersList}>
           <h2>Your orders</h2>
-          {orders.length === 0 ? (
+          {currentOrders.length === 0 ? (
             <p>No Orders to show</p>
           ) : (
-            <ul>
-              {orders.map((order, index) => (
-                <li key={index}>
-                  <h3>Order {index + 1}</h3>
+            <ul className={styles.mainList}>
+              {currentOrders.map((order, index) => (
+                <li className={styles.order} key={index}>
+                  <h2>Order {index + 1 + (currentPage - 1) * ordersPerPage}</h2>
                   <ul>
-                    <li>OrdertId: {order.order_id}</li>
-                    <li>UserId: {order.user_id}</li>
+                    <li>Order number: {order.order_id}</li>
                     <li>Full price: {order.full_price}</li>
                     <li>Payment status: {order.is_payment_completed ? "true" : "false"}</li>
                     <li>Payment Method: {order.paymentMethod}</li>
                     <li>Order date: {order.orderDate}</li>
+                    
                     {order.tickets.length === 0 ? (
                       <p>No tickets available</p>
                     ) : (
-                      <ul>
+                      <ul className={styles.ticketList}>
                         {order.tickets.map((ticket, index) => (
-                          <li key={index}>
+                          <li className={styles.ticket} key={index}>
                             <h3>Ticket {index + 1}</h3>
                             <ul>
-                              <li>TicketId: {ticket.ticket_id}</li>
-                              <li>flight_id: {ticket.flight_id}</li>
                               <li>Class: {ticket.ticket_class}</li>
                               <li>Row: {ticket.row}</li>
                               <li>Seat: {ticket.column}</li>
@@ -81,6 +123,15 @@ function ReservationsScreen() {
               ))}
             </ul>
           )}
+          <div className={styles.pagination}>
+              <button className={styles.button} onClick={handlePrevPage} disabled={currentPage === 1}>
+              Previous
+            </button>
+            {renderPageNumbers()}
+            <button className={styles.button} onClick={handleNextPage} disabled={currentPage === totalPages}>
+              Next
+            </button>
+          </div>
         </div>
     </>
   );

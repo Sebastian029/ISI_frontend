@@ -1,9 +1,6 @@
-import { useParams } from "react-router-dom";
-import TopBar from "../HomeScreen/TopBar/TopBar.jsx";
-import './OrderConfirmation.css';
+import TopBar from "../../HomeScreen/TopBar/TopBar.jsx";
+import styles from './OrderSuccess.module.css';
 import { useEffect, useState } from "react";
-import axios from "../../axiosInstance.js"; 
-import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
 
 const OrderSuccess = () => {
   const [tickets, setTickets] = useState([{}]);
@@ -29,11 +26,10 @@ const OrderSuccess = () => {
     <>
       <TopBar />
       <div style={appStyles}>
-        <div className = "flightData">
-          {/*<p>Flight id: {flightId}</p>*/}          
+        <div className = {styles.orderData}>         
           <p>Success!!</p>
         </div>
-        <div className="ticketsList">
+        <div className={styles.ticketsList}>
           <h2>Your Order</h2>
           <p>Departure Airport: {flightDetails && flightDetails.departureAirport}</p>
           <p>Departure City: {flightDetails && flightDetails.departureCity}</p>

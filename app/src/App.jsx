@@ -12,10 +12,10 @@ import AdminScreen from "./Components/AdminScreen/AccountScreen.jsx";
 import ErrorPage from "./errorPage.jsx";
 import NewFlight from "./Components/AdminScreen/NewFlight/NewFlight.jsx";
 import FlightReservation from "./Components/FlightReservation/FlightReservation.jsx";
-import OrderConfirmation from "./Components/OrderConfirmation/OrderConfirmation.jsx";
-import OrderCancel from "./Components/OrderCancel/OrderCancel.jsx";
-import OrderSuccess from "./Components/OrderSucess/OrderSuccess.jsx";
-import TransferDetails from "./Components/OrderConfirmation/TransferDetails/TransferDetails.jsx";
+import OrderConfirmation from "./Components/OrderScreen/OrderConfirmation/OrderConfirmation.jsx";
+import OrderCancel from "./Components/OrderScreen/OrderCancel/OrderCancel.jsx";
+import OrderSuccess from "./Components/OrderScreen/OrderSucess/OrderSuccess.jsx";
+import TransferDetails from "./Components/OrderScreen/OrderConfirmation/TransferDetails/TransferDetails.jsx";
 
 function App() {
   return (
@@ -26,12 +26,12 @@ function App() {
         </Route>
         <Route element={<RequireAuth allowedRoles={["user"]} />}>
           <Route path="account" element={<AccountScreen />} />
-         
           <Route path="/checkout" element={<OrderConfirmation />}/>
+        </Route>
           <Route path="/transferdetails" element={<TransferDetails />}/>
           <Route path="/cancell" element={<OrderCancel />} />
           <Route path="/success" element={<OrderSuccess />} />
-        </Route>
+        
 
         <Route path="reservations" element={<ReservationsScreen />} />
         <Route path="flightReservation/:flightId" element={<FlightReservation />} />
