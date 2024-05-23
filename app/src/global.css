@@ -1,5 +1,7 @@
-:root{
-    --background-color:#F5F5F7;
-    --main-color:rgb(254, 200, 135);
-    --main-color-2:rgb(255, 188, 106);
+:root {
+  --background-color: #f5f5f7;
+  --main-color: rgb(254, 200, 135);
+  --main-color-2: rgb(255, 188, 106);
+  --input-color: #e4e4e4;
+  --gray-text: rgb(49, 49, 49);
 }

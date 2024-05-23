@@ -10,7 +10,7 @@ function Content({ flights }) {
   const handleFlightSelection = (flight) => {
     const { departure_airport, departure_city, arrival_airport, arrival_city } =
       flight;
-    console.log("asd");
+    //console.log("asd");
     navigate(
       `flightReservation/${flight.flight_id}?departureAirport=${departure_airport}&departureCity=${departure_city}&arrivalAirport=${arrival_airport}&arrivalCity=${arrival_city}`
     );
@@ -20,19 +20,9 @@ function Content({ flights }) {
     <div className={styles.mainBox}>
       <div className={styles.flightsContent}>
         <Pagination
-          flights={[
-            ...flights,
-            ...flights,
-            ...flights,
-            ...flights,
-            ...flights,
-            ...flights,
-            ...flights,
-            ...flights,
-            ...flights,
-            ...flights,
-          ]}
-          itemsPerPage={3}
+          key={JSON.stringify(flights)}
+          flights={flights}
+          itemsPerPage={2}
           handleFlightSelection={handleFlightSelection}
         />
       </div>

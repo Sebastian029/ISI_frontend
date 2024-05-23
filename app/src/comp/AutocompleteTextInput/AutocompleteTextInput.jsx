@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
-import axiosInstance from "../axiosInstance";
+import axiosInstance from "../../axiosInstance";
+import styles from "./AutocompleteTextInput.module.css";
 
 const AutocompleteTextInput = ({
   value,
@@ -60,11 +61,11 @@ const AutocompleteTextInput = ({
     if (showSuggestions && value) {
       if (filteredSuggestions.length) {
         return (
-          <ul style={suggestionsListStyle}>
+          <ul className={styles.suggestionsList}>
             {filteredSuggestions.map((suggestion) => (
               <li
                 key={suggestion.airport_id}
-                style={suggestionItemStyle}
+                className={styles.suggestionItem}
                 onClick={() => handleSelectSuggestion(suggestion)}
               >
                 {suggestion.airport}
@@ -80,13 +81,14 @@ const AutocompleteTextInput = ({
   };
 
   return (
-    <div ref={wrapperRef} style={{ ...containerStyle, flex: 1 }}>
+    <div ref={wrapperRef} className={styles.container} style={{ flex: 1 }}>
       <input
         type="text"
         value={value}
         onChange={handleChange}
         placeholder={placeholder}
-        style={{ ...textInputStyle, ...style }}
+        className={styles.textInput}
+        style={style}
         {...props}
       />
       {renderSuggestions()}
@@ -97,7 +99,7 @@ const AutocompleteTextInput = ({
 AutocompleteTextInput.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  airportID: PropTypes.number,
+  setAirportID: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
   style: PropTypes.object,
 };
@@ -105,43 +107,6 @@ AutocompleteTextInput.propTypes = {
 AutocompleteTextInput.defaultProps = {
   placeholder: "",
   style: {},
-};
-
-const containerStyle = {
-  position: "relative",
-  display: "flex",
-  flexDirection: "column",
-};
-
-const textInputStyle = {
-  flex: 1,
-  border: "0px",
-  borderRadius: "5px",
-  padding: "10px",
-  fontFamily: "Arial, Helvetica, sans-serif",
-  fontSize: "20px",
-};
-
-const suggestionsListStyle = {
-  listStyle: "none",
-  padding: "0",
-  margin: "5px 0",
-  borderRadius: "4px",
-  position: "absolute",
-  top: "100%",
-  left: 0,
-  zIndex: 999,
-  backgroundColor: "lightgray",
-  maxHeight: "50vh",
-  overflowY: "auto",
-  fontFamily: "Lato",
-};
-
-const suggestionItemStyle = {
-  padding: "8px",
-  cursor: "pointer",
-  fontSize: 18,
-  borderBottom: "2px solid orange",
 };
 
 export default AutocompleteTextInput;

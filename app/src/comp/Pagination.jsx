@@ -5,12 +5,16 @@ import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import FlightLandIcon from "@mui/icons-material/FlightLand";
 import AirlineSeatReclineExtraIcon from "@mui/icons-material/AirlineSeatReclineExtra";
 import AirlineStopsIcon from "@mui/icons-material/AirlineStops";
-import { margin, maxHeight, width } from "@mui/system";
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import DepartureBoardIcon from "@mui/icons-material/DepartureBoard";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import PropTypes from "prop-types";
 
 function Items({ currentItems, handleFlightSelection }) {
   return (
     <div style={styles.globalFlightContainer}>
-      {currentItems &&
+      {currentItems && currentItems.length > 0 ? (
         currentItems.map((item, index) => (
           <div key={index} style={styles.innerFlightContainer}>
             <div style={styles.topFlightBar}>
@@ -21,12 +25,24 @@ function Items({ currentItems, handleFlightSelection }) {
               {item.arrival_city}
             </div>
             <div style={styles.infoBar}>
+              <CalendarMonthIcon style={styles.flightIcon} />
+              Flight Date:
+            </div>
+            <div style={styles.infoBar}>
               <FlightTakeoffIcon style={styles.flightIcon} />
               Arrival Airport: {item.arrival_airport}
             </div>
             <div style={styles.infoBar}>
               <FlightLandIcon style={styles.flightIcon} />
               Departure Airport: {item.departure_airport}
+            </div>
+            <div style={styles.infoBar}>
+              <DepartureBoardIcon style={styles.flightIcon} />
+              Departure Time:
+            </div>
+            <div style={styles.infoBar}>
+              <AccessTimeIcon style={styles.flightIcon} />
+              Travel Time:
             </div>
             <div style={styles.bottomContainer}>
               <div>
@@ -48,7 +64,15 @@ function Items({ currentItems, handleFlightSelection }) {
               />
             </div>
           </div>
-        ))}
+        ))
+      ) : (
+        <div style={styles.noFlightsMessage}>
+          No flights available
+          <SentimentVeryDissatisfiedIcon
+            style={{ fontSize: 50, paddingLeft: 10 }}
+          />
+        </div>
+      )}
     </div>
   );
 }
@@ -64,16 +88,14 @@ export default function PaginatedItems({
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+    //console.log(`Loading items from ${itemOffset} to ${endOffset}`);
     setCurrentItems(flights.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(flights.length / itemsPerPage));
   }, [itemOffset, itemsPerPage]);
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % flights.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
+    // console.log(`User requested page number ${event.selected}, which is offset ${newOffset}`);
     setItemOffset(newOffset);
   };
 
@@ -186,6 +208,7 @@ const styles = {
     flexDirection: "column",
     width: "100%",
     paddingBottom: 100,
+    color: "var(--gray-text)",
   },
   airplaneIcon: {
     transform: "rotate(90deg)",
@@ -221,4 +244,23 @@ const styles = {
     justifyContent: "space-between",
     alignItems: "flex-end",
   },
+  noFlightsMessage: {
+    marginLeft: "auto",
+    marginRight: "auto",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    fontSize: 30,
+    padding: 10,
+  },
+};
+
+PaginatedItems.propTypes = {
+  flights: PropTypes.array.isRequired,
+  itemsPerPage: PropTypes.number.isRequired,
+  handleFlightSelection: PropTypes.func.isRequired,
+};
+Items.propTypes = {
+  currentItems: PropTypes.array.isRequired,
+  handleFlightSelection: PropTypes.func.isRequired,
 };
