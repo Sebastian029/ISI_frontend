@@ -30,6 +30,26 @@ const PaymentAdmin = () => {
         fetchOrders();
     }, [axiosPrivate]);
 
+    const confirmPayment = async (order_id) => {
+        try {
+            const response = await axiosPrivate.get(`/order/confirm/${order_id}`);
+            alert(response.data.message);
+            setOrders(prevOrders =>
+                prevOrders.map(order =>
+                    order.order_id === order_id ? { ...order, is_payment_completed: 1 } : order
+                )
+            );
+        } catch (error) {
+            if (error.response) {
+                alert(`Error: ${error.response.data.error}`);
+            } else if (error.request) {
+                alert('Error: No response from server');
+            } else {
+                alert(`Error: ${error.message}`);
+            }
+        }
+    };
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -49,10 +69,12 @@ const PaymentAdmin = () => {
                     {orders.map((order, index) => (
                         <li key={index} className={styles.orderItem}>
                             <div>full price: {order.full_price}</div>
-                            <div>is payment completed: {order.is_payment_completed}</div>
                             <div>order data: {order.orderDate}</div>
                             <div>order id: {order.order_id}</div>
                             <div>payment method: {order.paymentMethod}</div>
+                                <button onClick={() => confirmPayment(order.order_id)}>
+                                    Confirm Payment
+                                </button>
                         </li>
                     ))}
                 </ul>
