@@ -38,11 +38,11 @@ const OrderSuccess = () => {
           {tickets.length === 0 ? (
             <p>No tickets available</p>
           ) : (
-            <ul>
+            <ul className={styles.ticketList}>
               {tickets.map((ticket, index) => (
-                <li key={index}>
+                <li className={styles.ticket} key={index}>
                   <h3>Ticket {index + 1}</h3>
-                  <ul>
+                  <ul className={styles.ticketData}>
                     <li>TicketId: {ticket.ticket_id}</li>
                     <li>flight_id: {ticket.flight_id}</li>
                     <li>Class: {ticket.ticket_class}</li>

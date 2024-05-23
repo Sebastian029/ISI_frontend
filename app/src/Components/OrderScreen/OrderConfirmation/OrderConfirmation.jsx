@@ -39,7 +39,7 @@ const OrderConfirmation = () => {;
 
       if(response.data){
         const orderIdResponse = response.data.order_id
-        setOrderId(orderIdResponse);
+        
         console.log(response.data.order_id);
 
         if(paymentMethod=="transfer"){
