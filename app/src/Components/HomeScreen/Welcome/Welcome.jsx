@@ -10,19 +10,21 @@ function Welcome() {
         <div className={styles.innerBox}>
           <ImageSlider />
           <div className={styles.contentBox}>
-            <p>Check out our flight finder app</p>
-            <p>We offer</p>
+            <p className={styles.welcomeText}>
+              Check out our flight finder app
+            </p>
+            <p className={styles.welcomeText}>We offer</p>
             <ul>
               <li>
-                <LeaderboardIcon />
+                <LeaderboardIcon className={styles.basicIcon} />
                 Bla bla
               </li>
               <li>
-                <LeaderboardIcon />
+                <LeaderboardIcon className={styles.basicIcon} />
                 Bla bla
               </li>
               <li>
-                <LeaderboardIcon />
+                <LeaderboardIcon className={styles.basicIcon} />
                 Bla bla
               </li>
             </ul>

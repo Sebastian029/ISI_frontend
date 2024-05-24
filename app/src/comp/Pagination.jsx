@@ -201,7 +201,7 @@ const styles = {
     justifyContent: "center",
   },
   globalFlightContainer: {
-    width: "50%",
+    width: "80%",
     overflowY: "auto",
     maxHeight: "80vh",
   },

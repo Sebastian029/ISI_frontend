@@ -39,7 +39,8 @@
   padding: 10px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
-  background-color: var(--input-color);
+  background-color: var(--background-color);
+  border: 1px solid gray;
   flex: 1;
 }
 .iconSwap {
@@ -70,7 +71,8 @@ input:focus {
   padding: 8px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 15px;
-  background-color: var(--input-color);
+  background-color: var(--background-color);
+  border: 1px solid gray;
   margin-left: 5px;
   margin-right: 10px;
   width: 8.5em;
@@ -90,12 +92,13 @@ input:focus {
   flex: 2;
   margin-left: 10px;
   background-color: var(--main-color);
-  border: 0px;
+  border: 1px solid gray;
   border-radius: 5px;
   font-size: 15px;
   font-weight: 500;
   padding: 8px;
   cursor: pointer;
+  font-family: "Lato";
 }
 .confirmButton:hover {
   background-color: var(--main-color-2);
@@ -113,6 +116,7 @@ input:focus {
   padding: 8px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 15px;
-  background-color: var(--input-color);
+  background-color: var(--background-color);
+  border: 1px solid gray;
   width: 7em;
 }

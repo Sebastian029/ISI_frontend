@@ -10,10 +10,9 @@ function TopBar() {
   const [username, setUsername] = useState("");
 
   useEffect(() => {
-    if (auth) {
+    if (auth && auth.username) {
       setUsername("Welcome " + auth.username + "!");
     }
-    // console.log(auth);
   }, [auth]);
 
   return (

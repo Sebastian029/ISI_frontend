@@ -93,6 +93,7 @@ function MainFinder({ activateFinder, setFlights }) {
   return (
     <div className={styles.mainBox}>
       <div className={styles.globalInputBox}>
+        {/*
         <div className={styles.checkBoxRow}>
           <input
             type="checkbox"
@@ -115,7 +116,7 @@ function MainFinder({ activateFinder, setFlights }) {
             Two direction
           </label>
         </div>
-
+  */}
         <div className={styles.destinationInputRow}>
           <AutocompleteTextInput
             value={departureTextInput}
@@ -178,7 +179,7 @@ function MainFinder({ activateFinder, setFlights }) {
             onClick={clearInputs}
           />
         </div>
-
+        {/*
         <div>
           Filtry
           <TuneIcon />
@@ -186,6 +187,7 @@ function MainFinder({ activateFinder, setFlights }) {
             <option>asd</option>
           </select>
         </div>
+        */}
       </div>
     </div>
   );
