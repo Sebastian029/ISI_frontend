@@ -24,26 +24,23 @@ function App() {
       <Routes>
         <Route element={<RequireAuth allowedRoles={["admin"]} />}>
           <Route path="/admin" element={<AdminScreen />} />
+          <Route path="/newflight" element={<NewFlight />} />
+          <Route path="/paymentadmin" element={<PaymentAdmin />} />
+          <Route path="/privileges" element={<Privileges />} />
         </Route>
         <Route element={<RequireAuth allowedRoles={["user"]} />}>
-          <Route path="account" element={<AccountScreen />} />
+          <Route path="/account" element={<AccountScreen />} />
           <Route path="/checkout" element={<OrderConfirmation />} />
+          <Route path="/transferdetails" element={<TransferDetails />} />
+          <Route path="/cancell" element={<OrderCancel />} />
+          <Route path="/success" element={<OrderSuccess />} />
+          <Route path="/reservations" element={<ReservationsScreen />} />
         </Route>
-        <Route path="/transferdetails" element={<TransferDetails />} />
-        <Route path="/cancell" element={<OrderCancel />} />
-        <Route path="/success" element={<OrderSuccess />} />
-
-        <Route path="reservations" element={<ReservationsScreen />} />
         <Route
           path="flightReservation/:flightId"
           element={<FlightReservation />}
         />
         <Route path="/unauthorized" element={<UnauthorizedScreen />} />
-        <Route element={<RequireAuth allowedRoles={["admin"]} />}>
-          <Route path="/newflight" element={<NewFlight />} />
-          <Route path="/paymentadmin" element={<PaymentAdmin />} />
-          <Route path="/privileges" element={<Privileges />} />
-        </Route>
         <Route path="/" element={<HomeScreen />} />
         <Route path="*" element={<ErrorPage />}></Route>
       </Routes>
