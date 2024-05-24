@@ -2,6 +2,10 @@
 import styles from "./Welcome.module.css";
 import ImageSlider from "../../../comp/ImageSlider/ImageSlider.jsx";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import GridViewIcon from "@mui/icons-material/GridView";
+import PaymentIcon from "@mui/icons-material/Payment";
+import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 
 function Welcome() {
   return (
@@ -11,21 +15,27 @@ function Welcome() {
           <ImageSlider />
           <div className={styles.contentBox}>
             <p className={styles.welcomeText}>
-              Check out our flight finder app
+              Your Fast Track to the Best Flights{" "}
             </p>
-            <p className={styles.welcomeText}>We offer</p>
+            <p className={styles.welcomeInfo}>
+              Unlock Your Next Adventure With:
+            </p>
             <ul>
               <li>
-                <LeaderboardIcon className={styles.basicIcon} />
-                Bla bla
+                <AttachMoneyIcon className={styles.basicIcon} />
+                Best Prices Guaranteed
               </li>
               <li>
-                <LeaderboardIcon className={styles.basicIcon} />
-                Bla bla
+                <GridViewIcon className={styles.basicIcon} />
+                User Friendly Interface
               </li>
               <li>
-                <LeaderboardIcon className={styles.basicIcon} />
-                Bla bla
+                <PaymentIcon className={styles.basicIcon} />
+                Secure Payment Methods
+              </li>
+              <li>
+                <SupportAgentIcon className={styles.basicIcon} />
+                User Support 24/7
               </li>
             </ul>
           </div>

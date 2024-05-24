@@ -71,10 +71,13 @@ body.active-modal {
   align-items: center;
   border: 1px solid black;
   padding: 5px;
+  font-size: 20px;
+  gap: 5px;
 }
 
 .google-auth:hover {
   background-color: var(--main-color);
+  cursor: pointer;
 }
 
 .register-reference {

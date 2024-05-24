@@ -1,8 +1,8 @@
 .slider {
-  width: 500px;
-  height: 300px;
+  width: 70vh;
+  height: 45vh;
   overflow: hidden;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 .slideContainer {

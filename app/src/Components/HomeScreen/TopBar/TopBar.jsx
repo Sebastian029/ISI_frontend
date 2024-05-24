@@ -28,7 +28,7 @@ function TopBar() {
           My reservations
         </div>
         <div className={styles.box} onClick={() => navigate("/account")}>
-          {auth ? "Account" : "Login"}
+          {auth ? "Account" : "Sign In"}
         </div>
         <Modal></Modal>
       </div>

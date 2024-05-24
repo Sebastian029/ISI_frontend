@@ -65,7 +65,7 @@ export default function Modal() {
   };
 
   const handleGoogle = () => {
-    window.location.href = 'http://localhost:5000/login/google'; // Adjust the URL to match your Flask backend
+    window.location.href = "http://localhost:5000/login/google";
   };
 
   const registerAccount = () => {
@@ -180,9 +180,9 @@ export default function Modal() {
               />
               {loginOutput ? <p>{loginOutput}</p> : <p></p>}
               <p>- or log in with-</p>
-              <div className="google-auth">
+              <div className="google-auth" onClick={() => handleGoogle()}>
                 <GoogleIcon />
-                <text onClick={() => handleGoogle()}>jol</text>
+                Google
               </div>
 
               <p className="register-reference" onClick={() => setLogin(false)}>
