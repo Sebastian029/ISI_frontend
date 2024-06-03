@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import TopBar from "../AdminScreen/TopBar/TopBar";
 import useAuth from "../../hooks/useAuth";
+import { DatePicker, Button } from "antd";
 
 function AdminScreen() {
   const { setAuth } = useAuth();
@@ -25,6 +26,8 @@ function AdminScreen() {
         AdminAdmin AdminAdmin AdminAdmin AdminAdmin AdminAdmin AdminAdmin
         AdminAdmin AdminAdmin Admin
         <button onClick={() => handleLogout()}>Logout</button>
+        <DatePicker />
+        <Button type="primary">Jol jol</Button>
       </div>
     </>
   );

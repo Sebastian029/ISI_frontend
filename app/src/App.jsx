@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
 import RequireAuth from "./comp/RequireAuth.jsx";
 import "./global.css";
 
@@ -42,7 +41,7 @@ function App() {
         />
         <Route path="/unauthorized" element={<UnauthorizedScreen />} />
         <Route path="/" element={<HomeScreen />} />
-        <Route path="*" element={<ErrorPage />}></Route>
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
   );

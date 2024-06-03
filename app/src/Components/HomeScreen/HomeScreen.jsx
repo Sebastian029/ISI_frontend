@@ -16,15 +16,13 @@ function HomeScreen() {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const {setAuth} = useAuth();
+  const { setAuth } = useAuth();
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    console.log(params);
     const accessToken = params.get("access_token");
     const refreshToken = params.get("refresh_token");
     const roles = [params.get("roles")];
-
 
     if (accessToken && refreshToken) {
       localStorage.setItem("access_token", accessToken);
@@ -35,25 +33,30 @@ function HomeScreen() {
         roles,
         accessToken,
         refreshToken,
-        username:"a",
+        username: "a",
       };
       setAuth(authData);
       localStorage.setItem("authData", JSON.stringify(authData));
     }
-  }, [location, navigate]);
+  }, [location, setAuth]);
+
+  useEffect(() => {
+    const authData = JSON.parse(localStorage.getItem("authData"));
+    if (authData?.roles.includes("admin")) {
+      navigate("/admin", { replace: true });
+    }
+  }, [navigate]);
 
   const [finderActive, setfinderActive] = useState(false);
   const [flights, setFlights] = useState([{}]);
 
   return (
-    <>
-      <div style={appStyles}>
-        <TopBar />
-        <MainFinder activateFinder={setfinderActive} setFlights={setFlights} />
-        {finderActive ? <Content flights={flights} /> : <Welcome />}
-        <Footer />
-      </div>
-    </>
+    <div style={appStyles}>
+      <TopBar />
+      <MainFinder activateFinder={setfinderActive} setFlights={setFlights} />
+      {finderActive ? <Content flights={flights} /> : <Welcome />}
+      <Footer />
+    </div>
   );
 }
 
