@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./TopBar.module.css";
 import Modal from "../Modal/Modal.jsx";
-import useAuth from "../../../hooks/useAuth.jsx";
+import useAuth from "../../../../hooks/useAuth.jsx";
 
 function TopBar() {
   const navigate = useNavigate();

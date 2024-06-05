@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Modal.css";
 import ModalLogin from "./ModalLogin";
 import ModalRegister from "./ModalRegister";
-import useAuth from "../../../hooks/useAuth";
+import useAuth from "../../../../hooks/useAuth";
 
 export default function Modal() {
   const { modal, setModal } = useAuth();
@@ -34,4 +34,3 @@ export default function Modal() {
     </>
   );
 }
-  

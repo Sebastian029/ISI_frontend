@@ -5,7 +5,7 @@ import Content from "./Content/Content.jsx";
 import Footer from "./Footer/Footer.jsx";
 import Welcome from "./Welcome/Welcome.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth.jsx";
+import useAuth from "../../../hooks/useAuth.jsx";
 
 function HomeScreen() {
   const appStyles = {

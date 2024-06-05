@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./Content.module.css";
 import PropTypes from "prop-types";
-import Pagination from "../../../comp/Pagination.jsx";
+import Pagination from "../../../../comp/Pagination.jsx";
 // import axiosInstance from '../../axiosInstance';
 
 function Content({ flights }) {

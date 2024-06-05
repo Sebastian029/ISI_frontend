@@ -1,6 +1,6 @@
 //import { useState, useEffect } from 'react';
 import styles from "./Welcome.module.css";
-import ImageSlider from "../../../comp/ImageSlider/ImageSlider.jsx";
+import ImageSlider from "../../../../comp/ImageSlider/ImageSlider.jsx";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import GridViewIcon from "@mui/icons-material/GridView";

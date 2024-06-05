@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import TopBar from "../HomeScreen/TopBar/TopBar";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "../../../hooks/useAuth";
 
 function AccountScreen() {
   const navigate = useNavigate();

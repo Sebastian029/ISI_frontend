@@ -1,22 +1,22 @@
 import { useParams, useNavigate } from "react-router-dom";
 import TopBar from "../HomeScreen/TopBar/TopBar.jsx";
-import styles from './FlightReservation.module.css';
+import styles from "./FlightReservation.module.css";
 import { useEffect, useState } from "react";
-import axios from "../../axiosInstance"; 
-import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
+import axios from "../../../axiosInstance.js";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate.jsx";
 
 const FlightReservation = () => {
   const { flightId } = useParams();
   const queryParams = new URLSearchParams(window.location.search);
-  const departureAirport = queryParams.get('departureAirport');
-  const departureCity = queryParams.get('departureCity');
-  const arrivalAirport = queryParams.get('arrivalAirport');
-  const arrivalCity = queryParams.get('arrivalCity');
-  const flightDate = queryParams.get('flightDate');
+  const departureAirport = queryParams.get("departureAirport");
+  const departureCity = queryParams.get("departureCity");
+  const arrivalAirport = queryParams.get("arrivalAirport");
+  const arrivalCity = queryParams.get("arrivalCity");
+  const flightDate = queryParams.get("flightDate");
   const [tickets, setTickets] = useState([{}]);
   const [selectedTickets, setSelectedTickets] = useState([]);
   const axiosPrivate = useAxiosPrivate();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const appStyles = {
     height: "100vh",
@@ -25,10 +25,9 @@ const FlightReservation = () => {
     flexDirection: "column",
   };
 
-  useEffect(()=>{
-    const getTickets = async ()=>{
+  useEffect(() => {
+    const getTickets = async () => {
       try {
-
         const response = await axios.get("/tickets/" + flightId, {
           // params: {
           //   flightId: flightId,
@@ -46,17 +45,17 @@ const FlightReservation = () => {
     };
 
     getTickets();
-
-  },[]);
+  }, []);
 
   const handleTicketReservation = (ticket) => {
     if (selectedTickets.includes(ticket)) {
-      setSelectedTickets(selectedTickets.filter(selectedTicket => selectedTicket !== ticket));
+      setSelectedTickets(
+        selectedTickets.filter((selectedTicket) => selectedTicket !== ticket)
+      );
     } else {
       setSelectedTickets([...selectedTickets, ticket]);
     }
-  }
-
+  };
 
   const [currentPage, setCurrentPage] = useState(1);
   const ticketsPerPage = 5;
@@ -90,7 +89,7 @@ const FlightReservation = () => {
       pageNumbers.push(
         <button
           key={i}
-          className={`${styles.page} ${i === currentPage ? styles.active : ''}`}
+          className={`${styles.page} ${i === currentPage ? styles.active : ""}`}
           onClick={() => handlePageChange(i)}
         >
           {i}
@@ -101,41 +100,38 @@ const FlightReservation = () => {
     return pageNumbers;
   };
 
-
   const handleConfirmation = async () => {
     try {
       console.log(selectedTickets);
-      localStorage.setItem("cart", JSON.stringify(selectedTickets))
+      localStorage.setItem("cart", JSON.stringify(selectedTickets));
 
       const flightDetails = {
         departureAirport,
         departureCity,
         arrivalAirport,
         arrivalCity,
-        flightDate
+        flightDate,
       };
-      localStorage.setItem("flightDetails",JSON.stringify(flightDetails))
-      
+      localStorage.setItem("flightDetails", JSON.stringify(flightDetails));
+
       // const response = await axiosPrivate.post("/ticket_buy", {
       //   tickets: selectedTickets.map(ticket => ({ ticket_id: ticket.ticket_id })),
       // });
 
       //console.log("Tickets bought successfully:", response.data);
-      navigate('/checkout');
+      navigate("/checkout");
       setSelectedTickets([]);
     } catch (error) {
       console.error("Error buying tickets:", error);
     }
   };
-  
-  
 
   return (
     <>
       <TopBar />
       <div style={appStyles}>
-        <div className = {styles.flightData}>
-          {/*<p>Flight id: {flightId}</p>*/}          
+        <div className={styles.flightData}>
+          {/*<p>Flight id: {flightId}</p>*/}
           <p>Departure Airport: {departureAirport}</p>
           <p>Departure City: {departureCity}</p>
           <p>Arrival Airport: {arrivalAirport}</p>
@@ -169,11 +165,19 @@ const FlightReservation = () => {
               </ul>
             )}
             <div className={styles.pagination}>
-              <button className={styles.page} onClick={handlePrevPage} disabled={currentPage === 1}>
+              <button
+                className={styles.page}
+                onClick={handlePrevPage}
+                disabled={currentPage === 1}
+              >
                 Previous
               </button>
               {renderPageNumbers()}
-              <button className={styles.page} onClick={handleNextPage} disabled={currentPage === totalPages}>
+              <button
+                className={styles.page}
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+              >
                 Next
               </button>
             </div>
@@ -187,12 +191,13 @@ const FlightReservation = () => {
                 </li>
               ))}
             </ul>
-            <input 
+            <input
               className={styles.button}
               type="button"
               value="Confirm reservation"
               onClick={handleConfirmation}
-              disabled={selectedTickets.length === 0} />
+              disabled={selectedTickets.length === 0}
+            />
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import TopBar from "../AdminScreen/TopBar/TopBar";
+import TopBar from "./TopBar/TopBar";
 import useAuth from "../../hooks/useAuth";
 import { DatePicker, Button } from "antd";
 

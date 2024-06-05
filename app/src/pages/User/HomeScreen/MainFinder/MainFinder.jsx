@@ -6,8 +6,8 @@ import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import TuneIcon from "@mui/icons-material/Tune";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import PersonIcon from "@mui/icons-material/Person";
-import AutocompleteTextInput from "../../../comp/AutocompleteTextInput/AutocompleteTextInput.jsx";
-import axios from "./../../../axiosInstance";
+import AutocompleteTextInput from "../../../../comp/AutocompleteTextInput/AutocompleteTextInput.jsx";
+import axios from "../../../../axiosInstance.js";
 import styles from "./MainFinder.module.css";
 
 function MainFinder({ activateFinder, setFlights }) {

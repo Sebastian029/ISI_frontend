@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import GoogleIcon from "@mui/icons-material/Google";
 import CloseIcon from "@mui/icons-material/Close";
-import axios from "../../../axiosInstance";
-import useAuth from "../../../hooks/useAuth";
+import axios from "../../../../axiosInstance";
+import useAuth from "../../../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
 const ModalLogin = ({ toggleModal, setLogin }) => {

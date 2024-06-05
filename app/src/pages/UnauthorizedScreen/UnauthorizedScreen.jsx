@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import TopBar from "../HomeScreen/TopBar/TopBar";
+import TopBar from "../User/HomeScreen/TopBar/TopBar";
 
 function UnauthorizedScreen() {
   const appStyles = {

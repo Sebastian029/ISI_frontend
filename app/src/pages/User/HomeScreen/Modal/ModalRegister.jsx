@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import axios from "../../../axiosInstance";
-import useAuth from "../../../hooks/useAuth";
+import axios from "../../../../axiosInstance";
+import useAuth from "../../../../hooks/useAuth";
 
 const ModalRegister = ({ toggleModal, setLogin }) => {
   const { setModal } = useAuth();

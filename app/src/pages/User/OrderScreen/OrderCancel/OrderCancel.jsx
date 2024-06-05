@@ -1,11 +1,10 @@
 import { useParams } from "react-router-dom";
 import TopBar from "../../HomeScreen/TopBar/TopBar.jsx";
-import styles from './OrderCancel.module.css';
+import styles from "./OrderCancel.module.css";
 import { useEffect, useState } from "react";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate.jsx";
+import useAxiosPrivate from "../../../../hooks/useAxiosPrivate.jsx";
 
 const OrderCancel = () => {
-
   const appStyles = {
     height: "100vh",
     width: "100vw",
@@ -13,13 +12,11 @@ const OrderCancel = () => {
     flexDirection: "column",
   };
 
-  
-
   return (
     <>
       <TopBar />
       <div style={appStyles}>
-        <div className = {styles.orderData}>     
+        <div className={styles.orderData}>
           <p>Cancelled!!</p>
         </div>
       </div>

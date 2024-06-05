@@ -2,20 +2,20 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RequireAuth from "./comp/RequireAuth.jsx";
 import "./global.css";
 
-import HomeScreen from "./Components/HomeScreen/HomeScreen.jsx";
-import AccountScreen from "./Components/AccountScreen/AccountScreen.jsx";
-import ReservationsScreen from "./Components/ReservationsScreen/ReservationsScreen.jsx";
-import UnauthorizedScreen from "./Components/UnauthorizedScreen/UnauthorizedScreen.jsx";
-import AdminScreen from "./Components/AdminScreen/AccountScreen.jsx";
+import HomeScreen from "./pages/User/HomeScreen/HomeScreen.jsx";
+import AccountScreen from "./pages/User/AccountScreen/AccountScreen.jsx";
+import ReservationsScreen from "./pages/User/ReservationsScreen/ReservationsScreen.jsx";
+import UnauthorizedScreen from "./pages/UnauthorizedScreen/UnauthorizedScreen.jsx";
+import AdminScreen from "./pages/Admin/AccountScreen.jsx";
 import ErrorPage from "./errorPage.jsx";
-import NewFlight from "./Components/AdminScreen/NewFlight/NewFlight.jsx";
-import PaymentAdmin from "./Components/AdminScreen/PaymentAdmin/PaymentAdmin.jsx";
-import FlightReservation from "./Components/FlightReservation/FlightReservation.jsx";
-import Privileges from "./Components/AdminScreen/Privileges/Privileges.jsx";
-import OrderConfirmation from "./Components/OrderScreen/OrderConfirmation/OrderConfirmation.jsx";
-import OrderCancel from "./Components/OrderScreen/OrderCancel/OrderCancel.jsx";
-import OrderSuccess from "./Components/OrderScreen/OrderSucess/OrderSuccess.jsx";
-import TransferDetails from "./Components/OrderScreen/OrderConfirmation/TransferDetails/TransferDetails.jsx";
+import NewFlight from "./pages/Admin/NewFlight/NewFlight.jsx";
+import PaymentAdmin from "./pages/Admin/PaymentAdmin/PaymentAdmin.jsx";
+import FlightReservation from "./pages/User/FlightReservation/FlightReservation.jsx";
+import Privileges from "./pages/Admin/Privileges/Privileges.jsx";
+import OrderConfirmation from "./pages/User/OrderScreen/OrderConfirmation/OrderConfirmation.jsx";
+import OrderCancel from "./pages/User/OrderScreen/OrderCancel/OrderCancel.jsx";
+import OrderSuccess from "./pages/User/OrderScreen/OrderSucess/OrderSuccess.jsx";
+import TransferDetails from "./pages/User/OrderScreen/OrderConfirmation/TransferDetails/TransferDetails.jsx";
 
 function App() {
   return (
