@@ -1,10 +1,64 @@
-.orderList {
-    list-style-type: none;
-    padding: 0;
+.ordersList{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border: 1px solid black;
+    font-family: 'Lato';
 }
 
-.orderItem {
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
-    padding: 10px;
+.order{
+    list-style-type: none;
+    width:80%;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    border: 1px solid orange;
+    border-radius: 10px;
+    padding: 2%;
+    margin: 1%;
+
+
+}
+
+.orderData{
+    margin-left: 5%;
+    width:95%;
+}
+
+.mainList{
+    width:90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.button{
+    padding: 8px 16px;
+    border: 1px solid orange;
+    color: orange;
+    cursor: pointer;
+    text-decoration: none;
+    bottom: 0px;
+    border-radius: 20px;
+    background-color: white;
+}
+
+.button:hover {
+    background-color: orange;
+    color: white;
+    cursor:pointer;
+}
+
+.active{
+    background-color: orange;
+    color: white;
+    border-color: orange;
+}
+
+li{
+    list-style-type: none;
 }
