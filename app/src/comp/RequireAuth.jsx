@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
-import { useLocation, Navigate, Outlet } from "react-router-dom";
+import { useLocation, Navigate, Outlet, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
 const RequireAuth = ({ allowedRoles }) => {
   const { setModal } = useAuth();
-
   const location = useLocation();
+  const navigate = useNavigate();
   const authData = JSON.parse(localStorage.getItem("authData"));
 
   const hasAllowedRole = authData?.roles?.some((role) =>
@@ -15,7 +15,12 @@ const RequireAuth = ({ allowedRoles }) => {
   if (hasAllowedRole) {
     return <Outlet />;
   } else if (authData?.accessToken) {
-    return <Navigate to="/unauthorized" state={{ from: location }} replace />;
+    if (authData.roles.includes("admin")) {
+      navigate("/admin", { replace: true });
+    } else {
+      navigate("/", { replace: true });
+    }
+    return null;
   } else {
     setModal(true);
     return <Navigate to="/" state={{ from: location }} replace />;
