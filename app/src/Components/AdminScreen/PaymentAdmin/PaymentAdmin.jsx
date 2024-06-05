@@ -8,6 +8,14 @@ const PaymentAdmin = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const axiosPrivate = useAxiosPrivate();
+    const [currentPage, setCurrentPage] = useState(1);
+    const ordersPerPage = 5;
+
+    const appStyles = {
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+      };
 
     useEffect(() => {
         const fetchOrders = async () => {
@@ -30,6 +38,47 @@ const PaymentAdmin = () => {
         fetchOrders();
     }, [axiosPrivate]);
 
+    const indexOfLastOrder = currentPage * ordersPerPage;
+    const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+    const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
+    const totalPages = Math.ceil(orders.length / ordersPerPage);
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+          setCurrentPage(currentPage + 1);
+        }
+      };
+    
+      const handlePrevPage = () => {
+        if (currentPage > 1) {
+          setCurrentPage(currentPage - 1);
+        }
+      };
+    
+      const handlePageChange = (page) => {
+        setCurrentPage(page);
+      };
+    
+      const renderPageNumbers = () => {
+        const pageNumbers = [];
+        const startPage = Math.max(1, currentPage - 2);
+        const endPage = Math.min(totalPages, currentPage + 2);
+    
+        for (let i = startPage; i <= endPage; i++) {
+          pageNumbers.push(
+            <button
+              key={i}
+              className={`${styles.button} ${i === currentPage ? styles.active : ''}`}
+              onClick={() => handlePageChange(i)}
+            >
+              {i}
+            </button>
+          );
+        }
+    
+        return pageNumbers;
+      };    
+
     const confirmPayment = async (order_id) => {
         try {
             const response = await axiosPrivate.get(`/order/confirm/${order_id}`);
@@ -51,7 +100,7 @@ const PaymentAdmin = () => {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+       return <><TopBar /> <div className={styles.ordersList}>Loading...</div></>;
     }
 
     if (error) {
@@ -59,28 +108,50 @@ const PaymentAdmin = () => {
     }
 
     return (
-        <div>
-            <TopBar />
-            <h1>Orders Transfer</h1>
-            {orders.length === 0 ? (
-                <p>No orders found.</p>
+        <>
+          <TopBar />
+          <div className={styles.ordersList}>
+            <h2>Orders Transfer</h2>
+            {currentOrders.length === 0 ? (
+              <p>No orders found.</p>
             ) : (
-                <ul className={styles.orderList}>
-                    {orders.map((order, index) => (
-                        <li key={index} className={styles.orderItem}>
-                            <div>full price: {order.full_price}</div>
-                            <div>order data: {order.orderDate}</div>
-                            <div>order id: {order.order_id}</div>
-                            <div>payment method: {order.paymentMethod}</div>
-                                <button onClick={() => confirmPayment(order.order_id)}>
-                                    Confirm Payment
-                                </button>
-                        </li>
-                    ))}
-                </ul>
+              <ul className={styles.mainList}>
+                {currentOrders.map((order, index) => (
+                  <li className={styles.order} key={index}>
+                    <h2>Order {index + 1 + (currentPage - 1) * ordersPerPage}</h2>
+                    <ul className={styles.orderData}>
+                      <li>Order number: {order.order_id}</li>
+                      <li>Full price: {order.full_price}</li>
+                      <li>Order date: {order.orderDate}</li>
+                      <li>Payment Method: {order.paymentMethod}</li>
+                      <button className={styles.button} onClick={() => confirmPayment(order.order_id)}>
+                        Confirm Payment
+                      </button>
+                    </ul>
+                  </li>
+                ))}
+              </ul>
             )}
-        </div>
-    );
+            <div className={styles.pagination}>
+              <button
+                className={styles.button}
+                onClick={handlePrevPage}
+                disabled={currentPage === 1}
+              >
+                Previous
+              </button>
+              {renderPageNumbers()}
+              <button
+                className={styles.button}
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        </>
+      );
 };
 
 export default PaymentAdmin;
