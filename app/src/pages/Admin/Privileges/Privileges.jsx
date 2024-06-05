@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import useAxiosPrivate from '../../../hooks/useAxiosPrivate';
 import TopBar from "../TopBar/TopBar";
 import Footer from '../Footer/Footer';
-import Select from 'react-select';
+import Modal from 'react-modal';
 import styles from "./Privileges.module.css";
+
+Modal.setAppElement('#root');
 
 const Privileges = () => {
   const [users, setUsers] = useState([]);
@@ -11,12 +13,25 @@ const Privileges = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({ username: '', privilege_name: '' });
+  const [searchTerm, setSearchTerm] = useState('');
   const axiosPrivate = useAxiosPrivate();
 
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
-  const totalPages = Math.ceil(users.length / usersPerPage);
-  const currentUsers = users.slice((currentPage - 1) * usersPerPage, currentPage * usersPerPage);
+  
+  // Updated filter logic to search by name, surname, or email
+  const filteredUsers = users.filter(user =>
+    user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.surname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  
+  const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+  const currentUsers = filteredUsers.slice((currentPage - 1) * usersPerPage, currentPage * usersPerPage);
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedPrivileges, setSelectedPrivileges] = useState([]);
 
   useEffect(() => {
     const fetchUsersAndPrivileges = async () => {
@@ -105,12 +120,50 @@ const Privileges = () => {
     return pageNumbers;
   };
 
-  const handlePrivilegeChange = async (selectedOptions, user) => {
-    const selectedPrivileges = selectedOptions.map(option => option.value);
+  const openModal = (user) => {
+    setSelectedUser(user);
+    setSelectedPrivileges(user.privileges.map(priv => priv.name));
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+    setSelectedUser(null);
+    setSelectedPrivileges([]);
+  };
+
+  const handlePrivilegeChange = (e) => {
+    const { value, checked } = e.target;
+    setSelectedPrivileges(prev =>
+      checked ? [...prev, value] : prev.filter(priv => priv !== value)
+    );
+  };
+
+  const handleSavePrivileges = async () => {
     try {
-      await axiosPrivate.put('/users/privileges/update', { public_id: user.public_id, privileges: selectedPrivileges });
+      const initialPrivileges = selectedUser.privileges.map(priv => priv.name);
+      const privilegesToAdd = selectedPrivileges.filter(priv => !initialPrivileges.includes(priv));
+      const privilegesToRemove = initialPrivileges.filter(priv => !selectedPrivileges.includes(priv));
+
+      // Add new privileges
+      for (const privilegeName of privilegesToAdd) {
+        await axiosPrivate.post('/users/privileges/add', {
+          public_id: selectedUser.public_id,
+          privilege_name: privilegeName
+        });
+      }
+
+      // Remove unselected privileges
+      for (const privilegeName of privilegesToRemove) {
+        await axiosPrivate.delete('/users/privileges/remove', {
+          data: { public_id: selectedUser.public_id, privilege_name: privilegeName }
+        });
+      }
+
+      // Fetch the updated users list
       const usersResponse = await axiosPrivate.get('/users/privilages');
       setUsers(usersResponse.data);
+      closeModal();
     } catch (err) {
       setError(err.message);
     }
@@ -129,17 +182,24 @@ const Privileges = () => {
       <TopBar />
       <div className={styles.privilegesList}>
         <h1>Users and Privileges</h1>
+        <input
+          type="text"
+          placeholder="Search by name, surname, or email..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className={styles.searchInput}
+        />
         <ul className={styles.mainList}>
           {currentUsers.map(user => (
             <li className={styles.privileges} key={user.id}>
-              {user.name} - Privileges: 
-              <Select
-                isMulti
-                value={user.privileges.map(priv => ({ value: priv.name, label: priv.name }))}
-                options={privileges.map(priv => ({ value: priv.name, label: priv.name }))}
-                onChange={(selectedOptions) => handlePrivilegeChange(selectedOptions, user)}
-                className={styles.multiSelect}
-              />
+              <span>{user.name} {user.surname} </span>
+              {user.email} - Privileges:
+              <ul>
+                {user.privileges.map(privilege => (
+                  <li key={privilege.id}>{privilege.name}</li>
+                ))}
+              </ul>
+              <button className={styles.button} onClick={() => openModal(user)}>Edit Privileges</button>
             </li>
           ))}
         </ul>
@@ -189,6 +249,34 @@ const Privileges = () => {
           ))}
         </ul>
       </div>
+
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Edit Privileges"
+        className={styles.modal}
+        overlayClassName={styles.overlay}
+      >
+        <h2>Edit Privileges for {selectedUser?.name}</h2>
+        <form>
+          {privileges.map(privilege => (
+            <div key={privilege.id}>
+              <label>
+                <input
+                  type="checkbox"
+                  value={privilege.name}
+                  checked={selectedPrivileges.includes(privilege.name)}
+                  onChange={handlePrivilegeChange}
+                />
+                {privilege.name}
+              </label>
+            </div>
+          ))}
+        </form>
+        <button onClick={handleSavePrivileges}>Save</button>
+        <button onClick={closeModal}>Cancel</button>
+      </Modal>
+
       <Footer />
     </>
   );
