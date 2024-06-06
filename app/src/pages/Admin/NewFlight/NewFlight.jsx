@@ -7,17 +7,28 @@ import 'antd/dist/reset.css';
 
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import FlightIcon from '@mui/icons-material/Flight';
-import AirlinesIcon from '@mui/icons-material/Airlines';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
+import FlightIcon from "@mui/icons-material/Flight";
+import AirlinesIcon from "@mui/icons-material/Airlines";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import axios from "./../../../axiosInstance";
 import TopBar from "../TopBar/TopBar";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-import { Select, MenuItem, FormControl, InputLabel, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from "@mui/material";
+import {
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
+} from "@mui/material";
 import styles from "./NewFlight.module.css";
 
-function NewFlight({ activateFinder }) {
+function NewFlight() {
   const [departureAirport, setDepartureAirport] = useState("");
   const [arrivalAirport, setArrivalAirport] = useState("");
   const [departureDateInput, setDepartureDateInput] = useState(null);
@@ -81,22 +92,25 @@ function NewFlight({ activateFinder }) {
     const travelTimeString = date.toTimeString().split(' ')[0];
     try {
       const data = {
+        
         departure_airport_id: airports.find(ap => ap.airport_name === departureAirport)?.airport_id,
         arrive_airport_id: airports.find(ap => ap.airport_name === arrivalAirport)?.airport_id,
         travel_time: travelTimeString,
+
         distance: distance,
-        plane_id: planes.find(p => p.plane_name === plane)?.plane_id,
-        airline_id: airlines.find(al => al.airline_name === airline)?.airline_id,
-        data_lotu: formatDate(departureDateInput)
+        plane_id: planes.find((p) => p.plane_name === plane)?.plane_id,
+        airline_id: airlines.find((al) => al.airline_name === airline)
+          ?.airline_id,
+        data_lotu: formatDate(departureDateInput),
       };
-  
-      const response = await axiosPrivate.post('/flight_register', data);
+
+      const response = await axiosPrivate.post("/flight_register", data);
       console.log(response.data);
       setOpen(true);
       setSuccess("Success");
-  
+    
     } catch (error) {
-      console.error('Error registering flight:', error);
+      console.error("Error registering flight:", error);
       setOpen(true);
       setSuccess("Failure");
     }
@@ -145,8 +159,12 @@ function NewFlight({ activateFinder }) {
       <div className={styles.mainBox}>
         <div className={styles.globalInputBox}>
           <div className={styles.destinationInputRow}>
-            <FormControl className={`${styles.textInput} ${styles.departureInput}`}>
-              <InputLabel id="departure-airport-select-label">Departure</InputLabel>
+            <FormControl
+              className={`${styles.textInput} ${styles.departureInput}`}
+            >
+              <InputLabel id="departure-airport-select-label">
+                Departure
+              </InputLabel>
               <Select
                 labelId="departure-airport-select-label"
                 value={departureAirport}
@@ -154,12 +172,19 @@ function NewFlight({ activateFinder }) {
                 label="Departure"
               >
                 {airports.map((airport) => (
-                  <MenuItem key={airport.airport_id} value={airport.airport_name}>{airport.airport_name}</MenuItem>
+                  <MenuItem
+                    key={airport.airport_id}
+                    value={airport.airport_name}
+                  >
+                    {airport.airport_name}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
             <SwapHorizIcon className={styles.iconSwap} onClick={handleSwap} />
-            <FormControl className={`${styles.textInput} ${styles.arrivalInput}`}>
+            <FormControl
+              className={`${styles.textInput} ${styles.arrivalInput}`}
+            >
               <InputLabel id="arrival-airport-select-label">Arrival</InputLabel>
               <Select
                 labelId="arrival-airport-select-label"
@@ -168,7 +193,12 @@ function NewFlight({ activateFinder }) {
                 label="Arrival"
               >
                 {airports.map((airport) => (
-                  <MenuItem key={airport.airport_id} value={airport.airport_name}>{airport.airport_name}</MenuItem>
+                  <MenuItem
+                    key={airport.airport_id}
+                    value={airport.airport_name}
+                  >
+                    {airport.airport_name}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
@@ -185,13 +215,14 @@ function NewFlight({ activateFinder }) {
                 className={styles.dateInput}
                 selected={departureDateInput}
                 onChange={(date) => setDepartureDateInput(date)}
-                dateFormat="yyyy-MM-dd"
+                dateFormat="dd-MM-yyyy"
                 placeholderText="Departure date"
               />
               <ArrowOutwardIcon
                 className={styles.icon}
               />
               <InputNumber
+
                 value={distance}
                 onChange={(value) => setDistanceTextInput(value)}
                 placeholder="Distance"
@@ -203,15 +234,16 @@ function NewFlight({ activateFinder }) {
               />
               <TimePicker
                 className={styles.timePicker}
+
                 value={travelTime}
                 onChange={setTravelTime}
                 format="HH:mm:ss"
                 placeholder="Travel Time"
               />
-              {travelTimeError && <div className={styles.error}>{travelTimeError}</div>}
-              <FlightIcon 
-                className={styles.icon}
-              />
+              {travelTimeError && (
+                <div className={styles.error}>{travelTimeError}</div>
+              )}
+              <FlightIcon className={styles.icon} />
               <FormControl className={styles.personInput}>
                 <InputLabel id="plane-select-label">Plane</InputLabel>
                 <Select
@@ -221,13 +253,13 @@ function NewFlight({ activateFinder }) {
                   label="Plane"
                 >
                   {planes.map((plane) => (
-                    <MenuItem key={plane.plane_id} value={plane.plane_name}>{plane.plane_name}</MenuItem>
+                    <MenuItem key={plane.plane_id} value={plane.plane_name}>
+                      {plane.plane_name}
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>
-              <AirlinesIcon
-                className={styles.icon}
-              />
+              <AirlinesIcon className={styles.icon} />
               <FormControl className={styles.personInput}>
                 <InputLabel id="airline-select-label">Airline</InputLabel>
                 <Select
@@ -237,7 +269,12 @@ function NewFlight({ activateFinder }) {
                   label="Airline"
                 >
                   {airlines.map((airline) => (
-                    <MenuItem key={airline.airline_id} value={airline.airline_name}>{airline.airline_name}</MenuItem>
+                    <MenuItem
+                      key={airline.airline_id}
+                      value={airline.airline_name}
+                    >
+                      {airline.airline_name}
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>
@@ -246,7 +283,7 @@ function NewFlight({ activateFinder }) {
               type="button"
               className={styles.confirmButton}
               value={"Add"}
-              onClick={() => saveFlightData()} 
+              onClick={() => saveFlightData()}
             />
             <input
               type="button"
@@ -264,10 +301,14 @@ function NewFlight({ activateFinder }) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{success === "Success" ? "Success" : "Failure"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">
+          {success === "Success" ? "Success" : "Failure"}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            {success === "Success" ? "Flight has been successfully added!" : "Failed to add flight."}
+            {success === "Success"
+              ? "Flight has been successfully added!"
+              : "Failed to add flight."}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -280,8 +321,6 @@ function NewFlight({ activateFinder }) {
   );
 }
 
-NewFlight.propTypes = {
-  activateFinder: PropTypes.func.isRequired,
-};
+
 
 export default NewFlight;

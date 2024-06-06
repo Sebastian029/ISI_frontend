@@ -1,33 +1,36 @@
 import { useState } from "react";
-
 import TopBar from "./TopBar/TopBar";
-import useAuth from "../../hooks/useAuth";
-import { DatePicker, Button } from "antd";
+import { height } from "@mui/system";
 
 function AdminScreen() {
-  const { setAuth } = useAuth();
   const appStyles = {
-    height: "100vh",
     display: "flex",
-    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "80vh",
   };
-  const handleLogout = () => {
-    console.log("logout");
-    localStorage.setItem("authData", null);
-    setAuth(null);
-    navigate("/");
+
+  const contentStyles = {
+    maxWidth: "600px",
+    backgroundColor: "#f9f9f9",
+    padding: "20px",
+    borderRadius: "10px",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
   };
 
   return (
     <>
+      <TopBar />
       <div style={appStyles}>
-        <TopBar />
-        Admin AdminAdmin AdminAdmin AdminAdmin AdminAdmin AdminAdmin AdminAdmin
-        AdminAdmin AdminAdmin AdminAdmin AdminAdmin AdminAdmin AdminAdmin
-        AdminAdmin AdminAdmin Admin
-        <button onClick={() => handleLogout()}>Logout</button>
-        <DatePicker />
-        <Button type="primary">Jol jol</Button>
+        <div style={contentStyles}>
+          <h1>Witam Cię w panelu administratora!</h1>
+          <p>Profil admina oferuje możliwości:</p>
+          <ul>
+            <li>zarządzania uprawnieniami użytkowników,</li>
+            <li>dodawania nowych lotów,</li>
+            <li>oraz płatnościami.</li>
+          </ul>
+        </div>
       </div>
     </>
   );

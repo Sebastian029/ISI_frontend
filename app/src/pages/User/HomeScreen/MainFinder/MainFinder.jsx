@@ -48,14 +48,21 @@ function MainFinder({ activateFinder, setFlights }) {
 
   const getFlights = async () => {
     try {
-      const response = await axios.get("/flights_with_airports", {
-        params: {
-          departure_airport_id: departureID,
-          arrive_airport_id: arrivalID,
-          data_lotu: formatDate(departureDateInput),
-        },
-      });
+      // Prepare the parameters object
+      const params = {
+        departure_airport_id: departureID,
+        arrive_airport_id: arrivalID,
+      };
 
+      // Add the date to parameters if it exists
+      if (departureDateInput) {
+        params.data_lotu = formatDate(departureDateInput);
+      }
+
+      // Make the API request
+      const response = await axios.get("/flights_with_airports", { params });
+
+      // Process the response
       if (response.data) {
         setFlights(response.data);
       }
@@ -69,9 +76,9 @@ function MainFinder({ activateFinder, setFlights }) {
     const dataToSave = {
       departureTextInput,
       arrivalTextInput,
-      departureDateInput:
-        departureDateInput ||
-        new Date().currentDate.toISOString().split("T")[0],
+      departureDateInput: departureDateInput
+        ? departureDateInput.toISOString().split("T")[0]
+        : null,
       arrivalID,
       departureID,
     };
@@ -145,10 +152,10 @@ function MainFinder({ activateFinder, setFlights }) {
             className={styles.dateInput}
             selected={departureDateInput}
             onChange={setDepartureDateInput}
-            dateFormat="yyyy-MM-dd"
+            dateFormat="dd-MM-yyyy"
             placeholderText="Departure date"
           />
-          <CalendarMonthIcon
+          {/* <CalendarMonthIcon
             className={styles.icon}
             onClick={() => datePickerRefArrival.current.setFocus(true)}
           />
@@ -159,13 +166,13 @@ function MainFinder({ activateFinder, setFlights }) {
             onChange={setArrivaleDateInput}
             dateFormat="yyyy-MM-dd"
             placeholderText="Arrival date"
-          />
-          <PersonIcon className={styles.icon} />
+          /> */}
+          {/* <PersonIcon className={styles.icon} />
           <input
             type="text"
             placeholder="People number"
             className={styles.personInput}
-          />
+          /> */}
           <input
             type="button"
             className={styles.confirmButton}
