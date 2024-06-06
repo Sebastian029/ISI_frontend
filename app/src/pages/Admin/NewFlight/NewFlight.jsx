@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { TimePicker, InputNumber } from 'antd';
+import 'antd/dist/reset.css';
 
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
@@ -32,9 +34,9 @@ function NewFlight() {
   const [departureDateInput, setDepartureDateInput] = useState(null);
   const [arrivalDateInput, setArrivalDateInput] = useState(null);
   const [plane, setPlaneTextInput] = useState("");
-  const [distance, setDistanceTextInput] = useState("");
+  const [distance, setDistanceTextInput] = useState(null); // Update to null for InputNumber
   const [airline, setAirlineTextInput] = useState("");
-  const [travelTime, setTravelTimeTextInput] = useState("");
+  const [travelTime, setTravelTime] = useState(null);
   const [distanceError, setDistanceError] = useState("");
   const [travelTimeError, setTravelTimeError] = useState("");
   const datePickerRefDeparture = useRef(null);
@@ -46,7 +48,7 @@ function NewFlight() {
 
   const [open, setOpen] = useState(false);
   const [success, setSuccess] = useState("");
-
+  
   const handleSwap = () => {
     const temp = departureAirport;
     setDepartureAirport(arrivalAirport);
@@ -64,11 +66,20 @@ function NewFlight() {
     const regex = /^[0-9]*\.?[0-9]+$/;
     return regex.test(distance);
   };
-
-  const validateTravelTime = (time) => {
-    const regex = /^([0-1][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/;
-    return regex.test(time);
+  
+  const handleClear = () => {
+    setDepartureAirport("");
+    setArrivalAirport("");
+    setDepartureDateInput(null);
+    setArrivalDateInput(null);
+    setPlaneTextInput("");
+    setDistanceTextInput(null);
+    setAirlineTextInput("");
+    setTravelTime(null);
+    setDistanceError("");
+    setTravelTimeError("");
   };
+
 
   const saveFlightData = async () => {
     if (!validateDistance(distance)) {
@@ -77,23 +88,15 @@ function NewFlight() {
     } else {
       setDistanceError("");
     }
-
-    if (!validateTravelTime(travelTime)) {
-      setTravelTimeError("Travel time must be in the format 00:00:00.");
-      return;
-    } else {
-      setTravelTimeError("");
-    }
-
+    const date = new Date(travelTime);
+    const travelTimeString = date.toTimeString().split(' ')[0];
     try {
       const data = {
-        departure_airport_id: airports.find(
-          (ap) => ap.airport_name === departureAirport
-        )?.airport_id,
-        arrive_airport_id: airports.find(
-          (ap) => ap.airport_name === arrivalAirport
-        )?.airport_id,
-        travel_time: travelTime,
+        
+        departure_airport_id: airports.find(ap => ap.airport_name === departureAirport)?.airport_id,
+        arrive_airport_id: airports.find(ap => ap.airport_name === arrivalAirport)?.airport_id,
+        travel_time: travelTimeString,
+
         distance: distance,
         plane_id: planes.find((p) => p.plane_name === plane)?.plane_id,
         airline_id: airlines.find((al) => al.airline_name === airline)
@@ -105,6 +108,7 @@ function NewFlight() {
       console.log(response.data);
       setOpen(true);
       setSuccess("Success");
+    
     } catch (error) {
       console.error("Error registering flight:", error);
       setOpen(true);
@@ -214,24 +218,27 @@ function NewFlight() {
                 dateFormat="dd-MM-yyyy"
                 placeholderText="Departure date"
               />
-              <ArrowOutwardIcon className={styles.icon} />
-              <input
-                type="text"
+              <ArrowOutwardIcon
+                className={styles.icon}
+              />
+              <InputNumber
+
                 value={distance}
-                onChange={(e) => setDistanceTextInput(e.target.value)}
+                onChange={(value) => setDistanceTextInput(value)}
                 placeholder="Distance"
                 className={styles.personInput}
               />
-              {distanceError && (
-                <div className={styles.error}>{distanceError}</div>
-              )}
-              <AccessTimeIcon className={styles.icon} />
-              <input
-                type="text"
+              {distanceError && <div className={styles.error}>{distanceError}</div>}
+              <AccessTimeIcon
+                className={styles.icon}
+              />
+              <TimePicker
+                className={styles.timePicker}
+
                 value={travelTime}
-                onChange={(e) => setTravelTimeTextInput(e.target.value)}
+                onChange={setTravelTime}
+                format="HH:mm:ss"
                 placeholder="Travel Time"
-                className={styles.personInput}
               />
               {travelTimeError && (
                 <div className={styles.error}>{travelTimeError}</div>
@@ -277,6 +284,12 @@ function NewFlight() {
               className={styles.confirmButton}
               value={"Add"}
               onClick={() => saveFlightData()}
+            />
+            <input
+              type="button"
+              className={styles.confirmButton}
+              value={"Clear"}
+              onClick={handleClear} 
             />
           </div>
         </div>
