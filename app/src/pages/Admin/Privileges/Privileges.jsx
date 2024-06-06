@@ -140,34 +140,38 @@ const Privileges = () => {
   };
 
   const handleSavePrivileges = async () => {
-    try {
-      const initialPrivileges = selectedUser.privileges.map(priv => priv.name);
-      const privilegesToAdd = selectedPrivileges.filter(priv => !initialPrivileges.includes(priv));
-      const privilegesToRemove = initialPrivileges.filter(priv => !selectedPrivileges.includes(priv));
+  try {
+    const initialPrivileges = selectedUser.privileges.map(priv => priv.name);
+    const privilegesToAdd = selectedPrivileges.filter(priv => !initialPrivileges.includes(priv));
+    const privilegesToRemove = initialPrivileges.filter(priv => !selectedPrivileges.includes(priv));
 
-      // Add new privileges
-      for (const privilegeName of privilegesToAdd) {
-        await axiosPrivate.post('/users/privileges/add', {
-          public_id: selectedUser.public_id,
-          privilege_name: privilegeName
-        });
-      }
+    // Add new privileges
+    const addPromises = privilegesToAdd.map(privilegeName => 
+      axiosPrivate.post('/users/privileges/add', {
+        public_id: selectedUser.public_id,
+        privilege_name: privilegeName
+      })
+    );
 
-      // Remove unselected privileges
-      for (const privilegeName of privilegesToRemove) {
-        await axiosPrivate.delete('/users/privileges/remove', {
-          data: { public_id: selectedUser.public_id, privilege_name: privilegeName }
-        });
-      }
+    // Remove unselected privileges
+    const removePromises = privilegesToRemove.map(privilegeName => 
+      axiosPrivate.delete('/users/privileges/remove', {
+        data: { public_id: selectedUser.public_id, privilege_name: privilegeName }
+      })
+    );
 
-      // Fetch the updated users list
-      const usersResponse = await axiosPrivate.get('/users/privilages');
-      setUsers(usersResponse.data);
-      closeModal();
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+    // Wait for all promises to resolve
+    await Promise.all([...addPromises, ...removePromises]);
+
+    // Fetch the updated users list
+    const usersResponse = await axiosPrivate.get('/users/privilages');
+    setUsers(usersResponse.data);
+    closeModal();
+  } catch (err) {
+    setError(err.message);
+  }
+};
+
 
   if (loading) {
     return <><TopBar /> <div className={styles.privilegesList}>Loading...</div></>;
@@ -184,10 +188,10 @@ const Privileges = () => {
         <h1>Users and Privileges</h1>
         <input
           type="text"
-          placeholder="Search by name, surname, or email..."
+          placeholder="Search user"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className={styles.searchInput}
+          className={styles.search}
         />
         <ul className={styles.mainList}>
           {currentUsers.map(user => (
@@ -196,7 +200,7 @@ const Privileges = () => {
               {user.email} - Privileges:
               <ul>
                 {user.privileges.map(privilege => (
-                  <li key={privilege.id}>{privilege.name}</li>
+                  <div key={privilege.id}>{privilege.name}</div>
                 ))}
               </ul>
               <button className={styles.button} onClick={() => openModal(user)}>Edit Privileges</button>
@@ -220,34 +224,6 @@ const Privileges = () => {
             Next
           </button>
         </div>
-
-        <h2>Add Privilege to User</h2>
-        <div>
-          <label>Username:</label>
-          <select name="username" value={formData.username} onChange={handleChange}>
-            <option value="">Select User</option>
-            {users.map(user => (
-              <option key={user.id} value={user.name}>{user.name}</option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label>Privilege Name:</label>
-          <select name="privilege_name" value={formData.privilege_name} onChange={handleChange}>
-            <option value="">Select Privilege</option>
-            {privileges.map(privilege => (
-              <option key={privilege.id} value={privilege.name}>{privilege.name}</option>
-            ))}
-          </select>
-        </div>
-        <button onClick={handleAdd}>Add Privilege</button>
-
-        <h2>Available Privileges</h2>
-        <ul>
-          {privileges.map(privilege => (
-            <li key={privilege.id}>{privilege.name}</li>
-          ))}
-        </ul>
       </div>
 
       <Modal
@@ -257,11 +233,11 @@ const Privileges = () => {
         className={styles.modal}
         overlayClassName={styles.overlay}
       >
-        <h2>Edit Privileges for {selectedUser?.name}</h2>
+        <h2 className={styles.imput}>Edit Privileges for {selectedUser?.name}</h2>
         <form>
           {privileges.map(privilege => (
             <div key={privilege.id}>
-              <label>
+              <label className={styles.imput}>
                 <input
                   type="checkbox"
                   value={privilege.name}
@@ -273,8 +249,8 @@ const Privileges = () => {
             </div>
           ))}
         </form>
-        <button onClick={handleSavePrivileges}>Save</button>
-        <button onClick={closeModal}>Cancel</button>
+        <button className={styles.button} onClick={handleSavePrivileges}>Save</button>
+        <button className={styles.button} onClick={closeModal}>Cancel</button>
       </Modal>
 
       <Footer />
