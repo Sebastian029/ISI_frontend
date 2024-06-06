@@ -58,32 +58,6 @@ const Privileges = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleRemove = async (publicId, privilegeName) => {
-    try {
-      await axiosPrivate.delete('/users/privileges/remove', { data: { public_id: publicId, privilege_name: privilegeName } });
-      const usersResponse = await axiosPrivate.get('/users/privilages');
-      setUsers(usersResponse.data);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-  const handleAdd = async () => {
-    try {
-      const selectedUser = users.find(user => user.name === formData.username);
-      if (!selectedUser) {
-        throw new Error('User not found');
-      }
-      
-      await axiosPrivate.post('/users/privileges/add', { public_id: selectedUser.public_id, privilege_name: formData.privilege_name });
-      const usersResponse = await axiosPrivate.get('/users/privilages');
-      setUsers(usersResponse.data);
-      setFormData({ username: '', privilege_name: '' });
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
@@ -196,7 +170,7 @@ const Privileges = () => {
         <ul className={styles.mainList}>
           {currentUsers.map(user => (
             <li className={styles.privileges} key={user.id}>
-              <span>{user.name} {user.surname} </span>
+              <span>{user.name} {user.surname} {user.public_id}</span>
               {user.email} - Privileges:
               <ul>
                 {user.privileges.map(privilege => (
