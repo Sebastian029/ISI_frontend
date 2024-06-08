@@ -12,6 +12,7 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import PropTypes from "prop-types";
+import { badgeClasses } from "@mui/material";
 
 function Items({
   currentItems,
@@ -74,21 +75,20 @@ function Items({
             </div>
 
             <div style={styles.infoBar}>
-              <div style={styles.starRow}>
-                <CalendarMonthIcon style={styles.flightIcon} />
-                Flight Date: {item.data_lotu}
-              </div>
+              <CalendarMonthIcon style={styles.flightIcon} />
+              Flight Date:
+            </div>
+            <div style={styles.infoBar2}>{item.data_lotu}</div>
 
+            <div style={styles.infoBar3}>
               {item.is_follow ? (
                 <StarIcon
-                  className={styles.flightIcon}
-                  style={{ cursor: "pointer", fontSize: 40 }}
+                  className="starIcon"
                   onClick={() => unfollowFlight(item.follow_id)}
                 />
               ) : (
                 <StarBorderIcon
-                  className={styles.flightIcon}
-                  style={{ cursor: "pointer", fontSize: 40 }}
+                  className="starIcon"
                   onClick={() => followFlight(item.flight_id)}
                 />
               )}
@@ -96,27 +96,34 @@ function Items({
 
             <div style={styles.infoBar}>
               <FlightTakeoffIcon style={styles.flightIcon} />
-              Arrival Airport: {item.arrival_airport}
+              Arrival Airport:
             </div>
+            <div style={styles.infoBar2}>{item.arrival_airport}</div>
+
             <div style={styles.infoBar}>
               <FlightLandIcon style={styles.flightIcon} />
-              Departure Airport: {item.departure_airport}
+              Departure Airport:
             </div>
+            <div style={styles.infoBar2}>{item.departure_airport}</div>
+
             <div style={styles.infoBar}>
               <AccessTimeIcon style={styles.flightIcon} />
-              Travel Time: {item.travel_time}
+              Travel Time:
             </div>
-            <div style={styles.bottomContainer}>
-              <div>
-                <div style={styles.infoBar}>
-                  <AirlineSeatReclineExtraIcon style={styles.flightIcon} />
-                  Available Seats: {item.available_seats}
-                </div>
-                <div style={styles.infoBar}>
-                  <AirlineStopsIcon style={styles.flightIcon} />
-                  Distance: {item.distance} km
-                </div>
-              </div>
+            <div style={styles.infoBar2}>{item.travel_time}</div>
+
+            <div style={styles.infoBar}>
+              <AirlineSeatReclineExtraIcon style={styles.flightIcon} />
+              Available Seats:
+            </div>
+            <div style={styles.infoBar2}>{item.available_seats}</div>
+
+            <div style={styles.infoBar}>
+              <AirlineStopsIcon style={styles.flightIcon} />
+              Distance:
+            </div>
+            <div style={styles.infoBar2}>{item.distance} km</div>
+            <div style={styles.infoBar3}>
               <input
                 type="button"
                 value="Book this flight"
@@ -230,7 +237,6 @@ export default function PaginatedItems({
           border-color: var(--main-color-2);
         }
         .button {
-          height: 50%;
           font-size: 20px;
           font-family: "Lato";
           background-color: var(--main-color);
@@ -241,6 +247,15 @@ export default function PaginatedItems({
         .button:hover {
           background-color: var(--main-color-2);
           cursor: pointer;
+          color: white;
+        }
+        .starIcon {
+          color: var(--main-color-2);
+          font-size: 50px;
+          cursor: pointer;
+        }
+        .starIcon:hover {
+          color: var(--main-color);
         }
       `}</style>
     </>
@@ -270,8 +285,9 @@ const styles = {
     maxHeight: "80vh",
   },
   innerFlightContainer: {
-    display: "flex",
-    flexDirection: "column",
+    display: "grid",
+    gridTemplateColumns: "20% 30% 20%",
+    gridGap: "10px",
     width: "100%",
     paddingBottom: 100,
     color: "var(--gray-text)",
@@ -285,6 +301,8 @@ const styles = {
   },
   flightMainText: {},
   topFlightBar: {
+    gridColumnStart: 1,
+    gridColumnEnd: 5,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -299,11 +317,32 @@ const styles = {
     margin: 10,
   },
   infoBar: {
+    gridColumnStart: 1,
+    gridColumnEnd: 2,
     display: "flex",
     alignItems: "center",
     gap: 10,
     paddingTop: 15,
     fontSize: 18,
+    // border: "1px solid red",
+  },
+  infoBar2: {
+    gridColumnStart: 2,
+    gridColumnEnd: 3,
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+    paddingTop: 15,
+    fontSize: 18,
+
+    // border: "1px solid lime",
+  },
+  infoBar3: {
+    gridColumnStart: 4,
+    gridColumnEnd: 5,
+    marginLeft: "auto",
+
+    //  border: "1px solid blue",
   },
   bottomContainer: {
     display: "flex",
@@ -318,11 +357,6 @@ const styles = {
     alignItems: "center",
     fontSize: 30,
     padding: 10,
-  },
-  starRow: {
-    flex: "row",
-    width: "95%",
-    justifyContent: "space-around",
   },
 };
 

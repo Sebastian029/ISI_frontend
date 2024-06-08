@@ -6,55 +6,15 @@
   align-items: center;
 }
 
-.box {
-  padding: 10px;
-  border: 1px solid black;
-}
-
-.checkBoxRow {
-  padding-bottom: 10px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 20px;
-}
-.checkbox {
-  height: 15px;
-  width: 15px;
-  cursor: pointer;
-}
-
-.checkboxText {
-  cursor: pointer;
-}
-
-.destinationInputRow {
-  display: flex;
-  justify-content: space-between;
-}
-
 .textInput {
   border: 0px;
   border-radius: 5px;
   padding: 10px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Lato";
   font-size: 20px;
   background-color: var(--background-color);
   border: 1px solid gray;
   flex: 1;
-}
-.iconSwap {
-  color: var(--gray-text);
-  cursor: pointer;
-  font-size: 50px !important;
-}
-
-input:focus {
-  outline: none;
-}
-
-.globalInputBox {
-  width: 50em;
 }
 
 .datePickerBox {
@@ -66,42 +26,39 @@ input:focus {
 }
 
 .dateInput {
-  border: 0px;
   border-radius: 5px;
   padding: 8px;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 15px;
-  background-color: var(--background-color);
-  border: 1px solid gray;
-  margin-left: 5px;
-  margin-right: 10px;
-  width: 8.5em;
-  z-index: 1;
-}
-
-.searchButton {
-  border: 0px;
-  border-radius: 5px;
-  padding: 8px;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 15px;
-  background-color: var(--input-color);
+  font-size: 25px;
 }
 
 .confirmButton {
-  flex: 2;
-  margin-left: 10px;
-  background-color: var(--main-color);
   border: 1px solid gray;
   border-radius: 5px;
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 500;
   padding: 8px;
   cursor: pointer;
   font-family: "Lato";
+  transition: background-color 0.2s ease;
 }
 .confirmButton:hover {
+  background-color: white;
+  border-color: var(--main-color);
+}
+.searchButton {
+  border: 1px solid gray;
+  border-radius: 5px;
+  font-size: 22px;
+  font-weight: 500;
+  padding: 8px;
+  cursor: pointer;
+  font-family: "Lato";
+  background-color: var(--main-color);
+  transition: background-color 0.2s ease;
+}
+.searchButton:hover {
   background-color: var(--main-color-2);
+  color: white;
 }
 
 .icon {
@@ -110,13 +67,17 @@ input:focus {
   font-size: 30px !important;
 }
 
-.personInput {
-  border: 0px;
-  border-radius: 5px;
-  padding: 8px;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 15px;
-  background-color: var(--background-color);
-  border: 1px solid gray;
-  width: 7em;
+.mainGridLayout {
+  display: grid;
+  grid-template-columns: 70% 30%;
+  grid-template-rows: auto auto auto;
+  gap: 10px;
+  width: 30%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  border-radius: 10px;
+  padding: 30px;
+  margin-bottom: 35px;
+  box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
 }

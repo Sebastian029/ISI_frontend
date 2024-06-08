@@ -63,9 +63,7 @@ const ModalLogin = ({ toggleModal, setLogin }) => {
   return (
     <div className="modal-content">
       <h2>Login</h2>
-      <p>
-        Hey, enter your details to get <br /> sign in to your account
-      </p>
+      <p>Hey, sign in to your account</p>
       <input
         type="text"
         placeholder="Email"
