@@ -7,11 +7,59 @@ import AirlineSeatReclineExtraIcon from "@mui/icons-material/AirlineSeatReclineE
 import AirlineStopsIcon from "@mui/icons-material/AirlineStops";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import DepartureBoardIcon from "@mui/icons-material/DepartureBoard";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import StarIcon from "@mui/icons-material/Star";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
 import PropTypes from "prop-types";
 
-function Items({ currentItems, handleFlightSelection }) {
+function Items({
+  currentItems,
+  handleFlightSelection,
+  axiosPrivate,
+  currentFlights,
+  setCurrentFlights,
+}) {
+  const updateItemsFollow = (flight_id, new_follow_id) => {
+    const updatedFlights = currentFlights.map((flight) =>
+      flight.flight_id === flight_id
+        ? { ...flight, is_follow: true, follow_id: new_follow_id }
+        : flight
+    );
+    setCurrentFlights(updatedFlights);
+  };
+
+  const updateItemsUnfollow = (follow_id) => {
+    const updatedFlights = currentFlights.map((flight) =>
+      flight.follow_id === follow_id ? { ...flight, is_follow: false } : flight
+    );
+    setCurrentFlights(updatedFlights);
+  };
+
+  const followFlight = async (flightId) => {
+    console.log(flightId);
+
+    try {
+      const response = await axiosPrivate.post("/follow", {
+        flight_id: flightId,
+      });
+      updateItemsFollow(flightId, response.data.follow_id);
+      console.log("Data posted successfully:", response.data);
+    } catch (error) {
+      console.error("Error following flight:", error);
+    }
+  };
+
+  const unfollowFlight = async (follow_id) => {
+    try {
+      const response = await axiosPrivate.delete(`/unfollow/${follow_id}`);
+      updateItemsUnfollow(follow_id);
+      console.log("Unfollowed successfully:", response.data);
+    } catch (error) {
+      console.error("Error unfollowing flight:", error);
+    }
+  };
+
   return (
     <div style={styles.globalFlightContainer}>
       {currentItems && currentItems.length > 0 ? (
@@ -24,10 +72,28 @@ function Items({ currentItems, handleFlightSelection }) {
               <div style={styles.line}></div>
               {item.arrival_city}
             </div>
+
             <div style={styles.infoBar}>
-              <CalendarMonthIcon style={styles.flightIcon} />
-              Flight Date: {item.data_lotu}
+              <div style={styles.starRow}>
+                <CalendarMonthIcon style={styles.flightIcon} />
+                Flight Date: {item.data_lotu}
+              </div>
+
+              {item.is_follow ? (
+                <StarIcon
+                  className={styles.flightIcon}
+                  style={{ cursor: "pointer", fontSize: 40 }}
+                  onClick={() => unfollowFlight(item.follow_id)}
+                />
+              ) : (
+                <StarBorderIcon
+                  className={styles.flightIcon}
+                  style={{ cursor: "pointer", fontSize: 40 }}
+                  onClick={() => followFlight(item.flight_id)}
+                />
+              )}
             </div>
+
             <div style={styles.infoBar}>
               <FlightTakeoffIcon style={styles.flightIcon} />
               Arrival Airport: {item.arrival_airport}
@@ -36,12 +102,6 @@ function Items({ currentItems, handleFlightSelection }) {
               <FlightLandIcon style={styles.flightIcon} />
               Departure Airport: {item.departure_airport}
             </div>
-            {/*
-            <div style={styles.infoBar}>
-              <DepartureBoardIcon style={styles.flightIcon} />
-              Departure Time:
-            </div>
-            */}
             <div style={styles.infoBar}>
               <AccessTimeIcon style={styles.flightIcon} />
               Travel Time: {item.travel_time}
@@ -84,20 +144,21 @@ export default function PaginatedItems({
   itemsPerPage,
   handleFlightSelection,
 }) {
-  const [currentItems, setCurrentItems] = useState(flights);
+  const axiosPrivate = useAxiosPrivate();
+
+  const [currentFlights, setCurrentFlights] = useState(flights);
+  const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    //console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-    setCurrentItems(flights.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(flights.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage]);
+    setCurrentItems(currentFlights.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(currentFlights.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, currentFlights]);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % flights.length;
-    // console.log(`User requested page number ${event.selected}, which is offset ${newOffset}`);
+    const newOffset = (event.selected * itemsPerPage) % currentFlights.length;
     setItemOffset(newOffset);
   };
 
@@ -108,6 +169,9 @@ export default function PaginatedItems({
           <Items
             currentItems={currentItems}
             handleFlightSelection={handleFlightSelection}
+            axiosPrivate={axiosPrivate}
+            currentFlights={currentFlights}
+            setCurrentFlights={setCurrentFlights}
           />
         </div>
         <div style={styles.paginationBar}>
@@ -254,6 +318,11 @@ const styles = {
     alignItems: "center",
     fontSize: 30,
     padding: 10,
+  },
+  starRow: {
+    flex: "row",
+    width: "95%",
+    justifyContent: "space-around",
   },
 };
 
