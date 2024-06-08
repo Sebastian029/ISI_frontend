@@ -25,8 +25,14 @@ function MainFinder({ activateFinder, setFlights }) {
       setDepartureTextInput(savedData.departureTextInput);
       setArrivalTextInput(savedData.arrivalTextInput);
       setDepartureDateInput(new Date(savedData.departureDateInput));
-      setArricalID(savedData.arrivalID);
       setDepartureID(savedData.departureID);
+    } else {
+      const currentDate = new Date();
+      const day = String(currentDate.getDate()).padStart(2, "0");
+      const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+      const year = currentDate.getFullYear();
+      const formattedDate = `${month}-${day}-${year}`;
+      setDepartureDateInput(formattedDate);
     }
   }, []);
 
