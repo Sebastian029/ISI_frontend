@@ -4,7 +4,10 @@ import styles from "./FlightReservation.module.css";
 import { useEffect, useState } from "react";
 import axios from "../../../axiosInstance.js";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate.jsx";
-import Deck from "./SeatMap/components/Deck.jsx";
+import Deck from "./components/Deck.jsx";
+import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
+import FlightLandIcon from "@mui/icons-material/FlightLand";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 const FlightReservation = () => {
   const { flightId } = useParams();
@@ -32,9 +35,7 @@ const FlightReservation = () => {
     const getTickets = async () => {
       try {
         const response = await axios.get("/tickets/" + flightId, {
-          // params: {
-          //   flightId: flightId,
-          // },
+          
         });
 
         console.log("Data posted successfully:", response.data);
@@ -64,48 +65,14 @@ const FlightReservation = () => {
     }
   };
 
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const ticketsPerPage = 5;
-  // const indexOfLastTicket = currentPage * ticketsPerPage;
-  // const indexOfFirstTicket = indexOfLastTicket - ticketsPerPage;
-  // const currentTickets = tickets.slice(indexOfFirstTicket, indexOfLastTicket);
-  // const totalPages = Math.ceil(tickets.length / ticketsPerPage);
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
+  const formatDate = (date) => {
+    const parsedDate = new Date(date);
+    const year = parsedDate.getFullYear();
+    const month = (parsedDate.getMonth() + 1).toString().padStart(2, "0");
+    const day = parsedDate.getDate().toString().padStart(2, "0");
+    return `${year}-${month}-${day}`;
   };
 
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
-  const renderPageNumbers = () => {
-    const pageNumbers = [];
-    const startPage = Math.max(1, currentPage - 2);
-    const endPage = Math.min(totalPages, currentPage + 2);
-
-    for (let i = startPage; i <= endPage; i++) {
-      pageNumbers.push(
-        <button
-          key={i}
-          className={`${styles.page} ${i === currentPage ? styles.active : ""}`}
-          onClick={() => handlePageChange(i)}
-        >
-          {i}
-        </button>
-      );
-    }
-
-    return pageNumbers;
-  };
 
   const handleConfirmation = async () => {
     try {
@@ -137,12 +104,20 @@ const FlightReservation = () => {
     <>
       <TopBar />
       <div style={appStyles}>
-        <div className={styles.flightData}>
+      <div className = {styles.flightData}>
           {/*<p>Flight id: {flightId}</p>*/}
-          <p>Departure Airport: {departureAirport}</p>
-          <p>Departure City: {departureCity}</p>
-          <p>Arrival Airport: {arrivalAirport}</p>
-          <p>Arrival City: {arrivalCity}</p>
+          <div>
+            <p>Departure <FlightTakeoffIcon style={styles.flightIcon} /></p>
+            <p>{departureCity} : {departureAirport}</p>
+          </div>
+          <div>
+            <p>Date: <CalendarMonthIcon style={styles.flightIcon} /></p>
+             {formatDate(flightDate)}
+          </div>
+          <div>
+            <p>Arrival <FlightLandIcon style={styles.flightIcon} /></p>
+            <p>{arrivalCity} : {arrivalAirport}</p>
+          </div>
         </div>
         <div className={styles.mainContainer}>
           <div className={styles.ticketsList}>
@@ -188,7 +163,9 @@ const FlightReservation = () => {
                 Next
               </button>
             </div> */}
-            <Deck tickets={tickets} num_columns={num_columns} total_seats={total_seats} handleTicketReservation={handleTicketReservation} />
+            <div className={styles.ticketMap}>
+              <Deck tickets={tickets} num_columns={num_columns} total_seats={total_seats} handleTicketReservation={handleTicketReservation} />
+            </div>
           </div>
           <div className={styles.reservationSummary}>
             <h2>Reservation Summary</h2>

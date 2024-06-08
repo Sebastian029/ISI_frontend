@@ -106,3 +106,13 @@
 li{
     list-style-type: none;
 }
+
+.ticketMap{
+    display: flex;
+    justify-content: center;
+    height: 70vh;
+}
+
+#deck {
+    position: relative; 
+}
