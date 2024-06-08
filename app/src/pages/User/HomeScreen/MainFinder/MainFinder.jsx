@@ -16,6 +16,7 @@ function MainFinder({ activateFinder, setFlights }) {
   const { auth } = useAuth();
   const [arrivalID, setArricalID] = useState(null);
   const [departureID, setDepartureID] = useState(null);
+
   const datePickerRefDeparture = useRef(null);
 
   useEffect(() => {
@@ -25,14 +26,10 @@ function MainFinder({ activateFinder, setFlights }) {
       setDepartureTextInput(savedData.departureTextInput);
       setArrivalTextInput(savedData.arrivalTextInput);
       setDepartureDateInput(new Date(savedData.departureDateInput));
+      setArricalID(savedData.arrivalID);
       setDepartureID(savedData.departureID);
     } else {
-      const currentDate = new Date();
-      const day = String(currentDate.getDate()).padStart(2, "0");
-      const month = String(currentDate.getMonth() + 1).padStart(2, "0");
-      const year = currentDate.getFullYear();
-      const formattedDate = `${month}-${day}-${year}`;
-      setDepartureDateInput(formattedDate);
+      setDepartureDateInput(null);
     }
   }, []);
 
@@ -58,7 +55,7 @@ function MainFinder({ activateFinder, setFlights }) {
       if (departureDateInput) {
         params.data_lotu = formatDate(departureDateInput);
       }
-
+      console.log(params);
       console.log(auth.accessToken);
       let response;
       try {

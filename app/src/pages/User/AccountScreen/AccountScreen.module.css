@@ -13,12 +13,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 20%;
-  height: 50%;
   background-color: white;
   border-radius: 10px;
   box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
   padding: 10px;
+  padding-bottom: 30px;
 }
 .detailsTitle {
   color: "red";
@@ -29,10 +28,7 @@
   margin-top: 30px;
 }
 .form {
-  flex-direction: column;
-  justify-content: space-between;
   width: 90%;
-  height: 100%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -53,7 +49,27 @@
   max-width: 100%;
 }
 
+.axiosResponseBlankStyle {
+  padding-top: 8px;
+  height: 30px;
+}
+
 .axiosResponseStyle {
+  padding-top: 8px;
+  height: 30px;
   text-align: center;
-  color: "gray";
+  color: gray;
+}
+
+.switch {
+  margin-right: 20px;
+}
+
+.button {
+  background-color: var(--main-color) !important;
+  color: black;
+}
+
+.button:hover {
+  background-color: var(--main-color-2) !important;
 }

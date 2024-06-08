@@ -213,34 +213,34 @@ export default function PaginatedItems({
         }
         .page-link {
           padding: 8px 16px;
-          border: 1px solid orange;
-          color: orange;
+          border: 1px solid var(--main-color-2);
+          color: var(--main-color-2);
           cursor: pointer;
           text-decoration: none;
           bottom: 0px;
           border-radius: 20px;
         }
         .page-link:hover {
-          background-color: orange;
+          background-color: var(--main-color);
           color: white;
         }
         .active .page-link {
-          background-color: orange;
+          background-color: var(--main-color);
           color: white;
-          border-color: orange);
+          border-color: var(--main-color-2);
         }
-        .button{
+        .button {
           height: 50%;
           font-size: 20px;
           font-family: "Lato";
           background-color: var(--main-color);
           border-radius: 10px;
-          border:0px;
+          border: 0px;
           padding: 15px 20px;
         }
         .button:hover {
           background-color: var(--main-color-2);
-          cursor:pointer;
+          cursor: pointer;
         }
       `}</style>
     </>

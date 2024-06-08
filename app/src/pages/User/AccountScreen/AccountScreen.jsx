@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./AccountScreen.module.css";
 import Footer from "../HomeScreen/Footer/Footer";
 import TopBar from "../HomeScreen/TopBar/TopBar";
-import { Button, Form, Input, Space } from "antd";
+import { Button, Form, Input, Space, Switch } from "antd";
 import { InputOTP } from "antd-input-otp";
 import { Slider } from "antd";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
@@ -74,6 +74,22 @@ function AccountScreen() {
     }
   };
 
+  const handleSwitch = async (checked) => {
+    try {
+      const response = await axiosPrivate.patch("/notification");
+
+      if (response) {
+        setAxiosResponse(response);
+      }
+      setAccountData((prevData) => ({
+        ...prevData,
+        notification: checked,
+      }));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const handleFinish = (otp) => {
     handleDataChange("phoneNumber", otp.join(""));
   };
@@ -100,6 +116,7 @@ function AccountScreen() {
                   <Button
                     type="primary"
                     onClick={() => handleDataChange("name", accountData.name)}
+                    className={styles.button}
                   >
                     Save
                   </Button>
@@ -122,15 +139,13 @@ function AccountScreen() {
                     onClick={() =>
                       handleDataChange("surname", accountData.surname)
                     }
+                    className={styles.button}
                   >
                     Save
                   </Button>
                 </Space.Compact>
               </Form.Item>
               <Form.Item className={styles.formItem} label="Phone number">
-                <Slider min={0} max={999999999} />
-
-                {/*}
                 <Space.Compact
                   style={{
                     width: "100%",
@@ -147,7 +162,6 @@ function AccountScreen() {
                     />
                   </div>
                 </Space.Compact>
-                */}
               </Form.Item>
               <Form.Item className={styles.formItem} label="Email">
                 <Space.Compact
@@ -164,15 +178,27 @@ function AccountScreen() {
                   />
                 </Space.Compact>
               </Form.Item>
+
+              <Form.Item className={styles.formItem}>
+                <Switch
+                  defaultChecked
+                  className={styles.switch}
+                  value={accountData.notification}
+                  onChange={handleSwitch}
+                />
+                Do u want to receive email notifications?
+              </Form.Item>
             </Form>
 
             <div className={styles.logoutButton} onClick={() => handleLogout()}>
               Logout
             </div>
-            {axiosResponse && (
+            {axiosResponse ? (
               <p className={styles.axiosResponseStyle}>
                 {JSON.stringify(axiosResponse.data.message, null, 2)}
               </p>
+            ) : (
+              <p className={styles.axiosResponseBlankStyle}></p>
             )}
           </div>
         </div>
