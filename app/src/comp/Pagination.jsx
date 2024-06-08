@@ -11,6 +11,15 @@ import DepartureBoardIcon from "@mui/icons-material/DepartureBoard";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PropTypes from "prop-types";
 
+const formatDate = (date) => {
+  const parsedDate = new Date(date);
+  const year = parsedDate.getFullYear();
+  const month = (parsedDate.getMonth() + 1).toString().padStart(2, "0");
+  const day = parsedDate.getDate().toString().padStart(2, "0");
+  return `${day}-${month}-${year}`;
+};
+
+
 function Items({ currentItems, handleFlightSelection }) {
   return (
     <div style={styles.globalFlightContainer}>
@@ -26,7 +35,7 @@ function Items({ currentItems, handleFlightSelection }) {
             </div>
             <div style={styles.infoBar}>
               <CalendarMonthIcon style={styles.flightIcon} />
-              Flight Date: {item.data_lotu}
+              Flight Date: {formatDate(item.data_lotu)}
             </div>
             <div style={styles.infoBar}>
               <FlightTakeoffIcon style={styles.flightIcon} />

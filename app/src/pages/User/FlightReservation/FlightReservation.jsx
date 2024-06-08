@@ -4,6 +4,7 @@ import styles from "./FlightReservation.module.css";
 import { useEffect, useState } from "react";
 import axios from "../../../axiosInstance.js";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate.jsx";
+import Deck from "./SeatMap/components/Deck.jsx";
 
 const FlightReservation = () => {
   const { flightId } = useParams();
@@ -14,6 +15,8 @@ const FlightReservation = () => {
   const arrivalCity = queryParams.get("arrivalCity");
   const flightDate = queryParams.get("flightDate");
   const [tickets, setTickets] = useState([{}]);
+  const [total_seats, setTotal_seatss] = useState();
+  const [num_columns, setNum_columns] = useState();
   const [selectedTickets, setSelectedTickets] = useState([]);
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
@@ -36,7 +39,9 @@ const FlightReservation = () => {
 
         console.log("Data posted successfully:", response.data);
         if (response.data) {
-          setTickets(response.data);
+          setTickets(response.data.tickets);
+          setNum_columns(response.data.num_columns);
+          setTotal_seatss(response.data.total_seats);
         }
       } catch (error) {
         console.error("Error posting data: elements not found");
@@ -45,6 +50,8 @@ const FlightReservation = () => {
     };
 
     getTickets();
+
+    console.log("aasd"+tickets);
   }, []);
 
   const handleTicketReservation = (ticket) => {
@@ -57,12 +64,12 @@ const FlightReservation = () => {
     }
   };
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const ticketsPerPage = 5;
-  const indexOfLastTicket = currentPage * ticketsPerPage;
-  const indexOfFirstTicket = indexOfLastTicket - ticketsPerPage;
-  const currentTickets = tickets.slice(indexOfFirstTicket, indexOfLastTicket);
-  const totalPages = Math.ceil(tickets.length / ticketsPerPage);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const ticketsPerPage = 5;
+  // const indexOfLastTicket = currentPage * ticketsPerPage;
+  // const indexOfFirstTicket = indexOfLastTicket - ticketsPerPage;
+  // const currentTickets = tickets.slice(indexOfFirstTicket, indexOfLastTicket);
+  // const totalPages = Math.ceil(tickets.length / ticketsPerPage);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -140,7 +147,7 @@ const FlightReservation = () => {
         <div className={styles.mainContainer}>
           <div className={styles.ticketsList}>
             <h2>Available Tickets:</h2>
-            {currentTickets.length === 0 ? (
+            {/* {currentTickets.length === 0 ? (
               <p>No tickets available</p>
             ) : (
               <ul className={styles.mainList}>
@@ -180,7 +187,8 @@ const FlightReservation = () => {
               >
                 Next
               </button>
-            </div>
+            </div> */}
+            <Deck tickets={tickets} num_columns={num_columns} total_seats={total_seats} handleTicketReservation={handleTicketReservation} />
           </div>
           <div className={styles.reservationSummary}>
             <h2>Reservation Summary</h2>
