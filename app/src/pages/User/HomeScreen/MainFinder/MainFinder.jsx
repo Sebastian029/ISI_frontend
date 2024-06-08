@@ -3,23 +3,20 @@ import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
-import TuneIcon from "@mui/icons-material/Tune";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import PersonIcon from "@mui/icons-material/Person";
 import AutocompleteTextInput from "../../../../comp/AutocompleteTextInput/AutocompleteTextInput.jsx";
-import axios from "../../../../axiosInstance.js";
+import axios, { axiosPrivate } from "../../../../axiosInstance.js";
 import styles from "./MainFinder.module.css";
+import useAuth from "../../../../hooks/useAuth.jsx";
 
 function MainFinder({ activateFinder, setFlights }) {
   const [departureTextInput, setDepartureTextInput] = useState("");
   const [arrivalTextInput, setArrivalTextInput] = useState("");
   const [departureDateInput, setDepartureDateInput] = useState(null);
-  const [arrivalDateInput, setArrivaleDateInput] = useState(null);
-  const [singleWayCheckbox, setSingleWayCheckbox] = useState(true);
+  const { auth } = useAuth();
   const [arrivalID, setArricalID] = useState(null);
   const [departureID, setDepartureID] = useState(null);
   const datePickerRefDeparture = useRef(null);
-  const datePickerRefArrival = useRef(null);
 
   useEffect(() => {
     const savedData = JSON.parse(localStorage.getItem("flightSearchData"));
@@ -28,8 +25,14 @@ function MainFinder({ activateFinder, setFlights }) {
       setDepartureTextInput(savedData.departureTextInput);
       setArrivalTextInput(savedData.arrivalTextInput);
       setDepartureDateInput(new Date(savedData.departureDateInput));
-      setArricalID(savedData.arrivalID);
       setDepartureID(savedData.departureID);
+    } else {
+      const currentDate = new Date();
+      const day = String(currentDate.getDate()).padStart(2, "0");
+      const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+      const year = currentDate.getFullYear();
+      const formattedDate = `${month}-${day}-${year}`;
+      setDepartureDateInput(formattedDate);
     }
   }, []);
 
@@ -48,21 +51,29 @@ function MainFinder({ activateFinder, setFlights }) {
 
   const getFlights = async () => {
     try {
-      // Prepare the parameters object
       const params = {
         departure_airport_id: departureID,
         arrive_airport_id: arrivalID,
       };
-
-      // Add the date to parameters if it exists
       if (departureDateInput) {
         params.data_lotu = formatDate(departureDateInput);
       }
 
-      // Make the API request
-      const response = await axios.get("/flights_with_airports", { params });
+      console.log(auth.accessToken);
+      let response;
+      try {
+        response = await axiosPrivate.get("/flights_with_airports_token", {
+          params,
+        });
+      } catch (error) {
+        console.log();
+        try {
+          response = await axios.get("/flights_with_airports", { params });
+        } catch (secondError) {
+          console.log("Get flights failed", secondError.message);
+        }
+      }
 
-      // Process the response
       if (response.data) {
         setFlights(response.data);
       }
@@ -83,14 +94,12 @@ function MainFinder({ activateFinder, setFlights }) {
       departureID,
     };
     localStorage.setItem("flightSearchData", JSON.stringify(dataToSave));
-    // console.log(dataToSave);
   };
 
   const clearInputs = () => {
     setDepartureTextInput("");
     setArrivalTextInput("");
     setDepartureDateInput(null);
-    setArrivaleDateInput(null);
     setDepartureID(null);
     setArricalID(null);
     activateFinder(false);
