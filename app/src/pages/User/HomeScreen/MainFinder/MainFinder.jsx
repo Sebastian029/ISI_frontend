@@ -11,7 +11,8 @@ import dayjs from "dayjs";
 dayjs.extend(customParseFormat);
 
 function MainFinder({ activateFinder, setFlights }) {
-  const dateFormat = "YYYY-MM-DD";
+  const displayDateFormat = "DD-MM-YYYY";
+  const sendDateFormat = "YYYY-MM-DD";
   const [departureTextInput, setDepartureTextInput] = useState("");
   const [arrivalTextInput, setArrivalTextInput] = useState("");
   const [departureDateInput, setDepartureDateInput] = useState(null);
@@ -27,7 +28,7 @@ function MainFinder({ activateFinder, setFlights }) {
       setArrivalTextInput(savedData.arrivalTextInput);
       setDepartureDateInput(
         savedData.departureDateInput
-          ? dayjs(savedData.departureDateInput, "YYYY-MM-DD")
+          ? dayjs(savedData.departureDateInput, sendDateFormat)
           : null
       );
 
@@ -45,9 +46,7 @@ function MainFinder({ activateFinder, setFlights }) {
         arrive_airport_id: arrivalID,
       };
       if (departureDateInput) {
-        params.data_lotu = dayjs(departureDateInput, dateFormat).format(
-          dateFormat
-        );
+        params.data_lotu = dayjs(departureDateInput).format(sendDateFormat);
       }
       console.log(params);
       console.log(auth.accessToken);
@@ -94,6 +93,7 @@ function MainFinder({ activateFinder, setFlights }) {
     activateFinder(false);
     localStorage.removeItem("flightSearchData");
   };
+
   const onDateChange = (date) => {
     setDepartureDateInput(date);
   };
@@ -111,7 +111,7 @@ function MainFinder({ activateFinder, setFlights }) {
         <DatePicker
           className={styles.dateInput}
           onChange={onDateChange}
-          format={dateFormat}
+          format={displayDateFormat}
           placeholderText="Departure date"
           value={departureDateInput}
         />
@@ -139,7 +139,6 @@ function MainFinder({ activateFinder, setFlights }) {
     </div>
   );
 }
-
 MainFinder.propTypes = {
   activateFinder: PropTypes.func.isRequired,
   setFlights: PropTypes.func.isRequired,
