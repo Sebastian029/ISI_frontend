@@ -56,6 +56,9 @@ const FlightReservation = () => {
   }, []);
 
   const handleTicketReservation = (ticket) => {
+    if (ticket.is_bought) {
+      return;
+    }
     if (selectedTickets.includes(ticket)) {
       setSelectedTickets(
         selectedTickets.filter((selectedTicket) => selectedTicket !== ticket)
@@ -104,65 +107,23 @@ const FlightReservation = () => {
     <>
       <TopBar />
       <div style={appStyles}>
-      <div className = {styles.flightData}>
-          {/*<p>Flight id: {flightId}</p>*/}
-          <div>
-            <p>Departure <FlightTakeoffIcon style={styles.flightIcon} /></p>
-            <p>{departureCity} : {departureAirport}</p>
-          </div>
-          <div>
-            <p>Date: <CalendarMonthIcon style={styles.flightIcon} /></p>
-             {formatDate(flightDate)}
-          </div>
-          <div>
-            <p>Arrival <FlightLandIcon style={styles.flightIcon} /></p>
-            <p>{arrivalCity} : {arrivalAirport}</p>
-          </div>
-        </div>
         <div className={styles.mainContainer}>
           <div className={styles.ticketsList}>
-            <h2>Available Tickets:</h2>
-            {/* {currentTickets.length === 0 ? (
-              <p>No tickets available</p>
-            ) : (
-              <ul className={styles.mainList}>
-                {currentTickets.map((ticket, index) => (
-                  <li key={index} className={styles.Ticket}>
-                    <h3>Ticket {index + 1}</h3>
-                    <ul>
-                      <li>TicketId: {ticket.ticket_id}</li>
-                      <li>Class: {ticket.ticket_class}</li>
-                      <li>Row: {ticket.row}</li>
-                      <li>Seat: {ticket.column}</li>
-                      <li>Price: {ticket.price}</li>
-                    </ul>
-                    <input
-                      className={styles.button}
-                      type="button"
-                      value="Choose Flight"
-                      onClick={() => handleTicketReservation(ticket)}
-                    />
-                  </li>
-                ))}
-              </ul>
-            )}
-            <div className={styles.pagination}>
-              <button
-                className={styles.page}
-                onClick={handlePrevPage}
-                disabled={currentPage === 1}
-              >
-                Previous
-              </button>
-              {renderPageNumbers()}
-              <button
-                className={styles.page}
-                onClick={handleNextPage}
-                disabled={currentPage === totalPages}
-              >
-                Next
-              </button>
-            </div> */}
+            <div className = {styles.flightData}>
+              <div>
+                <p>Departure <FlightTakeoffIcon style={styles.flightIcon} /></p>
+                <p>{departureCity} : {departureAirport}</p>
+              </div>
+              <div>
+                <p>Date: <CalendarMonthIcon style={styles.flightIcon} /></p>
+                {formatDate(flightDate)}
+              </div>
+              <div>
+                <p>Arrival <FlightLandIcon style={styles.flightIcon} /></p>
+                <p>{arrivalCity} : {arrivalAirport}</p>
+              </div>
+            </div>
+            <h2>Available Seats:</h2>
             <div className={styles.ticketMap}>
               <Deck tickets={tickets} num_columns={num_columns} total_seats={total_seats} handleTicketReservation={handleTicketReservation} />
             </div>
@@ -172,7 +133,7 @@ const FlightReservation = () => {
             <ul>
               {selectedTickets.map((ticket, index) => (
                 <li key={index}>
-                  {ticket.ticket_class} - {ticket.price}
+                  Seat number: {ticket.column}-{ticket.row} Class: {ticket.ticket_class} Price: {ticket.price}
                 </li>
               ))}
             </ul>

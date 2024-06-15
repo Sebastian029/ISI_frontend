@@ -4,6 +4,13 @@ import styles from "./OrderConfirmation.module.css";
 import { useEffect, useState } from "react";
 import axios from "../../../../axiosInstance.js";
 import useAxiosPrivate from "../../../../hooks/useAxiosPrivate.jsx";
+import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
+import FlightLandIcon from "@mui/icons-material/FlightLand";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import FlightIcon from "@mui/icons-material/Flight";
+import AirplaneTicketIcon from '@mui/icons-material/AirplaneTicket';
+import { Card } from 'antd';
+
 
 const OrderConfirmation = () => {
   const [tickets, setTickets] = useState([{}]);
@@ -17,6 +24,7 @@ const OrderConfirmation = () => {
     width: "100vw",
     display: "flex",
     flexDirection: "column",
+    alignItems: 'center',
   };
 
   useEffect(() => {
@@ -25,6 +33,14 @@ const OrderConfirmation = () => {
     setFlightDetails(JSON.parse(localStorage.getItem("flightDetails")));
     console.log(tickets);
   }, []);
+
+  const formatDate = (date) => {
+    const parsedDate = new Date(date);
+    const year = parsedDate.getFullYear();
+    const month = (parsedDate.getMonth() + 1).toString().padStart(2, "0");
+    const day = parsedDate.getDate().toString().padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
 
   const handleConfirmation = async () => {
     try {
@@ -67,37 +83,69 @@ const OrderConfirmation = () => {
     <>
       <TopBar />
       <div style={appStyles}>
-        <div className={styles.orderData}>
-          <p>
-            Departure Airport: {flightDetails && flightDetails.departureAirport}
-          </p>
-          <p>Departure City: {flightDetails && flightDetails.departureCity}</p>
-          <p>
-            Arrival Airport: {flightDetails && flightDetails.arrivalAirport}
-          </p>
-          <p>Arrival City: {flightDetails && flightDetails.arrivalCity}</p>
-        </div>
         <div className={styles.mainContainer}>
           <h2>Your Cart</h2>
-          {tickets.length === 0 ? (
-            <p>No tickets available</p>
-          ) : (
-            <ul className={styles.ticketList}>
-              {tickets.map((ticket, index) => (
-                <li key={index} className={styles.ticket}>
-                  <h3>Ticket {index + 1}</h3>
-                  <ul>
-                    <li>TicketId: {ticket.ticket_id}</li>
-                    <li>flight_id: {ticket.flight_id}</li>
-                    <li>Class: {ticket.ticket_class}</li>
-                    <li>Row: {ticket.row}</li>
-                    <li>Seat: {ticket.column}</li>
-                    <li>Price: {ticket.price}</li>
-                  </ul>
-                </li>
-              ))}
-            </ul>
-          )}
+          <div className={styles.yourOrder}>
+            <div className={styles.flightBar}>
+              <div className={styles.infoBar}>
+                <b> {flightDetails && flightDetails.departureCity}</b>
+              </div>
+              <div className={styles.line}/>
+              <div>
+                <FlightIcon style={{fontSize: 30, marginBottom:-5, transform: "rotate(90deg)"}} />
+              </div>
+              <div className={styles.line}/>
+              <div className={styles.infoBar}>
+                <b> {flightDetails && flightDetails.arrivalCity}</b>
+              </div>
+            </div>
+            <div className={styles.flightData}>
+              <div className={styles.infoBar}>
+                <p><FlightTakeoffIcon style={{fontSize:30, marginBottom:-5}} />
+                Departure Airport: {flightDetails && flightDetails.departureAirport}</p>
+              </div>
+              <div className={styles.infoBar}>
+                <p><FlightLandIcon style={{fontSize:30, marginBottom:-5}} />
+                Arrival Airport: {flightDetails && flightDetails.arrivalAirport}</p>
+              </div>
+              <div className={styles.infoBar}>
+                <p><CalendarMonthIcon style={{fontSize:30, marginBottom:-5}} />
+                Flight Date: {formatDate(flightDetails && flightDetails.flightDate)}</p>
+              </div>
+            </div>
+            <div className={styles.ticketData}>
+              <div className={styles.infoTickets}>Tickets you have chosen for this flight:</div>
+              {tickets.length === 0 ? (
+                <p>No tickets available</p>
+              ) : (
+                <ul className={styles.ticketList}>
+                  {tickets.map((ticket, index) => (
+                    <li key={index} className={styles.ticketC}>
+                      <Card hoverable className={styles.ticket}>
+                        <div className={styles.cardContent}>
+                          <div className={styles.info}>
+                            <div className={styles.infoBar}><AirplaneTicketIcon style={{fontSize:30, marginBottom:-7, marginRight: 4}}/>Ticket {index + 1}</div>
+                            <div className={styles.ticketInfo}>
+                              <div>Class: {ticket.ticket_class}</div>
+                              <div>Row: {ticket.row}</div>
+                              <div>Seat: {ticket.column}</div>
+                              <div>Price: {ticket.price} $</div>
+                            </div>
+                          </div>
+                          <img 
+                            className={styles.img}
+                            src={ticket.ticket_class == "buisness"
+                              ? "https://upload.wikimedia.org/wikipedia/commons/7/72/Philippine_Airlines_business_class_A330-300.png"
+                              : "https://www.travelguys.fr/wp-content/uploads/2023/06/IMG_7191-scaled.jpg"} />
+                        </div>
+                      </Card>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+          
           <div className={styles.payment}>
             <p className={styles.label}>Method of payment</p>
             <label className={styles.radio}>

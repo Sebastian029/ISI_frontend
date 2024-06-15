@@ -18,7 +18,8 @@ const Seat = ({seat, handleTicketReservation}) => {
     
     return (
       <div className = 'seat' style={style} onClick={() => handleTicketReservation(seat)}>
-        <p>{seat.column}-{seat.row}</p>
+        <p style={{marginBottom:'3px'}}>{seat.column}-{seat.row}</p>
+        <p>{seat.ticket_class=="buisness" ? 'B' : 'E'}</p>
       </div>
     )
   }

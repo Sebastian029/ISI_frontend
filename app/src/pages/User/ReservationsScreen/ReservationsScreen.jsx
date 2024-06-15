@@ -3,6 +3,9 @@ import TopBar from "../HomeScreen/TopBar/TopBar.jsx";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate.jsx";
 import useAuth from "../../../hooks/useAuth.jsx";
 import styles from "./ReservationsScreen.module.css";
+import AirplaneTicketIcon from '@mui/icons-material/AirplaneTicket';
+import { Card } from 'antd';
+
 
 function ReservationsScreen() {
   const appStyles = {
@@ -78,6 +81,15 @@ function ReservationsScreen() {
     return pageNumbers;
   };
 
+  const formatDate = (date) => {
+    const parsedDate = new Date(date);
+    const year = parsedDate.getFullYear();
+    const month = (parsedDate.getMonth() + 1).toString().padStart(2, "0");
+    const day = parsedDate.getDate().toString().padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+
   return (
     <>
       <TopBar />
@@ -95,24 +107,35 @@ function ReservationsScreen() {
                   <li>Full price: {order.full_price}</li>
                   <li>
                     Payment status:{" "}
-                    {order.is_payment_completed ? "true" : "false"}
+                    {order.is_payment_completed ? "true" : "not regulated"}
                   </li>
                   <li>Payment Method: {order.paymentMethod}</li>
-                  <li>Order date: {order.orderDate}</li>
+                  <li>Order date: {formatDate(order.orderDate)}</li>
 
                   {order.tickets.length === 0 ? (
                     <p>No tickets available</p>
                   ) : (
                     <ul className={styles.ticketList}>
                       {order.tickets.map((ticket, index) => (
-                        <li className={styles.ticket} key={index}>
-                          <h3>Ticket {index + 1}</h3>
-                          <ul className={styles.ticketData}>
-                            <li>Class: {ticket.ticket_class}</li>
-                            <li>Row: {ticket.row}</li>
-                            <li>Seat: {ticket.column}</li>
-                            <li>Price: {ticket.price}</li>
-                          </ul>
+                        <li key={index} className={styles.ticketC}>
+                          <Card hoverable className={styles.ticket}>
+                            <div className={styles.cardContent}>
+                              <div className={styles.info}>
+                                <div className={styles.infoBar}><AirplaneTicketIcon style={{fontSize:30, marginBottom:-7, marginRight: 4}}/>Ticket {index + 1}</div>
+                                <div className={styles.ticketInfo}>
+                                  <div>Class: {ticket.ticket_class}</div>
+                                  <div>Row: {ticket.row}</div>
+                                  <div>Seat: {ticket.column}</div>
+                                  <div>Price: {ticket.price} $</div>
+                                </div>
+                              </div>
+                              <img 
+                                className={styles.img}
+                                src={ticket.ticket_class == "buisness"
+                                  ? "https://upload.wikimedia.org/wikipedia/commons/7/72/Philippine_Airlines_business_class_A330-300.png"
+                                  : "https://www.travelguys.fr/wp-content/uploads/2023/06/IMG_7191-scaled.jpg"} />
+                            </div>
+                          </Card>
                         </li>
                       ))}
                     </ul>
