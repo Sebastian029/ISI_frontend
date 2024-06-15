@@ -2,6 +2,10 @@ import { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import axiosInstance from "../../axiosInstance";
 import styles from "./AutocompleteTextInput.module.css";
+import { Input } from "antd";
+import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
+import FlightLandIcon from "@mui/icons-material/FlightLand";
+
 
 const AutocompleteTextInput = ({
   value,
@@ -79,16 +83,19 @@ const AutocompleteTextInput = ({
     }
     return null;
   };
+  const IconComponent =
+    placeholder === "Departure airport" ? FlightTakeoffIcon : FlightLandIcon;
 
   return (
     <div ref={wrapperRef} className={styles.container} style={{ flex: 1 }}>
-      <input
+      <Input
         type="text"
         value={value}
         onChange={handleChange}
         placeholder={placeholder}
         className={styles.textInput}
         style={style}
+        prefix={<IconComponent />}
         {...props}
       />
       {renderSuggestions()}

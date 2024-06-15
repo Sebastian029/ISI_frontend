@@ -11,7 +11,7 @@ const useAxiosPrivate = () => {
     const requestIntercept = axiosPrivate.interceptors.request.use(
       (config) => {
         if (!config.headers["x-access-tokens"]) {
-         // console.log(auth?.accessToken);
+          // console.log(auth?.accessToken);
           config.headers["x-access-tokens"] = auth?.accessToken;
         }
         return config;

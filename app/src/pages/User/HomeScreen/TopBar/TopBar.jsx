@@ -23,7 +23,9 @@ function TopBar() {
           Home
         </div>
         <div className={styles.box}>Help</div>
-        <div className={styles.box}>Favourites</div>
+        <div className={styles.box} onClick={() => navigate("/favourites")} >
+          Favourites
+        </div>
         <div className={styles.box} onClick={() => navigate("/reservations")}>
           My reservations
         </div>

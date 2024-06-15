@@ -20,7 +20,7 @@
 
 .box:hover {
   margin-bottom: -5px;
-  border-bottom-color: orange;
+  border-bottom-color: var(--main-color);
 }
 
 .username {

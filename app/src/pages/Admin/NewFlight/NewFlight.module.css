@@ -1,130 +1,71 @@
 .mainBox {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    background-color: var(--background-color);
-    align-items: center;
-  }
-  
-  .box {
-    padding: 10px;
-    border: 1px solid black;
-  }
-  
-  .checkBoxRow {
-    padding-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 20px;
-  }
-  .checkbox {
-    height: 15px;
-    width: 15px;
-    cursor: pointer;
-  }
-  
-  .checkboxText {
-    cursor: pointer;
-  }
-  
-  .destinationInputRow {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .textInput {
-    border: 0px;
-    border-radius: 5px;
-    padding: 10px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 20px;
-    background-color: #e4e4e4;
-  }
-  .destinationInputRow > input {
-    flex: 3;
-  }
-  
-  input:focus {
-    outline: none;
-  }
-  
-  .iconSwap {
-    color: #e4e4e4;
-    cursor: pointer;
-    font-size: 50px !important;
-  }
-  
-  .globalInputBox {
-    width: 50em;
-  }
-  
-  .datePickerBox {
-    display: flex;
-    margin-top: 10px;
-    justify-content: space-between;
-    max-width: 100%;
-    align-items: center;
-  }
-  
-  .dateInput {
-    border: 0px;
-    border-radius: 5px;
-    padding: 8px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 15px;
-    background-color: #e4e4e4;
-    margin-left: 5px;
-    margin-right: 10px;
-    width: 8.5em;
-    z-index: 1;
-  }
-  
-  .searchButton {
-    border: 0px;
-    border-radius: 5px;
-    padding: 8px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 15px;
-    background-color: #e4e4e4;
-  }
-  
-  .confirmButton {
-    flex: 2;
-    margin-top: 10px;
-    margin-right: 10px;
-    background-color: var(--main-color);
-    border: 0px;
-    border-radius: 5px;
-    font-size: 15px;
-    font-weight: 500;
-    padding: 8px;
-    cursor: pointer;
-  }
-  .confirmButton:hover {
-    background-color: var(--main-color-2);
-  }
-  
-  .icon {
-    color: #e4e4e4;
-    cursor: pointer;
-    font-size: 30px !important;
-  }
-  
-  .personInput {
-    border: 0px;
-    border-radius: 5px;
-    padding: 8px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 15px;
-    background-color: #e4e4e4;
-    width: 7em;
-  }
-  
-  .departureInput {
-    width: 350px; 
-  }
-  
-  .arrivalInput {
-    width: 350px; 
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 80vh;
+  padding-top: 10vh;
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.inputContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.inputLabelActive {
+    color: #333;
+}
+
+.inputLabelActive,
+.inputLabelActive + .MuiInputBase-root .MuiInput-input {
+  transition: all 0.3s ease-out;
+}
+
+.inputLabelActive {
+  transform-origin: top left;
+  pointer-events: none;
+  z-index: 1;
+  background-color: #fff;
+  padding: 0 5px;
+  margin-bottom: 5px;
+}
+
+.iconSwap {
+  color: #666;
+  cursor: pointer;
+}
+.timePicker {
+  margin-top: 8px; /* dostosuj marginesy według potrzeb */
+}
+.icon {
+  color: #666;
+  cursor: pointer;
+}
+
+.confirmButton {
+  width: 100%;
+  max-width: 150px;
+  margin-top: 20px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.error {
+  color: red;
+}
