@@ -1,17 +1,58 @@
 
 .orderData{
-    width:100%;
+    width:90%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-    border: 1px solid black;
     font-size: 18px;
     font-family: 'Lato';
     font-weight: 600;
-
+    margin-bottom: 5%;
 }
 
+
+.flightBar{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1%;
+}
+
+.line{
+    flex: 1;
+    height: 2px;
+    background-color: black;
+    margin: 10;
+}
+
+.infoBar {
+    display: flex;
+    align-items: "center";
+    gap: 10;
+    font-size: 20px;
+}
+
+.infoTickets {
+    margin:1%;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.yourOrder{
+    width:80%;
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+    padding: 2%;
+    margin: 2%;
+}
+
+.img{
+    width: 50%;
+    border-radius: 10px;
+    
+}
 
 .ordersList{
     width:100%;
@@ -29,7 +70,7 @@
     width:80%;
     align-items: center;
     justify-content: center;
-    border: 1px solid orange;
+    border: 1px solid var(--main-color-2);
     border-radius: 10px;
     padding: 2%;
     margin: 1%;
@@ -43,7 +84,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
+    padding: 2%
 }
 
 .ticketList{
@@ -51,25 +92,52 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    gap: 20px;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
     font-family: 'Lato';
     font-size: 18px;
+    margin-left: 4%;
+    gap: 20px
 
 }
 
 .ticket{
-    background-color:bisque;
+    background-color:rgba(var(--main-color-rgb),0.4);
+    border: 2px solid var(--main-color);
     border-radius: 10px;
-    padding: 3%;
-    margin: 1%;
+    padding: 1%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+}
+
+.ticketC{
+    width: 40%;
+}
+
+.ticketInfo{
+    margin-left: 10%;
+    margin-top: 1%;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.info{
+    width: 100%;
+}
+
+.cardContent{
+    width: 23vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .button{
     padding: 8px 16px;
-    border: 1px solid orange;
-    color: orange;
+    border: 1px solid var(--main-color-2);
+    color: var(--main-color-2);
     cursor: pointer;
     text-decoration: none;
     bottom: 0px;
@@ -78,15 +146,15 @@
 }
 
 .button:hover {
-    background-color: orange;
+    background-color: var(--main-color-2);
     color: white;
     cursor:pointer;
 }
 
 .active{
-    background-color: orange;
+    background-color: var(--main-color-2);
     color: white;
-    border-color: orange;
+    border-color: var(--main-color-2);
 }
 
 .payment{
