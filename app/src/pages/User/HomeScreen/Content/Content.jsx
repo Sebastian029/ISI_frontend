@@ -8,11 +8,11 @@ function Content({ flights }) {
   const navigate = useNavigate();
 
   const handleFlightSelection = (flight) => {
-    const { departure_airport, departure_city, arrival_airport, arrival_city } =
+    const { departure_airport, departure_city, arrival_airport, arrival_city, data_lotu } =
       flight;
     //console.log("asd");
     navigate(
-      `flightReservation/${flight.flight_id}?departureAirport=${departure_airport}&departureCity=${departure_city}&arrivalAirport=${arrival_airport}&arrivalCity=${arrival_city}`
+      `flightReservation/${flight.flight_id}?departureAirport=${departure_airport}&departureCity=${departure_city}&arrivalAirport=${arrival_airport}&arrivalCity=${arrival_city}&flightDate=${data_lotu}`
     );
   };
 
