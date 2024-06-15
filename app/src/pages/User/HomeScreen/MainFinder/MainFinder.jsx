@@ -8,6 +8,7 @@ import useAuth from "../../../../hooks/useAuth.jsx";
 import { DatePicker } from "antd";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import dayjs from "dayjs";
+import { CalendarOutlined } from "@ant-design/icons";
 dayjs.extend(customParseFormat);
 
 function MainFinder({ activateFinder, setFlights }) {
@@ -49,19 +50,19 @@ function MainFinder({ activateFinder, setFlights }) {
         params.data_lotu = dayjs(departureDateInput).format(sendDateFormat);
       }
       console.log(params);
-      console.log(auth.accessToken);
+
       let response;
-      try {
-        response = await axiosPrivate.get("/flights_with_airports_token", {
-          params,
-        });
-      } catch (error) {
-        console.log();
+      if (auth && auth.accessToken) {
         try {
+          response = await axiosPrivate.get("/flights_with_airports_token", {
+            params,
+          });
+        } catch (error) {
+          console.log("Get flights with token failed", error.message);
           response = await axios.get("/flights_with_airports", { params });
-        } catch (secondError) {
-          console.log("Get flights failed", secondError.message);
         }
+      } else {
+        response = await axios.get("/flights_with_airports", { params });
       }
 
       if (response.data) {
@@ -109,10 +110,10 @@ function MainFinder({ activateFinder, setFlights }) {
           setAirportID={setDepartureID}
         />
         <DatePicker
-          className={styles.dateInput}
+          className={`${styles.dateInput} custom-date-picker`}
+          suffixIcon={<CalendarOutlined className={styles.customIcon} />}
           onChange={onDateChange}
           format={displayDateFormat}
-          placeholderText="Departure date"
           value={departureDateInput}
         />
 
@@ -139,6 +140,7 @@ function MainFinder({ activateFinder, setFlights }) {
     </div>
   );
 }
+
 MainFinder.propTypes = {
   activateFinder: PropTypes.func.isRequired,
   setFlights: PropTypes.func.isRequired,

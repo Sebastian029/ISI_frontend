@@ -4,7 +4,7 @@
   align-items: center;
   width: 100%;
   min-height: 80vh;
-  padding-top: 10vh;
+  padding-top: 5vh;
 }
 
 .formContainer {
@@ -23,7 +23,7 @@
 }
 
 .inputLabelActive {
-    color: #333;
+  color: #333;
 }
 
 .inputLabelActive,

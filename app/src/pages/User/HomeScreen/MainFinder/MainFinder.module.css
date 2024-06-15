@@ -29,6 +29,14 @@
   border-radius: 5px;
   padding: 8px;
   font-size: 25px;
+  background-color: var(--background-color);
+  border: 1px solid gray;
+  font-family: "Lato";
+  font-size: 20px;
+}
+.customIcon {
+  color: black; /* Przykład: zmiana koloru ikony */
+  font-size: 20px; /* Przykład: zmiana rozmiaru ikony */
 }
 
 .confirmButton {

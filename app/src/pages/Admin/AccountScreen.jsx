@@ -28,7 +28,7 @@ function AdminScreen() {
           <ul>
             <li>zarządzania uprawnieniami użytkowników,</li>
             <li>dodawania nowych lotów,</li>
-            <li>oraz płatnościami.</li>
+            <li>oraz zarządzaniu płatnościami.</li>
           </ul>
         </div>
       </div>
