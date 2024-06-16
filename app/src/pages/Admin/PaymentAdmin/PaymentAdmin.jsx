@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-import { Table, Button, Space, Input } from "antd";
+import { Table, Button, Space, Input, message } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 import TopBar from "../TopBar/TopBar";
@@ -8,6 +8,7 @@ import Loading from "../../../comp/Loading";
 import NoData from "../../../comp/NoData";
 import dayjs from "dayjs";
 import styles from "./PaymentAdmin.module.css";
+import useAuth from "../../../hooks/useAuth.jsx";
 
 const PaymentAdmin = () => {
   const [orders, setOrders] = useState([]);
@@ -15,12 +16,12 @@ const PaymentAdmin = () => {
   const [loading, setLoading] = useState(true);
   const axiosPrivate = useAxiosPrivate();
   const [currentPage, setCurrentPage] = useState(1);
-  const ordersPerPage = 5;
+  const ordersPerPage = 11;
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
 
-  // Define searchInput useRef
   const searchInput = useRef(null);
+  const auth = useAuth();
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -41,12 +42,12 @@ const PaymentAdmin = () => {
     };
 
     fetchOrders();
-  }, [axiosPrivate]);
+  }, [auth.auth, axiosPrivate]);
 
   const handleConfirmPayment = async (order_id) => {
     try {
       const response = await axiosPrivate.get(`/order/confirm/${order_id}`);
-      alert(response.data.message);
+      message.success(response.data.message);
       setOrders((prevOrders) =>
         prevOrders.filter((order) => order.order_id !== order_id)
       );
@@ -126,10 +127,12 @@ const PaymentAdmin = () => {
       <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
     ),
     onFilter: (value, record) => {
-      const user = record[dataIndex]?.name; // Optional chaining here
-      return user && user.toLowerCase().includes(value.toLowerCase());
+      const keys = dataIndex.split(".");
+      const field = keys.reduce((acc, key) => (acc ? acc[key] : null), record);
+      return (
+        field && field.toString().toLowerCase().includes(value.toLowerCase())
+      );
     },
-
     onFilterDropdownVisibleChange: (visible) => {
       if (visible) {
         setTimeout(() => searchInput.current.select(), 100);
@@ -148,24 +151,91 @@ const PaymentAdmin = () => {
       ),
   });
 
+  const getUserColumnSearchProps = () => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+    }) => (
+      <div style={{ padding: 8 }}>
+        <Input
+          ref={searchInput}
+          placeholder={`Search user`}
+          value={selectedKeys[0]}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() => handleSearch(selectedKeys, confirm, "user")}
+          style={{ width: 188, marginBottom: 8, display: "block" }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys, confirm, "user")}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => handleReset(clearFilters)}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Reset
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered) => (
+      <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+    ),
+    onFilter: (value, record) => {
+      const user = `${record.user.name} ${record.user.surname}`;
+      return user.toLowerCase().includes(value.toLowerCase());
+    },
+    onFilterDropdownVisibleChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.current.select(), 100);
+      }
+    },
+    render: (text, record) =>
+      searchedColumn === "user" ? (
+        <Highlighter
+          highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+          searchWords={[searchText]}
+          autoEscape
+          textToHighlight={`${record.user.name} ${record.user.surname}`}
+        />
+      ) : (
+        `${record.user.name} ${record.user.surname}`
+      ),
+  });
+
   const columns = [
     {
       title: "Order identification nr.",
       dataIndex: "order_id",
       key: "order_id",
+      align: "center",
       sorter: (a, b) => a.order_id - b.order_id,
+      ...getColumnSearchProps("order_id"),
       render: (order_id) => <span>{order_id}</span>,
     },
     {
       title: "User",
       dataIndex: "user",
+      align: "center",
       key: "user",
-      ...getColumnSearchProps("user.name"),
+      ...getUserColumnSearchProps(),
       render: (user) => <span>{`${user.name} ${user.surname}`}</span>,
     },
     {
       title: "Full price",
       dataIndex: "full_price",
+      align: "center",
       key: "full_price",
       sorter: (a, b) => a.full_price - b.full_price,
       render: (full_price) => <span>{full_price}</span>,
@@ -173,20 +243,16 @@ const PaymentAdmin = () => {
     {
       title: "Order date",
       dataIndex: "orderDate",
+      align: "center",
       key: "orderDate",
       render: (orderDate) => (
         <span>{dayjs(orderDate).format("DD-MM-YYYY")}</span>
       ),
     },
     {
-      title: "Payment Methods",
-      dataIndex: "paymentMethod",
-      key: "paymentMethod",
-      render: (paymentMethod) => <span>{paymentMethod}</span>,
-    },
-    {
       title: "Action",
       key: "action",
+      align: "center",
       render: (_, record) => (
         <Button
           type="primary"
@@ -207,24 +273,15 @@ const PaymentAdmin = () => {
     );
   }
 
-  if (error) {
-    return (
-      <>
-        <TopBar />
-        <div>{error}</div>
-      </>
-    );
-  }
-
   return (
     <>
       <TopBar />
       <div className={styles.ordersList}>
-        <h2>Orders Transfer</h2>
         {orders.length === 0 ? (
           <NoData />
         ) : (
           <Table
+            className={styles.fullWidthTable}
             columns={columns}
             dataSource={orders}
             rowKey={(record) => record.order_id}
