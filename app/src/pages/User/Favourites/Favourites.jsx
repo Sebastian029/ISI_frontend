@@ -10,11 +10,7 @@ import { useEffect, useState } from "react";
 
 function FavouritesScreen() {
   const navigate = useNavigate();
-  const appStyles = {
-    height: "100vh",
-    display: "flex",
-    flexDirection: "column",
-  };
+
   const axiosPrivate = useAxiosPrivate();
   const auth = useAuth();
 
@@ -45,10 +41,10 @@ function FavouritesScreen() {
     };
 
     getFlights();
-  }, [auth]);
+  }, [axiosPrivate]);
 
   return (
-    <div style={appStyles}>
+    <>
       <TopBar />
       <div className={styles.mainBox}>
         <div className={styles.flightsContent}>
@@ -65,7 +61,7 @@ function FavouritesScreen() {
         </div>
       </div>
       <Footer />
-    </div>
+    </>
   );
 }
 

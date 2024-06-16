@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { useLocation, Navigate, Outlet, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import { useEffect } from "react";
 
 const RequireAuth = ({ allowedRoles }) => {
   const { setModal } = useAuth();
@@ -12,17 +13,21 @@ const RequireAuth = ({ allowedRoles }) => {
     allowedRoles?.includes(role)
   );
 
+  useEffect(() => {
+    if (!hasAllowedRole && authData?.accessToken) {
+      if (authData.roles.includes("admin")) {
+        navigate("/admin", { replace: true });
+      } else {
+        navigate("/", { replace: true });
+      }
+    } else if (!authData?.accessToken) {
+      setModal(true);
+    }
+  }, [hasAllowedRole, authData, navigate, setModal]);
+
   if (hasAllowedRole) {
     return <Outlet />;
-  } else if (authData?.accessToken) {
-    if (authData.roles.includes("admin")) {
-      navigate("/admin", { replace: true });
-    } else {
-      navigate("/", { replace: true });
-    }
-    return null;
   } else {
-    setModal(true);
     return <Navigate to="/" state={{ from: location }} replace />;
   }
 };

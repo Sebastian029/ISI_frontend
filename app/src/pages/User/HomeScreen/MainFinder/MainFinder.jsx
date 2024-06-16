@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "react-datepicker/dist/react-datepicker.css";
 import AutocompleteTextInput from "../../../../comp/AutocompleteTextInput/AutocompleteTextInput.jsx";
-import axios, { axiosPrivate } from "../../../../axiosInstance.js";
+import axios from "../../../../axiosInstance.js";
+import useAxiosPrivate from "../../../../hooks/useAxiosPrivate.jsx";
 import styles from "./MainFinder.module.css";
 import useAuth from "../../../../hooks/useAuth.jsx";
 import { DatePicker } from "antd";
@@ -20,6 +21,7 @@ function MainFinder({ activateFinder, setFlights }) {
   const { auth } = useAuth();
   const [arrivalID, setArricalID] = useState(null);
   const [departureID, setDepartureID] = useState(null);
+  const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
     const savedData = JSON.parse(localStorage.getItem("flightSearchData"));

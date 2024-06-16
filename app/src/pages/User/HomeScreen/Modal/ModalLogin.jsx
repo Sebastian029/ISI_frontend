@@ -4,6 +4,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import axios from "../../../../axiosInstance";
 import useAuth from "../../../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import logo from "../../../../assets/google_logo.png";
 
 const ModalLogin = ({ toggleModal, setLogin }) => {
   const navigate = useNavigate();
@@ -88,9 +89,8 @@ const ModalLogin = ({ toggleModal, setLogin }) => {
       />
       {loginOutput ? <p>{loginOutput}</p> : <p></p>}
       <p>- or log in with-</p>
-      <div className="google-auth" onClick={handleGoogle}>
-        <GoogleIcon />
-        Google
+      <div className="googleAuth">
+        <img src={logo} alt="Logo" width={180} onClick={handleGoogle} />
       </div>
       <p className="register-reference" onClick={() => setLogin(false)}>
         Don`t have an account? <b>Register now</b>
