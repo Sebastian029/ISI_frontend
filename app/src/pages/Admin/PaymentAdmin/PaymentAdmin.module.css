@@ -5,6 +5,13 @@
   align-items: center;
   justify-content: space-around;
   font-family: "Lato";
+  padding-top: 1%;
+  padding: 1%;
+  box-sizing: border-box;
+}
+
+.fullWidthTable {
+  width: 100%;
 }
 
 .order {

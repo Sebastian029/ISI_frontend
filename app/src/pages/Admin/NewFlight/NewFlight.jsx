@@ -14,6 +14,7 @@ import TopBar from "../TopBar/TopBar";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import styles from "./NewFlight.module.css";
 import dayjs from "dayjs";
+import useAuth from "../../../hooks/useAuth";
 
 function NewFlight() {
   const [form] = Form.useForm();
@@ -22,6 +23,7 @@ function NewFlight() {
   const [airports, setAirports] = useState([]);
   const [messageApi, contextHolder] = message.useMessage();
   const axiosPrivate = useAxiosPrivate();
+  const auth = useAuth();
 
   const formatDate = (date) => dayjs(date).format("YYYY-MM-DD");
 
@@ -95,7 +97,7 @@ function NewFlight() {
     fetchPlanes();
     fetchAirlines();
     fetchAirports();
-  }, []);
+  }, [auth.auth]);
 
   return (
     <>

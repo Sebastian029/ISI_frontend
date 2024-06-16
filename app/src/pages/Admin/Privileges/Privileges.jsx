@@ -1,45 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import {
+  Table,
+  Button,
+  Space,
+  Input,
+  message,
+  Modal,
+  Checkbox,
+  Form,
+} from "antd";
+import { SearchOutlined } from "@ant-design/icons";
+import Highlighter from "react-highlight-words";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import TopBar from "../TopBar/TopBar";
-import Footer from "../Footer/Footer";
-import Modal from "react-modal";
-import styles from "./Privileges.module.css";
 import Loading from "../../../comp/Loading";
-
-Modal.setAppElement("#root");
+import styles from "./Privileges.module.css";
+import useAuth from "../../../hooks/useAuth.jsx";
+import NoData from "../../../comp/NoData";  
 
 const Privileges = () => {
   const [users, setUsers] = useState([]);
   const [privileges, setPrivileges] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [formData, setFormData] = useState({
-    username: "",
-    privilege_name: "",
-  });
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
+  const searchInput = useRef(null);
+  const auth = useAuth();
   const axiosPrivate = useAxiosPrivate();
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 10;
-
-  // Updated filter logic to search by name, surname, or email
-  const filteredUsers = users.filter(
-    (user) =>
-      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.surname.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
-  const currentUsers = filteredUsers.slice(
-    (currentPage - 1) * usersPerPage,
-    currentPage * usersPerPage
-  );
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [selectedPrivileges, setSelectedPrivileges] = useState([]);
+  const [initialPrivileges, setInitialPrivileges] = useState([]);
 
   useEffect(() => {
     const fetchUsersAndPrivileges = async () => {
@@ -59,54 +52,90 @@ const Privileges = () => {
     };
 
     fetchUsersAndPrivileges();
-  }, [axiosPrivate]);
+  }, [auth.auth, axiosPrivate]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
   };
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
+  const handleReset = (clearFilters) => {
+    clearFilters();
+    setSearchText("");
   };
 
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
-  const renderPageNumbers = () => {
-    const pageNumbers = [];
-    const startPage = Math.max(1, currentPage - 2);
-    const endPage = Math.min(totalPages, currentPage + 2);
-
-    for (let i = startPage; i <= endPage; i++) {
-      pageNumbers.push(
-        <button
-          key={i}
-          className={`${styles.button} ${
-            i === currentPage ? styles.active : ""
-          }`}
-          onClick={() => handlePageChange(i)}
-        >
-          {i}
-        </button>
-      );
-    }
-
-    return pageNumbers;
-  };
+  const getColumnSearchProps = (dataIndex) => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+    }) => (
+      <div style={{ padding: 8 }}>
+        <Input
+          ref={searchInput}
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{ width: 188, marginBottom: 8, display: "block" }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => handleReset(clearFilters)}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Reset
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered) => (
+      <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex]
+        ? record[dataIndex]
+            .toString()
+            .toLowerCase()
+            .includes(value.toLowerCase())
+        : "",
+    onFilterDropdownVisibleChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.current.select(), 100);
+      }
+    },
+    render: (text) =>
+      searchedColumn === dataIndex ? (
+        <Highlighter
+          highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+          searchWords={[searchText]}
+          autoEscape
+          textToHighlight={text ? text.toString() : ""}
+        />
+      ) : (
+        text
+      ),
+  });
 
   const openModal = (user) => {
+    const userPrivileges = user.privileges.map((priv) => priv.name);
     setSelectedUser(user);
-    setSelectedPrivileges(user.privileges.map((priv) => priv.name));
+    setSelectedPrivileges(userPrivileges);
+    setInitialPrivileges(userPrivileges);
     setModalIsOpen(true);
   };
 
@@ -114,6 +143,7 @@ const Privileges = () => {
     setModalIsOpen(false);
     setSelectedUser(null);
     setSelectedPrivileges([]);
+    setInitialPrivileges([]);
   };
 
   const handlePrivilegeChange = (e) => {
@@ -125,9 +155,6 @@ const Privileges = () => {
 
   const handleSavePrivileges = async () => {
     try {
-      const initialPrivileges = selectedUser.privileges.map(
-        (priv) => priv.name
-      );
       const privilegesToAdd = selectedPrivileges.filter(
         (priv) => !initialPrivileges.includes(priv)
       );
@@ -135,7 +162,6 @@ const Privileges = () => {
         (priv) => !selectedPrivileges.includes(priv)
       );
 
-      // Add new privileges
       const addPromises = privilegesToAdd.map((privilegeName) =>
         axiosPrivate.post("/users/privileges/add", {
           public_id: selectedUser.public_id,
@@ -143,7 +169,6 @@ const Privileges = () => {
         })
       );
 
-      // Remove unselected privileges
       const removePromises = privilegesToRemove.map((privilegeName) =>
         axiosPrivate.delete("/users/privileges/remove", {
           data: {
@@ -153,17 +178,50 @@ const Privileges = () => {
         })
       );
 
-      // Wait for all promises to resolve
       await Promise.all([...addPromises, ...removePromises]);
 
-      // Fetch the updated users list
       const usersResponse = await axiosPrivate.get("/users/privilages");
       setUsers(usersResponse.data);
       closeModal();
+      message.success("Privileges updated successfully!");
     } catch (err) {
       setError(err.message);
     }
   };
+
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      align: "center",
+      ...getColumnSearchProps("name"),
+    },
+    {
+      title: "Surname",
+      dataIndex: "surname",
+      key: "surname",
+      align: "center",
+      ...getColumnSearchProps("surname"),
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      align: "center",
+      ...getColumnSearchProps("email"),
+    },
+    {
+      title: "Actions",
+      key: "actions",
+      align: "center",
+      render: (_, record) => (
+        <Button type="primary" onClick={() => openModal(record)}>
+          Edit Privileges
+        </Button>
+      ),
+    },
+  ];
 
   if (loading) {
     return (
@@ -173,93 +231,46 @@ const Privileges = () => {
     );
   }
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
   return (
     <>
       <TopBar />
       <div className={styles.privilegesList}>
-        <h1>Users and Privileges</h1>
-        <input
-          type="text"
-          placeholder="Search user"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className={styles.search}
-        />
-        <ul className={styles.mainList}>
-          {currentUsers.map((user) => (
-            <li className={styles.privileges} key={user.id}>
-              <span>
-                {user.name} {user.surname} {user.public_id}
-              </span>
-              {user.email} - Privileges:
-              <ul>
-                {user.privileges.map((privilege) => (
-                  <div key={privilege.id}>{privilege.name}</div>
-                ))}
-              </ul>
-              <button className={styles.button} onClick={() => openModal(user)}>
-                Edit Privileges
-              </button>
-            </li>
-          ))}
-        </ul>
-        <div className={styles.pagination}>
-          <button
-            className={styles.button}
-            onClick={handlePrevPage}
-            disabled={currentPage === 1}
-          >
-            Previous
-          </button>
-          {renderPageNumbers()}
-          <button
-            className={styles.button}
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </button>
-        </div>
-      </div>
-
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Edit Privileges"
-        className={styles.modal}
-        overlayClassName={styles.overlay}
-      >
-        <h2 className={styles.imput}>
-          Edit Privileges for {selectedUser?.name}
-        </h2>
-        <form>
-          {privileges.map((privilege) => (
-            <div key={privilege.id}>
-              <label className={styles.imput}>
-                <input
-                  type="checkbox"
+        {privileges.length === 0 ? (
+          <NoData />
+        ) : (
+          <Table
+            className={styles.fullWidthTable}
+            columns={columns}
+            dataSource={users}
+            rowKey="id"
+          />
+        )}
+        <Modal
+          title={`Edit for ${selectedUser?.name} ${selectedUser?.surname}`}
+          visible={modalIsOpen}
+          onOk={handleSavePrivileges}
+          onCancel={closeModal}
+          okButtonProps={{
+            disabled:
+              selectedPrivileges.sort().join(",") ===
+              initialPrivileges.sort().join(","),
+          }}
+        >
+          <Form style={{ display: "flex" }}>
+            {privileges.map((privilege) => (
+              <Form.Item key={privilege.id}>
+                <Checkbox
                   value={privilege.name}
                   checked={selectedPrivileges.includes(privilege.name)}
                   onChange={handlePrivilegeChange}
-                />
-                {privilege.name}
-              </label>
-            </div>
-          ))}
-        </form>
-        <button className={styles.button} onClick={handleSavePrivileges}>
-          Save
-        </button>
-        <button className={styles.button} onClick={closeModal}>
-          Cancel
-        </button>
-      </Modal>
-
-      <Footer />
+                >
+                  {privilege.name}
+                </Checkbox>
+              </Form.Item>
+            ))}
+          </Form>
+        </Modal>
+      </div>
     </>
   );
 };

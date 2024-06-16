@@ -5,24 +5,22 @@
   justify-content: flex-end;
   gap: 10px;
   padding: 10px 0px;
-  overflow-x: auto; /* Dodajemy pasek przewijania w poziomie dla mniejszych ekranów */
 }
 
 .box {
   font-size: 20px;
-  font-weight: 200;
-  font-family: "Lucida Sans";
+  font-weight: 400;
+  font-family: "Lato";
   margin: 0px 10px;
   padding: 5px 20px;
   border-bottom: 4px solid transparent;
   transition: margin-bottom 0.5s ease, border-bottom-color 0.5s ease;
   cursor: pointer;
-  flex-shrink: 0; /* Zapobiegamy zmniejszaniu elementów */
 }
 
 .box:hover {
   margin-bottom: -5px;
-  border-bottom-color: orange;
+  border-bottom-color: var(--main-color);
 }
 
 /* Media queries dla responsywności */
