@@ -5,6 +5,8 @@ import useAuth from "../../../hooks/useAuth.jsx";
 import styles from "./ReservationsScreen.module.css";
 import AirplaneTicketIcon from '@mui/icons-material/AirplaneTicket';
 import { Card } from 'antd';
+import Loading from '../../../comp/Loading.jsx';
+import NoData from "../../../comp/NoData.jsx";
 
 
 function ReservationsScreen() {
@@ -19,6 +21,7 @@ function ReservationsScreen() {
   const auth = useAuth();
   const [currentPage, setCurrentPage] = useState(1);
   const ordersPerPage = 5;
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getOrders = async () => {
@@ -28,6 +31,7 @@ function ReservationsScreen() {
         console.log("Data posted successfully:", response.data);
         if (response.data) {
           setOrders(response.data);
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error posting data: elements not found");
@@ -86,7 +90,7 @@ function ReservationsScreen() {
     const year = parsedDate.getFullYear();
     const month = (parsedDate.getMonth() + 1).toString().padStart(2, "0");
     const day = parsedDate.getDate().toString().padStart(2, "0");
-    return `${year}-${month}-${day}`;
+    return `${day}-${month}-${year}`;
   };
 
 
@@ -96,18 +100,17 @@ function ReservationsScreen() {
       <div className={styles.ordersList}>
         <h2>Your orders</h2>
         {currentOrders.length === 0 ? (
-          <p>No Orders to show</p>
+          !loading ? <NoData/> : <Loading/>
         ) : (
           <ul className={styles.mainList}>
             {currentOrders.map((order, index) => (
               <li className={styles.order} key={index}>
                 <h2>Order {index + 1 + (currentPage - 1) * ordersPerPage}</h2>
                 <ul className={styles.orderData}>
-                  <li>Order number: {order.order_id}</li>
                   <li>Full price: {order.full_price}</li>
                   <li>
                     Payment status:{" "}
-                    {order.is_payment_completed ? "true" : "not regulated"}
+                    {order.is_payment_completed ? "completed" : "not regulated"}
                   </li>
                   <li>Payment Method: {order.paymentMethod}</li>
                   <li>Order date: {formatDate(order.orderDate)}</li>
@@ -131,9 +134,9 @@ function ReservationsScreen() {
                               </div>
                               <img 
                                 className={styles.img}
-                                src={ticket.ticket_class == "buisness"
-                                  ? "https://upload.wikimedia.org/wikipedia/commons/7/72/Philippine_Airlines_business_class_A330-300.png"
-                                  : "https://www.travelguys.fr/wp-content/uploads/2023/06/IMG_7191-scaled.jpg"} />
+                                src={ticket.ticket_class == "economy"
+                                  ? "https://www.travelguys.fr/wp-content/uploads/2023/06/IMG_7191-scaled.jpg"
+                                  : "https://upload.wikimedia.org/wikipedia/commons/7/72/Philippine_Airlines_business_class_A330-300.png"} />
                             </div>
                           </Card>
                         </li>
@@ -145,23 +148,24 @@ function ReservationsScreen() {
             ))}
           </ul>
         )}
-        <div className={styles.pagination}>
-          <button
-            className={styles.button}
-            onClick={handlePrevPage}
-            disabled={currentPage === 1}
-          >
-            Previous
-          </button>
-          {renderPageNumbers()}
-          <button
-            className={styles.button}
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </button>
-        </div>
+        { !loading ? <div className={styles.pagination}>
+            <button
+              className={styles.button}
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </button>
+            {renderPageNumbers()}
+            <button
+              className={styles.button}
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div> : ''
+          }
       </div>
     </>
   );

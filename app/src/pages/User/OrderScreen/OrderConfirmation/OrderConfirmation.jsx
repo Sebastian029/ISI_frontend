@@ -39,7 +39,7 @@ const OrderConfirmation = () => {
     const year = parsedDate.getFullYear();
     const month = (parsedDate.getMonth() + 1).toString().padStart(2, "0");
     const day = parsedDate.getDate().toString().padStart(2, "0");
-    return `${year}-${month}-${day}`;
+    return `${day}-${month}-${year}`;
   };
 
   const handleConfirmation = async () => {
@@ -134,9 +134,9 @@ const OrderConfirmation = () => {
                           </div>
                           <img 
                             className={styles.img}
-                            src={ticket.ticket_class == "buisness"
-                              ? "https://upload.wikimedia.org/wikipedia/commons/7/72/Philippine_Airlines_business_class_A330-300.png"
-                              : "https://www.travelguys.fr/wp-content/uploads/2023/06/IMG_7191-scaled.jpg"} />
+                            src={ticket.ticket_class == "economy"
+                              ? "https://www.travelguys.fr/wp-content/uploads/2023/06/IMG_7191-scaled.jpg"
+                              : "https://upload.wikimedia.org/wikipedia/commons/7/72/Philippine_Airlines_business_class_A330-300.png"} />
                         </div>
                       </Card>
                     </li>

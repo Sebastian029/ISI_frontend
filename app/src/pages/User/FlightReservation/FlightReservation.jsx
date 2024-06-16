@@ -8,6 +8,8 @@ import Deck from "./components/Deck.jsx";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import FlightLandIcon from "@mui/icons-material/FlightLand";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import FlightIcon from "@mui/icons-material/Flight";
+import { message } from "antd";
 
 const FlightReservation = () => {
   const { flightId } = useParams();
@@ -23,6 +25,8 @@ const FlightReservation = () => {
   const [selectedTickets, setSelectedTickets] = useState([]);
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
+  const [messageApi, contextHolder] = message.useMessage();
+
 
   const appStyles = {
     height: "100vh",
@@ -63,8 +67,16 @@ const FlightReservation = () => {
       setSelectedTickets(
         selectedTickets.filter((selectedTicket) => selectedTicket !== ticket)
       );
+      messageApi.open({
+        type: 'error',
+        content: 'The ticket has been removed from the cart.',
+      });
     } else {
       setSelectedTickets([...selectedTickets, ticket]);
+      messageApi.open({
+        type: 'success',
+        content: 'The ticket has been added to the cart.',
+      });
     }
   };
 
@@ -73,7 +85,7 @@ const FlightReservation = () => {
     const year = parsedDate.getFullYear();
     const month = (parsedDate.getMonth() + 1).toString().padStart(2, "0");
     const day = parsedDate.getDate().toString().padStart(2, "0");
-    return `${year}-${month}-${day}`;
+    return `${day}-${month}-${year}`;
   };
 
 
@@ -105,22 +117,38 @@ const FlightReservation = () => {
 
   return (
     <>
+      {contextHolder}
       <TopBar />
       <div style={appStyles}>
         <div className={styles.mainContainer}>
           <div className={styles.ticketsList}>
             <div className = {styles.flightData}>
-              <div>
-                <p>Departure <FlightTakeoffIcon style={styles.flightIcon} /></p>
-                <p>{departureCity} : {departureAirport}</p>
+              <div className={styles.flightBar}>
+                <div className={styles.infoBar}>
+                  <b> {departureCity}</b>
+                </div>
+                <div className={styles.line}/>
+                <div>
+                  <FlightIcon style={{fontSize: 30, marginBottom:-5, transform: "rotate(90deg)"}} />
+                </div>
+                <div className={styles.line}/>
+                <div className={styles.infoBar}>
+                  <b> {arrivalCity}</b>
+                </div>
               </div>
-              <div>
-                <p>Date: <CalendarMonthIcon style={styles.flightIcon} /></p>
-                {formatDate(flightDate)}
-              </div>
-              <div>
-                <p>Arrival <FlightLandIcon style={styles.flightIcon} /></p>
-                <p>{arrivalCity} : {arrivalAirport}</p>
+              <div className={styles.flightInfo}>
+                <div className={styles.infoBar}>
+                  <p><FlightTakeoffIcon style={{fontSize:30, marginBottom:-5}} />
+                  Departure Airport: {departureAirport}</p>
+                </div>
+                <div className={styles.infoBar}>
+                  <p><FlightLandIcon style={{fontSize:30, marginBottom:-5}} />
+                  Arrival Airport: {arrivalAirport}</p>
+                </div>
+                <div className={styles.infoBar}>
+                  <p><CalendarMonthIcon style={{fontSize:30, marginBottom:-5}} />
+                  Flight Date: {formatDate(flightDate)}</p>
+                </div>
               </div>
             </div>
             <h2>Available Seats:</h2>

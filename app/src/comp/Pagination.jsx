@@ -12,6 +12,7 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import PropTypes from "prop-types";
+import NoData from "./NoData";
 
 function Items({
   currentItems,
@@ -60,6 +61,16 @@ function Items({
     }
   };
 
+  const formatDate = (date) => {
+    const parsedDate = new Date(date);
+    const year = parsedDate.getFullYear();
+    const month = (parsedDate.getMonth() + 1).toString().padStart(2, "0");
+    const day = parsedDate.getDate().toString().padStart(2, "0");
+    return `${day}-${month}-${year}`;
+  };
+
+  
+
   return (
     <div style={styles.globalFlightContainer}>
       {currentItems && currentItems.length > 0 ? (
@@ -77,7 +88,7 @@ function Items({
               <CalendarMonthIcon style={styles.flightIcon} />
               Flight Date:
             </div>
-            <div style={styles.infoBar2}>{item.data_lotu}</div>
+            <div style={styles.infoBar2}>{formatDate(item.data_lotu)}</div>
 
             <div style={styles.infoBar3}>
               {item.is_follow ? (
@@ -135,10 +146,7 @@ function Items({
         ))
       ) : (
         <div style={styles.noFlightsMessage}>
-          No flights available
-          <SentimentVeryDissatisfiedIcon
-            style={{ fontSize: 50, paddingLeft: 10 }}
-          />
+          <NoData/>
         </div>
       )}
     </div>
