@@ -1,4 +1,3 @@
-
 import ReactPaginate from "react-paginate";
 import { useEffect, useState } from "react";
 import FlightIcon from "@mui/icons-material/Flight";
@@ -13,7 +12,7 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import PropTypes from "prop-types";
-import { badgeClasses } from "@mui/material";
+import NoData from "./NoData";
 
 function Items({
   currentItems,
@@ -62,6 +61,16 @@ function Items({
     }
   };
 
+  const formatDate = (date) => {
+    const parsedDate = new Date(date);
+    const year = parsedDate.getFullYear();
+    const month = (parsedDate.getMonth() + 1).toString().padStart(2, "0");
+    const day = parsedDate.getDate().toString().padStart(2, "0");
+    return `${day}-${month}-${year}`;
+  };
+
+  
+
   return (
     <div style={styles.globalFlightContainer}>
       {currentItems && currentItems.length > 0 ? (
@@ -79,7 +88,7 @@ function Items({
               <CalendarMonthIcon style={styles.flightIcon} />
               Flight Date:
             </div>
-            <div style={styles.infoBar2}>{item.data_lotu}</div>
+            <div style={styles.infoBar2}>{formatDate(item.data_lotu)}</div>
 
             <div style={styles.infoBar3}>
               {item.is_follow ? (
@@ -137,15 +146,20 @@ function Items({
         ))
       ) : (
         <div style={styles.noFlightsMessage}>
-          No flights available
-          <SentimentVeryDissatisfiedIcon
-            style={{ fontSize: 50, paddingLeft: 10 }}
-          />
+          <NoData/>
         </div>
       )}
     </div>
   );
 }
+
+Items.propTypes = {
+  currentItems: PropTypes.array.isRequired,
+  handleFlightSelection: PropTypes.func.isRequired,
+  axiosPrivate: PropTypes.object.isRequired,
+  currentFlights: PropTypes.array.isRequired,
+  setCurrentFlights: PropTypes.func.isRequired,
+};
 
 export default function PaginatedItems({
   flights,
@@ -205,7 +219,7 @@ export default function PaginatedItems({
           />
         </div>
       </div>
-      <style jsx>{`
+      <style jsx="true">{`
         .pagination {
           display: flex;
           list-style: none;
@@ -238,12 +252,12 @@ export default function PaginatedItems({
           border-color: var(--main-color-2);
         }
         .button {
-          font-size: 20px;
           font-family: "Lato";
           background-color: var(--main-color);
           border-radius: 10px;
           border: 0px;
           padding: 15px 20px;
+          font-size: 1.2em;
         }
         .button:hover {
           background-color: var(--main-color-2);
@@ -252,23 +266,38 @@ export default function PaginatedItems({
         }
         .starIcon {
           color: var(--main-color-2);
-          font-size: 50px;
+          font-size: 3em;
           cursor: pointer;
         }
         .starIcon:hover {
           color: var(--main-color);
+        }
+        @media screen and (max-width: 700px) {
+          .button {
+            font-size: 0.8em;
+            padding: 5px 10px;
+          }
+          .starIcon {
+            font-size: 2em;
+          }
         }
       `}</style>
     </>
   );
 }
 
+PaginatedItems.propTypes = {
+  flights: PropTypes.array.isRequired,
+  itemsPerPage: PropTypes.number.isRequired,
+  handleFlightSelection: PropTypes.func.isRequired,
+};
+
 const styles = {
   mainContainer: {
     paddingTop: 20,
     display: "flex",
     flexDirection: "column",
-    minWidth: "100%",
+    minWidth: "70%",
     fontFamily: "Lato",
   },
   itemsContainer: {
@@ -280,14 +309,10 @@ const styles = {
     display: "flex",
     justifyContent: "center",
   },
-  globalFlightContainer: {
-    width: "80%",
-    overflowY: "auto",
-    maxHeight: "80vh",
-  },
+  globalFlightContainer: {},
   innerFlightContainer: {
     display: "grid",
-    gridTemplateColumns: "20% 30% 20%",
+    gridTemplateColumns: "35% 35% 30%",
     gridGap: "10px",
     width: "100%",
     paddingBottom: 100,
@@ -301,14 +326,15 @@ const styles = {
     fontSize: 30,
   },
   flightMainText: {},
+
   topFlightBar: {
     gridColumnStart: 1,
-    gridColumnEnd: 5,
+    gridColumnEnd: 4,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    fontSize: 22,
+    fontSize: "1.5em",
     fontWeight: "bold",
   },
   line: {
@@ -324,8 +350,9 @@ const styles = {
     alignItems: "center",
     gap: 10,
     paddingTop: 15,
-    fontSize: 18,
-    // border: "1px solid red",
+    fontSize: "1em",
+    //border: "1px solid red",
+    overflow: "hidden",
   },
   infoBar2: {
     gridColumnStart: 2,
@@ -334,16 +361,15 @@ const styles = {
     alignItems: "center",
     gap: 10,
     paddingTop: 15,
-    fontSize: 18,
+    fontSize: "1em",
 
     // border: "1px solid lime",
   },
   infoBar3: {
-    gridColumnStart: 4,
-    gridColumnEnd: 5,
+    gridColumnStart: 3,
+    gridColumnEnd: 4,
+    // border: "1px solid blue",
     marginLeft: "auto",
-
-    //  border: "1px solid blue",
   },
   bottomContainer: {
     display: "flex",

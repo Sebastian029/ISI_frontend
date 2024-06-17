@@ -5,16 +5,13 @@ import useAxiosPrivate from "../../../hooks/useAxiosPrivate.jsx";
 import Pagination from "../../../comp/Pagination.jsx";
 import Footer from "../HomeScreen/Footer/Footer.jsx";
 import useAuth from "../../../hooks/useAuth.jsx";
+import Loading from '../../../comp/Loading.jsx';
 
 import { useEffect, useState } from "react";
 
 function FavouritesScreen() {
   const navigate = useNavigate();
-  const appStyles = {
-    height: "100vh",
-    display: "flex",
-    flexDirection: "column",
-  };
+
   const axiosPrivate = useAxiosPrivate();
   const auth = useAuth();
 
@@ -22,10 +19,10 @@ function FavouritesScreen() {
   const [loading, setLoading] = useState(true);
 
   const handleFlightSelection = (flight) => {
-    const { departure_airport, departure_city, arrival_airport, arrival_city } =
+    const { departure_airport, departure_city, arrival_airport, arrival_city, data_lotu } =
       flight;
     navigate(
-      `flightReservation/${flight.flight_id}?departureAirport=${departure_airport}&departureCity=${departure_city}&arrivalAirport=${arrival_airport}&arrivalCity=${arrival_city}`
+      `/flightReservation/${flight.flight_id}?departureAirport=${departure_airport}&departureCity=${departure_city}&arrivalAirport=${arrival_airport}&arrivalCity=${arrival_city}&flightDate=${data_lotu} `
     );
   };
 
@@ -45,15 +42,15 @@ function FavouritesScreen() {
     };
 
     getFlights();
-  }, [auth]);
+  }, [axiosPrivate]);
 
   return (
-    <div style={appStyles}>
+    <>
       <TopBar />
       <div className={styles.mainBox}>
         <div className={styles.flightsContent}>
           {loading ? (
-            <p>Loading...</p>
+            <Loading/>
           ) : (
             <Pagination
               key={JSON.stringify(flights)}
@@ -65,7 +62,7 @@ function FavouritesScreen() {
         </div>
       </div>
       <Footer />
-    </div>
+    </>
   );
 }
 

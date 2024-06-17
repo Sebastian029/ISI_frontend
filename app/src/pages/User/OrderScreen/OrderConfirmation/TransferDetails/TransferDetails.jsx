@@ -14,10 +14,10 @@ const TransferDetails = () => {
       <div className={styles.mainContainer}>
         <Card hoverable title={<div className={styles.title}>Bank transfer details</div>} className = {styles.orderData}>      
           <p>Full name: John Doe</p>
-          <p>Phone number: 2251222172</p>
-          <p>E-mail: dominikjaroszek@business.example.com</p>
-          <p>Transfer title: {order_id}</p>
-          <p>Transfer ammount: {full_price}</p>
+          {/* <p>Phone number: 2251222172</p> */}
+          {/* <p>E-mail: dominikjaroszek@business.example.com</p> */}
+          <p>Transfer title: Order identification number{order_id}Imię nazwisko</p>
+          <p>Transfer ammount: {full_price}$</p>
         </Card>
       </div>
     </>

@@ -8,11 +8,13 @@ const useAxiosPrivate = () => {
   const { auth, setAuth } = useAuth();
 
   useEffect(() => {
+    const authDataStr = localStorage.getItem("authData");
+    const tmpAuth = authDataStr ? JSON.parse(authDataStr) : null;
+
     const requestIntercept = axiosPrivate.interceptors.request.use(
       (config) => {
         if (!config.headers["x-access-tokens"]) {
-          // console.log(auth?.accessToken);
-          config.headers["x-access-tokens"] = auth?.accessToken;
+          config.headers["x-access-tokens"] = tmpAuth.accessToken;
         }
         return config;
       },
@@ -28,6 +30,11 @@ const useAxiosPrivate = () => {
           const newAccessToken = await refresh();
           prevRequest.headers["x-access-tokens"] = newAccessToken;
           setAuth({ ...auth, accessToken: newAccessToken });
+          const authData = {
+            ...tmpAuth,
+            accessToken: newAccessToken,
+          };
+          localStorage.setItem("authData", JSON.stringify(authData));
           return axiosPrivate(prevRequest);
         }
         return Promise.reject(error);

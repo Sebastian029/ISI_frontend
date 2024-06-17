@@ -22,8 +22,8 @@
   align-items: flex-start;
   padding-left: 20px;
   font-family: "Lato";
-  font-size: 30px;
   letter-spacing: 2px;
+  min-width: 300px;
 }
 p {
   text-align: left;
@@ -39,22 +39,22 @@ li {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
-  font-size: 20px;
   font-weight: bold;
   font-family: "Lato";
+  font-size: 1em;
 }
 
 .welcomeText {
   font-weight: bold;
   font-family: "Lato";
-  font-size: 40px;
+  font-size: 2em;
   letter-spacing: 2px;
   padding-bottom: 30px;
 }
 .welcomeInfo {
   font-weight: bold;
   font-family: "Lato";
-  font-size: 25px;
+  font-size: 1.5em;
   letter-spacing: 2px;
   padding-bottom: 10px;
 }
@@ -62,4 +62,16 @@ li {
 .basicIcon {
   font-size: 35px !important;
   padding-right: 10px;
+}
+
+@media screen and (max-width: 700px) {
+  .welcomeText {
+    font-size: 1.7em;
+  }
+  .welcomeInfo {
+    font-size: 1.1em;
+  }
+  li {
+    font-size: 0.8em;
+  }
 }
