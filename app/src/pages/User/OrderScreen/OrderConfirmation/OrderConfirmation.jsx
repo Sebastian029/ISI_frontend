@@ -9,7 +9,7 @@ import FlightLandIcon from "@mui/icons-material/FlightLand";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import FlightIcon from "@mui/icons-material/Flight";
 import AirplaneTicketIcon from '@mui/icons-material/AirplaneTicket';
-import { Card } from 'antd';
+import { Card, message } from 'antd';
 
 
 const OrderConfirmation = () => {
@@ -18,6 +18,8 @@ const OrderConfirmation = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
+  const [messageApi, contextHolder] = message.useMessage();
+
 
   const appStyles = {
     height: "100vh",
@@ -53,8 +55,12 @@ const OrderConfirmation = () => {
         const orderIdResponse = response.data.order_id;
 
         console.log(response.data.order_id);
-
-        if (paymentMethod == "transfer") {
+        if(response.data.order_id==undefined){
+          messageApi.open({
+            type: 'error',
+            content: "You don't have permission to make a purchase!",
+          });
+        } else if (paymentMethod == "transfer") {
           console.log("Transfer Payment");
           navigate(
             `/transferdetails?orderId=${response.data.order_id}&fullPrice=${response.data.full_price}`
@@ -81,6 +87,7 @@ const OrderConfirmation = () => {
 
   return (
     <>
+      {contextHolder}
       <TopBar />
       <div style={appStyles}>
         <div className={styles.mainContainer}>
