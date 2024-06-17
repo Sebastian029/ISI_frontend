@@ -17,9 +17,6 @@ const useRefreshToken = () => {
     );
     setAuth((prev) => {
       console.log("REFRESH, nowy token: " + response.data.access_token);
-      console.log("REFRESH, nowy token: " + response.data.access_token);
-      console.log("REFRESH, nowy token: " + response.data.access_token);
-      console.log("REFRESH, nowy token: " + response.data.access_token);
       return { ...prev, access_token: response.data.access_token };
     });
     return response.data.access_token;

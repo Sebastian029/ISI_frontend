@@ -31,11 +31,12 @@ function ReservationsScreen() {
         console.log("Data posted successfully:", response.data);
         if (response.data) {
           setOrders(response.data);
-          setLoading(false);
+          
         }
       } catch (error) {
         console.error("Error posting data: elements not found");
         setOrders([]);
+        setLoading(false);
       }
     };
 
@@ -148,7 +149,7 @@ function ReservationsScreen() {
             ))}
           </ul>
         )}
-        { !loading ? <div className={styles.pagination}>
+        { loading ? <div className={styles.pagination}>
             <button
               className={styles.button}
               onClick={handlePrevPage}
