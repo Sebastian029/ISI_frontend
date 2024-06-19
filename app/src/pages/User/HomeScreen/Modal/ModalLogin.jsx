@@ -6,6 +6,7 @@ import useAuth from "../../../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import logo from "../../../../assets/google_logo.png";
 import { message } from "antd";
+import { jwtDecode } from "jwt-decode";
 
 const ModalLogin = ({ toggleModal, setLogin }) => {
   const navigate = useNavigate();
@@ -64,26 +65,24 @@ const ModalLogin = ({ toggleModal, setLogin }) => {
         password: passwordInput,
       })
       .then((response) => {
-        const accessToken = response?.data?.access_token;
-        const refreshToken = response?.data?.refresh_token;
-        const roles = response?.data?.roles;
-        const username = response?.data?.surname;
+        const access_token = response?.data?.access_token;
+        const refresh_token = response?.data?.refresh_token;
+        const token_decoded = jwtDecode(access_token);
         const authData = {
-          email: emailInput,
-          password: passwordInput,
-          roles,
-          accessToken,
-          refreshToken,
-          username,
+          accessToken: access_token,
+          refreshToken: refresh_token,
+          roles: token_decoded.roles,
+          username: token_decoded.name + " " + token_decoded.surname,
         };
+
         setAuth(authData);
+        localStorage.setItem("authData", JSON.stringify(authData));
         setLoginOutput("Login successful!");
         setEmailInput("");
         setPasswordInput("");
         setModal(false);
-        localStorage.setItem("authData", JSON.stringify(authData));
 
-        if (roles.includes("admin")) {
+        if (token_decoded.includes("admin")) {
           navigate("/admin");
         }
       })
