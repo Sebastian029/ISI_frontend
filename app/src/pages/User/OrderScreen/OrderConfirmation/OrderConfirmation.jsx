@@ -55,12 +55,13 @@ const OrderConfirmation = () => {
         const orderIdResponse = response.data.order_id;
 
         console.log(response.data.order_id);
-        if(response.data.order_id==undefined){
-          messageApi.open({
-            type: 'error',
-            content: "You don't have permission to make a purchase!",
-          });
-        } else if (paymentMethod == "transfer") {
+        // if(response.data.order_id==undefined){
+        //   messageApi.open({
+        //     type: 'error',
+        //     content: "You don't have permission to make a purchase!",
+        //   });
+        // } else 
+        if (paymentMethod == "transfer") {
           console.log("Transfer Payment");
           navigate(
             `/transferdetails?orderId=${response.data.order_id}&fullPrice=${response.data.full_price}`
@@ -81,7 +82,14 @@ const OrderConfirmation = () => {
       // localStorage.setItem("cart",null)
       // localStorage.setItem("flightDetails",null)
     } catch (error) {
-      console.error("Error buying tickets:", error);
+      //console.error("Error buying tickets:", error);
+      if(error.response && error.response.status == 403)
+      {  
+        messageApi.open({
+          type: 'error',
+          content: "You don't have permission to make a purchase!",
+        });
+      }
     }
   };
 
