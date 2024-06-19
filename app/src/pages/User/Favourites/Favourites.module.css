@@ -5,6 +5,7 @@
   background-color: var(--background-color);
   justify-content: center;
   flex-grow: 1;
+  height: 100vh;
 }
 
 .box {

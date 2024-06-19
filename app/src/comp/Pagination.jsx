@@ -5,7 +5,6 @@ import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import FlightLandIcon from "@mui/icons-material/FlightLand";
 import AirlineSeatReclineExtraIcon from "@mui/icons-material/AirlineSeatReclineExtra";
 import AirlineStopsIcon from "@mui/icons-material/AirlineStops";
-import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
@@ -68,8 +67,6 @@ function Items({
     const day = parsedDate.getDate().toString().padStart(2, "0");
     return `${day}-${month}-${year}`;
   };
-
-  
 
   return (
     <div style={styles.globalFlightContainer}>
@@ -146,7 +143,7 @@ function Items({
         ))
       ) : (
         <div style={styles.noFlightsMessage}>
-          <NoData/>
+          <NoData />
         </div>
       )}
     </div>
@@ -296,6 +293,7 @@ const styles = {
   mainContainer: {
     paddingTop: 20,
     display: "flex",
+    flex: 1,
     flexDirection: "column",
     minWidth: "70%",
     fontFamily: "Lato",
