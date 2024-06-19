@@ -143,11 +143,9 @@ test("displays error message if email and password are empty", () => {
 
     await waitFor(() => {
       expect(mockSetAuth).toHaveBeenCalledWith({
-        email: "test@example.com",
-        password: "password123",
-        roles: ["user"],
         accessToken: "access_token",
         refreshToken: "refresh_token",
+        roles: ["user"],
         username: "username",
       });
       expect(mockMessage.open).not.toHaveBeenCalledWith({

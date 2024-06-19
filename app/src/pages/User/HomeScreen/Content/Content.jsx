@@ -39,7 +39,7 @@ Content.propTypes = {
       departure_airport: PropTypes.string.isRequired,
       departure_city: PropTypes.string.isRequired,
       distance: PropTypes.number.isRequired,
-      flight_id: PropTypes.string.isRequired,
+      flight_id: PropTypes.number.isRequired,
     })
   ).isRequired,
 };
