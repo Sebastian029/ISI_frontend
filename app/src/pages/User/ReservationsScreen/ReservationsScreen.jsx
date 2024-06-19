@@ -34,7 +34,7 @@ function ReservationsScreen() {
           
         }
       } catch (error) {
-        console.error("Error posting data: elements not found");
+        //console.error("Error posting data: elements not found");
         setOrders([]);
         setLoading(false);
       }
