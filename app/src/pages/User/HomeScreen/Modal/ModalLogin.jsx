@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import logo from "../../../../assets/google_logo.png";
 import { message } from "antd";
 
-
 const ModalLogin = ({ toggleModal, setLogin }) => {
   const navigate = useNavigate();
   const { setAuth } = useAuth();
@@ -18,7 +17,6 @@ const ModalLogin = ({ toggleModal, setLogin }) => {
   const [loginOutput, setLoginOutput] = useState("");
   const [messageApi, contextHolder] = message.useMessage();
 
-
   const handleKeyUp = (event) => {
     if (event.key === "Enter" || event.keyCode === 13) {
       handleLogin();
@@ -28,37 +26,34 @@ const ModalLogin = ({ toggleModal, setLogin }) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const handleLogin = async () => {
-
-    
-
     if (!emailInput && !passwordInput) {
       messageApi.open({
-        type: 'error',
-        content: 'Please fill out the email and password fields.',
+        type: "error",
+        content: "Please fill out the email and password fields.",
       });
       return;
     }
 
-    if (!emailInput ) {
+    if (!emailInput) {
       messageApi.open({
-        type: 'error',
-        content: 'Email is required.',
+        type: "error",
+        content: "Email is required.",
       });
       return;
     }
 
     if (!passwordInput) {
       messageApi.open({
-        type: 'error',
-        content: 'Password Cannot be empty',
+        type: "error",
+        content: "Password Cannot be empty",
       });
       return;
     }
 
     if (!emailRegex.test(emailInput)) {
       messageApi.open({
-        type: 'error',
-        content: 'Invalid email format. Please try again.',
+        type: "error",
+        content: "Invalid email format. Please try again.",
       });
       return;
     }
@@ -95,8 +90,8 @@ const ModalLogin = ({ toggleModal, setLogin }) => {
       .catch((error) => {
         console.error("Login error:", error);
         messageApi.open({
-          type: 'error',
-          content: 'Login failed. Please try again.',
+          type: "error",
+          content: "Login failed. Please try again.",
         });
       });
   };
