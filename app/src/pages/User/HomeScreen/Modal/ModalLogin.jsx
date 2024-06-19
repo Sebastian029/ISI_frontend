@@ -5,6 +5,8 @@ import axios from "../../../../axiosInstance";
 import useAuth from "../../../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import logo from "../../../../assets/google_logo.png";
+import { message } from "antd";
+
 
 const ModalLogin = ({ toggleModal, setLogin }) => {
   const navigate = useNavigate();
@@ -14,6 +16,8 @@ const ModalLogin = ({ toggleModal, setLogin }) => {
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const [loginOutput, setLoginOutput] = useState("");
+  const [messageApi, contextHolder] = message.useMessage();
+
 
   const handleKeyUp = (event) => {
     if (event.key === "Enter" || event.keyCode === 13) {
@@ -21,7 +25,44 @@ const ModalLogin = ({ toggleModal, setLogin }) => {
     }
   };
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   const handleLogin = async () => {
+
+    
+
+    if (!emailInput && !passwordInput) {
+      messageApi.open({
+        type: 'error',
+        content: 'Please fill out the email and password fields.',
+      });
+      return;
+    }
+
+    if (!emailInput ) {
+      messageApi.open({
+        type: 'error',
+        content: 'Email is required.',
+      });
+      return;
+    }
+
+    if (!passwordInput) {
+      messageApi.open({
+        type: 'error',
+        content: 'Password Cannot be empty',
+      });
+      return;
+    }
+
+    if (!emailRegex.test(emailInput)) {
+      messageApi.open({
+        type: 'error',
+        content: 'Invalid email format. Please try again.',
+      });
+      return;
+    }
+
     axios
       .post("/login", {
         email: emailInput,
@@ -53,7 +94,10 @@ const ModalLogin = ({ toggleModal, setLogin }) => {
       })
       .catch((error) => {
         console.error("Login error:", error);
-        setLoginOutput("Login failed. Please try again.");
+        messageApi.open({
+          type: 'error',
+          content: 'Login failed. Please try again.',
+        });
       });
   };
 
@@ -63,6 +107,7 @@ const ModalLogin = ({ toggleModal, setLogin }) => {
 
   return (
     <div className="modal-content">
+      {contextHolder}
       <h2>Login</h2>
       <p>Hey, sign in to your account</p>
       <input
