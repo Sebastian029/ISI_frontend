@@ -187,7 +187,7 @@ function AccountScreen() {
                       value={accountData.email}
                       onChange={handleInputChange}
                       placeholder="example@example.com"
-                      readOnly="true"
+                      readOnly={true}
                     />
                   </Space.Compact>
                 </Form.Item>

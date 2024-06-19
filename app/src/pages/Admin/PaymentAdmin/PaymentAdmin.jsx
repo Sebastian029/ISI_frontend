@@ -133,7 +133,7 @@ const PaymentAdmin = () => {
         field && field.toString().toLowerCase().includes(value.toLowerCase())
       );
     },
-    onFilterDropdownVisibleChange: (visible) => {
+    onFilterDropdownOpenChange: (visible) => {
       if (visible) {
         setTimeout(() => searchInput.current.select(), 100);
       }
@@ -196,7 +196,7 @@ const PaymentAdmin = () => {
       const user = `${record.user.name} ${record.user.surname}`;
       return user.toLowerCase().includes(value.toLowerCase());
     },
-    onFilterDropdownVisibleChange: (visible) => {
+    onFilterDropdownOpenChange: (visible) => {
       if (visible) {
         setTimeout(() => searchInput.current.select(), 100);
       }
