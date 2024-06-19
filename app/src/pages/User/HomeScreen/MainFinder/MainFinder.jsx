@@ -29,11 +29,11 @@ function MainFinder({ activateFinder, setFlights }) {
     if (savedData) {
       setDepartureTextInput(savedData.departureTextInput);
       setArrivalTextInput(savedData.arrivalTextInput);
-      setDepartureDateInput(
-        savedData.departureDateInput
-          ? dayjs(savedData.departureDateInput, sendDateFormat)
-          : null
-      );
+      const parsedDate = savedData.departureDateInput
+        ? dayjs(savedData.departureDateInput, sendDateFormat)
+        : null;
+      const updatedDate = parsedDate ? parsedDate.add(1, "day") : null;
+      setDepartureDateInput(updatedDate);
 
       setArricalID(savedData.arrivalID);
       setDepartureID(savedData.departureID);

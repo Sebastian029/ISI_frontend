@@ -19,12 +19,14 @@
   padding: 10px;
   padding-bottom: 30px;
 }
-@media (max-width: 700px) {
+
+@media screen and (max-width: 700px) {
   .accountBox {
     background-color: transparent;
     box-shadow: none;
   }
 }
+
 .detailsTitle {
   color: "red";
   font-size: 30px;
