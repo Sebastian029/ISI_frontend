@@ -242,7 +242,7 @@ const Privileges = () => {
             className={styles.fullWidthTable}
             columns={columns}
             dataSource={users}
-            rowKey="id"
+            rowKey="public_id"
           />
         )}
         <Modal
