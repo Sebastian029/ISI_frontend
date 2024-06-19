@@ -5,7 +5,7 @@ import useAxiosPrivate from "../../../hooks/useAxiosPrivate.jsx";
 import Pagination from "../../../comp/Pagination.jsx";
 import Footer from "../HomeScreen/Footer/Footer.jsx";
 import useAuth from "../../../hooks/useAuth.jsx";
-import Loading from '../../../comp/Loading.jsx';
+import Loading from "../../../comp/Loading.jsx";
 
 import { useEffect, useState } from "react";
 
@@ -19,8 +19,13 @@ function FavouritesScreen() {
   const [loading, setLoading] = useState(true);
 
   const handleFlightSelection = (flight) => {
-    const { departure_airport, departure_city, arrival_airport, arrival_city, data_lotu } =
-      flight;
+    const {
+      departure_airport,
+      departure_city,
+      arrival_airport,
+      arrival_city,
+      data_lotu,
+    } = flight;
     navigate(
       `/flightReservation/${flight.flight_id}?departureAirport=${departure_airport}&departureCity=${departure_city}&arrivalAirport=${arrival_airport}&arrivalCity=${arrival_city}&flightDate=${data_lotu} `
     );
@@ -46,11 +51,12 @@ function FavouritesScreen() {
 
   return (
     <>
-      <TopBar />
       <div className={styles.mainBox}>
+        <TopBar />
+
         <div className={styles.flightsContent}>
           {loading ? (
-            <Loading/>
+            <Loading />
           ) : (
             <Pagination
               key={JSON.stringify(flights)}
@@ -60,8 +66,9 @@ function FavouritesScreen() {
             />
           )}
         </div>
+
+        <Footer />
       </div>
-      <Footer />
     </>
   );
 }
