@@ -16,7 +16,7 @@ import TopBar from "../TopBar/TopBar";
 import Loading from "../../../comp/Loading";
 import styles from "./Privileges.module.css";
 import useAuth from "../../../hooks/useAuth.jsx";
-import NoData from "../../../comp/NoData";  
+import NoData from "../../../comp/NoData";
 
 const Privileges = () => {
   const [users, setUsers] = useState([]);
@@ -113,8 +113,8 @@ const Privileges = () => {
             .toLowerCase()
             .includes(value.toLowerCase())
         : "",
-    onFilterDropdownVisibleChange: (visible) => {
-      if (visible) {
+    onFilterDropdownOpenChange: (open) => {
+      if (open) {
         setTimeout(() => searchInput.current.select(), 100);
       }
     },
@@ -247,7 +247,7 @@ const Privileges = () => {
         )}
         <Modal
           title={`Edit for ${selectedUser?.name} ${selectedUser?.surname}`}
-          visible={modalIsOpen}
+          open={modalIsOpen}
           onOk={handleSavePrivileges}
           onCancel={closeModal}
           okButtonProps={{
@@ -257,8 +257,8 @@ const Privileges = () => {
           }}
         >
           <Form style={{ display: "flex" }}>
-            {privileges.map((privilege) => (
-              <Form.Item key={privilege.id}>
+            {privileges.map((privilege, index) => (
+              <Form.Item key={index}>
                 <Checkbox
                   value={privilege.name}
                   checked={selectedPrivileges.includes(privilege.name)}
