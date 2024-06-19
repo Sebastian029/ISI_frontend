@@ -1,163 +1,157 @@
-.mainContainer{
-    display: flex;
-    flex-direction: row;
+.mainContainer {
+  display: flex;
+  flex-direction: row;
 }
 
-.yourOrder{
-    width:100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    font-size: 18px;
-    font-family: 'Lato';
-    font-weight: 600;
-    margin-bottom: 5%;
+.yourOrder {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 18px;
+  font-family: "Lato";
+  font-weight: 600;
+  margin-bottom: 5%;
 }
 
-.flightBar{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1%;
+.flightBar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1%;
 }
 
 .infoBar {
-    display: flex;
-    align-items: "center";
-    gap: 10;
-    font-size: 1.3em;
+  display: flex;
+  align-items: "center";
+  gap: 10;
+  font-size: 1.3em;
 }
 
-.flightData{
-    width:80%;
-    border-radius: 10px;
-    padding: 2%;
-    margin: 2%;
+.flightData {
+  width: 80%;
+  border-radius: 10px;
+  padding: 2%;
+  margin: 2%;
 }
 
-.flightInfo{
-    width:80%;
-    border-radius: 10px;
-    padding: 2%;
-    margin: 2%;
+.flightInfo {
+  width: 80%;
+  border-radius: 10px;
+  padding: 2%;
+  margin: 2%;
 }
 
-.line{
-    flex: 1;
-    height: 2px;
-    background-color: black;
-    margin: 10px;
+.line {
+  flex: 1;
+  height: 2px;
+  background-color: black;
+  margin: 10px;
 }
 
-
-.ticketsList{
-    width:65%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    font-family: 'Lato';
-    font-size: 18px;
-    margin:2.5%;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    padding: 1%;
-
+.ticketsList {
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  font-family: "Lato";
+  font-size: 18px;
+  margin: 2.5%;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 1%;
 }
 
-.reservationSummary{
-    width:25%;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    font-family: 'Lato';
-    font-size: 18px;
-    margin:2.5%;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    padding: 1%;
-    height: fit-content;
+.reservationSummary {
+  width: 25%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  font-family: "Lato";
+  font-size: 18px;
+  margin: 2.5%;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 1%;
+  height: fit-content;
 }
 
-.Ticket{
-    list-style-type: none;
-    width:90%;
-    display: flex;
-    flex-direction: column;
-    align-items:flex-start;
-    justify-content: center;
-    border: 1px solid var(--main-color-2);
-    border-radius: 10px;
-    padding: 2%;
-    margin: 1%;
-
-
+.Ticket {
+  list-style-type: none;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  border: 1px solid var(--main-color-2);
+  border-radius: 10px;
+  padding: 2%;
+  margin: 1%;
 }
 
-.mainList{
-    width:90%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
+.mainList {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.button{
-    align-self: flex-end;
-    padding: 8px 16px;
-    border: 1px solid var(--main-color-2);
-    color: white;
-    cursor: pointer;
-    text-decoration: none;
-    bottom: 0px;
-    border-radius: 10px;
-    background-color: var(--main-color);
-    font-size: 18px;
-    
+.button {
+  align-self: flex-end;
+  padding: 8px 16px;
+  border: 1px solid var(--main-color-2);
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+  bottom: 0px;
+  border-radius: 10px;
+  background-color: var(--main-color);
+  font-size: 18px;
+  transition: background-color 0.3s ease;
 }
 
 .button:hover {
-    background-color: var(--main-color-2);
-    color: white;
-    cursor:pointer;
+  background-color: var(--main-color-2);
+  color: white;
+  cursor: pointer;
 }
 
-.page{
-    padding: 8px 16px;
-    border: 1px solid var(--main-color-2);
-    color: var(--main-color-2);
-    cursor: pointer;
-    text-decoration: none;
-    bottom: 0px;
-    border-radius: 20px;
-    background-color: white;
+.page {
+  padding: 8px 16px;
+  border: 1px solid var(--main-color-2);
+  color: var(--main-color-2);
+  cursor: pointer;
+  text-decoration: none;
+  bottom: 0px;
+  border-radius: 20px;
+  background-color: white;
 }
 
 .page:hover {
-    background-color: var(--main-color-2);
-    color: white;
-    cursor:pointer;
+  background-color: var(--main-color-2);
+  color: white;
+  cursor: pointer;
 }
 
-.active{
-    background-color: var(--main-color-2);
-    color: white;
-    border-color: var(--main-color-2);
+.active {
+  background-color: var(--main-color-2);
+  color: white;
+  border-color: var(--main-color-2);
 }
 
-li{
-    list-style-type: none;
+li {
+  list-style-type: none;
 }
 
-.ticketMap{
-    display: flex;
-    justify-content: center;
-
+.ticketMap {
+  display: flex;
+  justify-content: center;
 }
 
 #deck {
-    position: relative; 
+  position: relative;
 }

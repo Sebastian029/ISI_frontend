@@ -255,7 +255,9 @@ export default function PaginatedItems({
           border: 0px;
           padding: 15px 20px;
           font-size: 1.2em;
+          transition: background-color 0.3s ease;
         }
+
         .button:hover {
           background-color: var(--main-color-2);
           cursor: pointer;
