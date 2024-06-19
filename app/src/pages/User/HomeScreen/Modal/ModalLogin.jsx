@@ -88,7 +88,7 @@ const ModalLogin = ({ toggleModal, setLogin }) => {
         }
       })
       .catch((error) => {
-        console.error("Login error:", error);
+        //console.error("Login error:", error);
         messageApi.open({
           type: "error",
           content: "Login failed. Please try again.",

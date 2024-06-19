@@ -24,6 +24,7 @@ function AccountScreen() {
     name: "",
     surname: "",
     email: "",
+    notification: "",
   });
   const [phoneNumber, setPhoneNumber] = useState([]);
   const [axiosResponse, setAxiosResponse] = useState(null);
