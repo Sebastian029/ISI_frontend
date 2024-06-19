@@ -75,14 +75,13 @@ const ModalLogin = ({ toggleModal, setLogin }) => {
           username: token_decoded.name + " " + token_decoded.surname,
         };
 
-        setAuth(authData);
-        localStorage.setItem("authData", JSON.stringify(authData));
         setLoginOutput("Login successful!");
         setEmailInput("");
         setPasswordInput("");
         setModal(false);
-
-        if (token_decoded.includes("admin")) {
+        setAuth(authData);
+        localStorage.setItem("authData", JSON.stringify(authData));
+        if (token_decoded.roles.includes("admin")) {
           navigate("/admin");
         }
       })
