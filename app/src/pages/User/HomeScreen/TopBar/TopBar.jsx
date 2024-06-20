@@ -108,7 +108,10 @@ function TopBar() {
     <>
       <div className={styles.mainBoxWrapper}>
         <div className={styles.mainBox}>
-          <div className={styles.username}>{username}</div>
+          <div className={styles.username}>
+            <img src={logo} alt="App Logo" />
+            {username}
+          </div>
           <div className={styles.appLogo}>
             <img src={logo} alt="App Logo" />
             Flight Finder

@@ -100,18 +100,16 @@ function Items({
                 />
               )}
             </div>
-
             <div style={styles.infoBar}>
               <FlightTakeoffIcon style={styles.flightIcon} />
-              Arrival Airport:
-            </div>
-            <div style={styles.infoBar2}>{item.arrival_airport}</div>
-
-            <div style={styles.infoBar}>
-              <FlightLandIcon style={styles.flightIcon} />
               Departure Airport:
             </div>
             <div style={styles.infoBar2}>{item.departure_airport}</div>
+            <div style={styles.infoBar}>
+              <FlightLandIcon style={styles.flightIcon} />
+              Arrival Airport:
+            </div>
+            <div style={styles.infoBar2}>{item.arrival_airport}</div>
 
             <div style={styles.infoBar}>
               <AccessTimeIcon style={styles.flightIcon} />
