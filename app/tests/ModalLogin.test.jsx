@@ -5,6 +5,7 @@ import useAuth from "../src/hooks/useAuth";
 import { BrowserRouter as Router } from "react-router-dom";
 import axios from "../src/axiosInstance";
 import { message } from "antd";
+import { jwtDecode } from "jwt-decode";
 
 vi.mock("react-router-dom", () => ({
     ...require("react-router-dom"),
@@ -13,6 +14,7 @@ vi.mock("react-router-dom", () => ({
 
 vi.mock("../src/hooks/useAuth");
 vi.mock("../src/axiosInstance");
+vi.mock("jwt-decode");
 
 const mockNavigate = vi.fn();
 const mockSetAuth = vi.fn();
@@ -117,14 +119,22 @@ test("displays error message if email and password are empty", () => {
   });
 
   test("handles successful login", async () => {
+    const mockAccessToken = "access_token";
+    const mockRefreshToken = "refresh_token";
+    const mockDecodedToken = {
+      roles: ["user"],
+      name: "John",
+      surname: "Doe",
+    };
+
     axios.post.mockResolvedValue({
-      data: {
-        access_token: "access_token",
-        refresh_token: "refresh_token",
-        roles: ["user"],
-        surname: "username",
-      },
+        data: {
+          access_token: mockAccessToken,
+          refresh_token: mockRefreshToken,
+        },
     });
+
+    jwtDecode.mockReturnValue(mockDecodedToken);
 
     render(
       <Router>
@@ -142,32 +152,26 @@ test("displays error message if email and password are empty", () => {
     fireEvent.click(screen.getByDisplayValue("Sign in"));
 
     await waitFor(() => {
-      expect(mockSetAuth).toHaveBeenCalledWith({
-        accessToken: "access_token",
-        refreshToken: "refresh_token",
-        roles: ["user"],
-        username: "username",
+        expect(mockSetAuth).toHaveBeenCalledWith({
+          accessToken: mockAccessToken,
+          refreshToken: mockRefreshToken,
+          roles: mockDecodedToken.roles,
+          username: `${mockDecodedToken.name} ${mockDecodedToken.surname}`,
+        });
       });
-      expect(mockMessage.open).not.toHaveBeenCalledWith({
-        type: "error",
-        content: "Login failed. Please try again.",
-      });
+  
+      expect(localStorage.setItem).toHaveBeenCalledWith(
+        "authData",
+        JSON.stringify({
+          accessToken: mockAccessToken,
+          refreshToken: mockRefreshToken,
+          roles: mockDecodedToken.roles,
+          username: `${mockDecodedToken.name} ${mockDecodedToken.surname}`,
+        })
+      );
+      expect(mockSetModal).toHaveBeenCalledWith(false);
+      expect(screen.getByText("Login successful!")).toBeInTheDocument();
     });
-
-    expect(localStorage.setItem).toHaveBeenCalledWith(
-      "authData",
-      JSON.stringify({
-        email: "test@example.com",
-        password: "password123",
-        roles: ["user"],
-        accessToken: "access_token",
-        refreshToken: "refresh_token",
-        username: "username",
-      })
-    );
-    expect(mockSetModal).toHaveBeenCalledWith(false);
-    expect(screen.getByText("Login successful!")).toBeInTheDocument();
-  });
 
   test("handles login failure", async () => {
     axios.post.mockRejectedValue(new Error("Login failed"));
