@@ -27,8 +27,6 @@ const Role = () => {
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
   const auth = useAuth();
-  const axiosPrivate = useAxiosPrivate();
-
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [selectedRoles, setSelectedRoles] = useState([]);
