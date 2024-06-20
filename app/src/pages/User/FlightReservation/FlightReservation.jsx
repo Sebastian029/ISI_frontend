@@ -38,21 +38,25 @@ const FlightReservation = () => {
       try {
         const response = await axios.get("/tickets/" + flightId, {});
 
-        console.log("Data posted successfully:", response.data);
+        //console.log("Data posted successfully:", response.data);
         if (response.data) {
           setTickets(response.data.tickets);
           setNum_columns(response.data.num_columns);
           setTotal_seatss(response.data.total_seats);
         }
       } catch (error) {
-        console.error("Error posting data: elements not found");
+        //console.error("Error posting data: elements not found");
+        messageApi.open({
+          type: "error",
+          content: "Tickets not found",
+        });
         setTickets([]);
       }
     };
 
     getTickets();
 
-    console.log("aasd" + tickets);
+    //console.log("aasd" + tickets);
   }, []);
 
   const handleTicketReservation = (ticket) => {
@@ -76,7 +80,7 @@ const FlightReservation = () => {
     }
   };
 
-  const formatDate = (date) => {
+  const formatDate = (date) => { 
     const parsedDate = new Date(date);
     const year = parsedDate.getFullYear();
     const month = (parsedDate.getMonth() + 1).toString().padStart(2, "0");
@@ -86,7 +90,7 @@ const FlightReservation = () => {
 
   const handleConfirmation = async () => {
     try {
-      console.log(selectedTickets);
+      //console.log(selectedTickets);
       localStorage.setItem("cart", JSON.stringify(selectedTickets));
 
       const flightDetails = {
@@ -106,7 +110,11 @@ const FlightReservation = () => {
       navigate("/checkout");
       setSelectedTickets([]);
     } catch (error) {
-      console.error("Error buying tickets:", error);
+      //console.error("Error buying tickets:", error);
+      messageApi.open({
+        type: "error",
+        content: "Something went wrong",
+      });
     }
   };
 
@@ -125,11 +133,7 @@ const FlightReservation = () => {
                 <div className={styles.line} />
                 <div>
                   <FlightIcon
-                    style={{
-                      fontSize: 30,
-                      marginBottom: -5,
-                      transform: "rotate(90deg)",
-                    }}
+                    className={styles.flightIcon}
                   />
                 </div>
                 <div className={styles.line} />
@@ -141,7 +145,7 @@ const FlightReservation = () => {
                 <div className={styles.infoBar}>
                   <p>
                     <FlightTakeoffIcon
-                      style={{ fontSize: 30, marginBottom: -5 }}
+                      className={styles.icon}
                     />
                     Departure Airport: {departureAirport}
                   </p>
@@ -149,7 +153,7 @@ const FlightReservation = () => {
                 <div className={styles.infoBar}>
                   <p>
                     <FlightLandIcon
-                      style={{ fontSize: 30, marginBottom: -5 }}
+                      className={styles.icon}
                     />
                     Arrival Airport: {arrivalAirport}
                   </p>
@@ -157,7 +161,7 @@ const FlightReservation = () => {
                 <div className={styles.infoBar}>
                   <p>
                     <CalendarMonthIcon
-                      style={{ fontSize: 30, marginBottom: -5 }}
+                      className={styles.icon}
                     />
                     Flight Date: {formatDate(flightDate)}
                   </p>
@@ -178,9 +182,10 @@ const FlightReservation = () => {
             <h2>Reservation Summary</h2>
             <ul>
               {selectedTickets.map((ticket, index) => (
-                <li key={index}>
-                  Seat number: {ticket.column}-{ticket.row} Class:{" "}
-                  {ticket.ticket_class} Price: {ticket.price}
+                <li key={index} className={styles.selectedTicket}>
+                  <p>Seat number: {ticket.column}-{ticket.row}</p> 
+                  <p>Class:{" "} {ticket.ticket_class} </p>
+                  <p>Price: {ticket.price}</p>
                 </li>
               ))}
             </ul>

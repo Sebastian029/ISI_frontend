@@ -34,12 +34,12 @@ function FavouritesScreen() {
     const getFlights = async () => {
       try {
         const response = await axiosPrivate.get("/follows", {});
-        console.log("Data fetched successfully:", response.data);
+        //console.log("Data fetched successfully:", response.data);
         if (response.data) {
           setFlights(response.data);
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        //console.error("Error fetching data:", error);
       } finally {
         setLoading(false); // Set loading to false regardless of success or failure
       }

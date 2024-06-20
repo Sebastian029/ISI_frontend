@@ -7,6 +7,7 @@ import AirplaneTicketIcon from "@mui/icons-material/AirplaneTicket";
 import { Card } from "antd";
 import Loading from "../../../comp/Loading.jsx";
 import NoData from "../../../comp/NoData.jsx";
+import { message } from "antd";
 
 function ReservationsScreen() {
   const [orders, setOrders] = useState([]);
@@ -14,18 +15,25 @@ function ReservationsScreen() {
   const [currentPage, setCurrentPage] = useState(1);
   const ordersPerPage = 5;
   const [loading, setLoading] = useState(true);
+  const [messageApi, contextHolder] = message.useMessage();
 
   useEffect(() => {
     const getOrders = async () => {
       try {
         const response = await axiosPrivate.get("/orders/user/", {});
 
-        console.log("Data posted successfully:", response.data);
+        //console.log("Data posted successfully:", response.data);
         if (response.data) {
           setOrders(response.data);
         }
       } catch (error) {
         //console.error("Error posting data: elements not found");
+        if (error.response && error.response.status == 404) {
+          messageApi.open({
+            type: "error",
+            content: "You haven't made any reservations",
+          });
+        }
         setOrders([]);
         setLoading(false);
       }
@@ -87,6 +95,7 @@ function ReservationsScreen() {
 
   return (
     <>
+      {contextHolder}
       <TopBar />
       <div className={styles.ordersList}>
         <h2>Your orders</h2>
@@ -100,9 +109,9 @@ function ReservationsScreen() {
           <ul className={styles.mainList}>
             {currentOrders.map((order, index) => (
               <li className={styles.order} key={index}>
-                <h2>Order {index + 1 + (currentPage - 1) * ordersPerPage}</h2>
+                <h2><b>Order {index + 1 + (currentPage - 1) * ordersPerPage}</b></h2>
                 <ul className={styles.orderData}>
-                  <li>Full price: {order.full_price}</li>
+                  <li>Full price: {order.full_price} $</li>
                   <li>
                     Payment status:{" "}
                     {order.is_payment_completed ? "completed" : "not regulated"}
@@ -121,11 +130,7 @@ function ReservationsScreen() {
                               <div className={styles.info}>
                                 <div className={styles.infoBar}>
                                   <AirplaneTicketIcon
-                                    style={{
-                                      fontSize: 30,
-                                      marginBottom: -7,
-                                      marginRight: 4,
-                                    }}
+                                    className={styles.ticketIcon}
                                   />
                                   Ticket {index + 1}
                                 </div>

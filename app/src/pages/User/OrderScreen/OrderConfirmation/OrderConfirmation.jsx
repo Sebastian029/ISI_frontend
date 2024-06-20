@@ -27,10 +27,10 @@ const OrderConfirmation = () => {
   };
 
   useEffect(() => {
-    console.log(localStorage.getItem("flightDetails"));
+    //console.log(localStorage.getItem("flightDetails"));
     setTickets(JSON.parse(localStorage.getItem("cart")));
     setFlightDetails(JSON.parse(localStorage.getItem("flightDetails")));
-    console.log(tickets);
+    //console.log(tickets);
   }, []);
 
   const formatDate = (date) => {
@@ -51,7 +51,7 @@ const OrderConfirmation = () => {
       if (response.data) {
         const orderIdResponse = response.data.order_id;
 
-        console.log(response.data.order_id);
+        //console.log(response.data.order_id);
         // if(response.data.order_id==undefined){
         //   messageApi.open({
         //     type: 'error',
@@ -59,12 +59,12 @@ const OrderConfirmation = () => {
         //   });
         // } else
         if (paymentMethod == "transfer") {
-          console.log("Transfer Payment");
+          //console.log("Transfer Payment");
           navigate(
             `/transferdetails?orderId=${response.data.order_id}&fullPrice=${response.data.full_price}`
           );
         } else if (paymentMethod == "online") {
-          console.log("Online Payment");
+          //console.log("Online Payment");
           const payment = await axiosPrivate.post("/create-payment", {
             tickets: tickets,
             order_id: response.data.order_id,
@@ -72,7 +72,7 @@ const OrderConfirmation = () => {
           });
 
           window.location.href = payment.data.approval_url;
-          console.log(payment.data);
+          //console.log(payment.data);
         }
       }
 
@@ -104,11 +104,7 @@ const OrderConfirmation = () => {
               <div className={styles.line} />
               <div>
                 <FlightIcon
-                  style={{
-                    fontSize: 30,
-                    marginBottom: -5,
-                    transform: "rotate(90deg)",
-                  }}
+                  className={styles.flightIcon}
                 />
               </div>
               <div className={styles.line} />
@@ -120,7 +116,7 @@ const OrderConfirmation = () => {
               <div className={styles.infoBar}>
                 <p>
                   <FlightTakeoffIcon
-                    style={{ fontSize: 30, marginBottom: -5 }}
+                    className={styles.icon}
                   />
                   Departure Airport:{" "}
                   {flightDetails && flightDetails.departureAirport}
@@ -128,7 +124,7 @@ const OrderConfirmation = () => {
               </div>
               <div className={styles.infoBar}>
                 <p>
-                  <FlightLandIcon style={{ fontSize: 30, marginBottom: -5 }} />
+                  <FlightLandIcon className={styles.icon} />
                   Arrival Airport:{" "}
                   {flightDetails && flightDetails.arrivalAirport}
                 </p>
@@ -136,7 +132,7 @@ const OrderConfirmation = () => {
               <div className={styles.infoBar}>
                 <p>
                   <CalendarMonthIcon
-                    style={{ fontSize: 30, marginBottom: -5 }}
+                    className={styles.icon}
                   />
                   Flight Date:{" "}
                   {formatDate(flightDetails && flightDetails.flightDate)}
@@ -158,11 +154,7 @@ const OrderConfirmation = () => {
                           <div className={styles.info}>
                             <div className={styles.infoBar}>
                               <AirplaneTicketIcon
-                                style={{
-                                  fontSize: 30,
-                                  marginBottom: -7,
-                                  marginRight: 4,
-                                }}
+                                className={styles.icon}
                               />
                               Ticket {index + 1}
                             </div>

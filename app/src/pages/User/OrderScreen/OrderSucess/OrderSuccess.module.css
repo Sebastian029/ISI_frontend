@@ -168,7 +168,7 @@
 
 .label{
     font-family: 'Lato';
-    font-size: 22px;
+    font-size: 1.5em;
     font-weight: 600;
     align-self: flex-start;
     margin-left: 10%;
@@ -183,4 +183,105 @@
 
 li{
     list-style-type: none;
+}
+
+.flightIcon {
+    font-size: 2em !important;
+    margin-bottom: -5px !important;
+    transform: rotate(90deg) !important;
+  }
+  
+.icon {
+    font-size: 1.5em !important;
+    margin-bottom: -5px !important;
+}
+
+@media screen and (max-width: 1200px) {
+    .img{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .img{
+        display: none;
+    }
+
+    .ticketC{
+        width: 55vw;
+    }
+    
+    .cardContent{
+        width: 40vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: -0.7em
+    }
+
+    .ticketInfo{
+        margin-left: 10%;
+        margin-top: 1%;
+        font-size: 1em;
+        font-weight: 500;
+    }
+
+    .infoBar {
+        display: flex;
+        align-items: "center";
+        gap: 10;
+        font-size: 1.17em;
+    }
+
+    .ticketIcon{
+        font-size: 1.2em !important;
+        margin-bottom: -7px !important;
+        margin-right: 4px !important;
+    }
+
+    .orderData{
+        margin-left: 5%;
+        width:95%;
+        font-size: 1.4em;
+    }
+
+    .yourOrder {
+        width: 95%;
+        border-radius: 10px;
+        font-size: 0.8em;
+    }
+    
+    .flightData {
+        width: 95%;
+        border-radius: 10px;
+        padding: 2%;
+        margin: 2%;
+    }
+
+    .payment{
+        width:80%;
+        display: flex;
+        flex-direction: column;
+        font-size: 18px;
+        font-family: 'Lato';
+        align-items: flex-start;
+        margin-top: 0.3em;
+        margin-bottom: 0.3em;
+
+    }
+    
+    .infoTickets {
+        margin:1%;
+        font-size: 1.3em;
+        font-weight: 600;
+    }
+
+    .label{
+        font-family: 'Lato';
+        font-size: 1.2em;
+        font-weight: 600;
+        align-self: flex-start;
+        margin-left: 10%;
+        margin-bottom: -1%;
+    }
 }

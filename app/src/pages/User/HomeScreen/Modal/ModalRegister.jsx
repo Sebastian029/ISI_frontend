@@ -138,7 +138,7 @@ const ModalRegister = ({ toggleModal, setLogin }) => {
         setRepeatPasswordRegister("");
       })
       .catch((error) => {
-        console.error("Registration error:", error);
+        //console.error("Registration error:", error);
         if (error.response) {
           messageApi.error(error.response.data.message);
         } else {
