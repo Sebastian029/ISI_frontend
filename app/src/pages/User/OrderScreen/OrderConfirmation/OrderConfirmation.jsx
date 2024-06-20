@@ -9,7 +9,7 @@ import FlightLandIcon from "@mui/icons-material/FlightLand";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import FlightIcon from "@mui/icons-material/Flight";
 import AirplaneTicketIcon from "@mui/icons-material/AirplaneTicket";
-import { Card, message } from "antd";
+import { Card, message, Radio, Space } from "antd";
 
 const OrderConfirmation = () => {
   const [tickets, setTickets] = useState([{}]);
@@ -88,6 +88,10 @@ const OrderConfirmation = () => {
       }
     }
   };
+
+  const changePaymentMethod = (e) => {
+    setPaymentMethod(e.target.value);
+  }
 
   return (
     <>
@@ -184,24 +188,26 @@ const OrderConfirmation = () => {
 
           <div className={styles.payment}>
             <p className={styles.label}>Method of payment</p>
-            <label className={styles.radio}>
-              <input
-                type="radio"
-                name="paymentMethod"
-                value="transfer"
-                onChange={() => setPaymentMethod("transfer")}
-              />
-              Przelew
-            </label>
-            <label className={styles.radio}>
-              <input
-                type="radio"
-                name="paymentMethod"
-                value="online"
-                onChange={() => setPaymentMethod("online")}
-              />
-              PayPal
-            </label>
+            <Radio.Group onChange={changePaymentMethod} value={paymentMethod}>
+              <Space direction="vertical">
+                  <Radio
+                    name="paymentMethod"
+                    value="transfer"
+                    className={styles.radio}
+                    //onChange={() => setPaymentMethod("transfer")}
+                  >
+                    Przelew
+                  </Radio>
+                  <Radio
+                    name="paymentMethod"
+                    value="online"
+                    className={styles.radio}
+                    //onChange={() => setPaymentMethod("online")}
+                    >
+                    PayPal
+                  </Radio>
+              </Space>
+            </Radio.Group>
           </div>
           <input
             className={styles.button}

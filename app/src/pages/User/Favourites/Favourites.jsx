@@ -6,6 +6,7 @@ import Pagination from "../../../comp/Pagination.jsx";
 import Footer from "../HomeScreen/Footer/Footer.jsx";
 import useAuth from "../../../hooks/useAuth.jsx";
 import Loading from "../../../comp/Loading.jsx";
+import { message } from "antd";
 
 import { useEffect, useState } from "react";
 
@@ -16,6 +17,7 @@ function FavouritesScreen() {
 
   const [flights, setFlights] = useState([{}]);
   const [loading, setLoading] = useState(true);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const handleFlightSelection = (flight) => {
     const {
@@ -37,6 +39,11 @@ function FavouritesScreen() {
         //console.log("Data fetched successfully:", response.data);
         if (response.data) {
           setFlights(response.data);
+          if (response.data.length==0)
+            messageApi.open({
+              type:"error",
+              content: "You haven't followed anything yet."
+            })
         }
       } catch (error) {
         //console.error("Error fetching data:", error);
@@ -50,6 +57,7 @@ function FavouritesScreen() {
 
   return (
     <>
+      {contextHolder}
       <div className={styles.mainBox}>
         <TopBar />
 

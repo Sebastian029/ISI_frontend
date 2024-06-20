@@ -31,7 +31,9 @@ function AccountScreen() {
         const response = await axiosPrivate.get("/contact");
         if (response) {
           setAccountData(response.data);
-          setPhoneNumber(response.data.phone_number.split(""));
+          if(response.data.phone_number){
+            setPhoneNumber(response.data.phone_number.split(""));
+          }
         }
       } catch (err) {
         console.log(err);

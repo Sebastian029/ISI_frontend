@@ -138,6 +138,35 @@ li{
     list-style-type: none;
 }
 
+.flightIcon {
+    font-size: 1.5em !important;
+    margin-bottom: -5px !important;
+    transform: rotate(90deg) !important;
+}
+
+.icon {
+    font-size: 1.3em !important;
+    margin: 4px;
+    margin-bottom: -5px !important;
+}
+
+.flightBar{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1%;
+}
+
+.line{
+    flex: 1;
+    height: 2px;
+    background-color: black;
+    margin: 10px;
+}
+
+
+
 @media screen and (max-width: 1200px) {
     .img{
         display: none;
@@ -172,7 +201,7 @@ li{
         display: flex;
         align-items: "center";
         gap: 10;
-        font-size: 1.2em;
+        font-size: 0.9em;
     }
 
     .ticketIcon{
@@ -185,6 +214,13 @@ li{
         margin-left: 5%;
         width:95%;
         font-size: 1.4em;
+    }
+
+    .flightData {
+        width: 95%;
+        border-radius: 10px;
+        padding: 2%;
+        margin: 2%;
     }
     
 }

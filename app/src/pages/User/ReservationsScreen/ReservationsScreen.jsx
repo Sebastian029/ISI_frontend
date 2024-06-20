@@ -4,6 +4,10 @@ import { axiosPrivate } from "../../../hooks/useAxiosPrivate.jsx";
 import useAuth from "../../../hooks/useAuth.jsx";
 import styles from "./ReservationsScreen.module.css";
 import AirplaneTicketIcon from "@mui/icons-material/AirplaneTicket";
+import FlightIcon from "@mui/icons-material/Flight";
+import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
+import FlightLandIcon from "@mui/icons-material/FlightLand";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { Card } from "antd";
 import Loading from "../../../comp/Loading.jsx";
 import NoData from "../../../comp/NoData.jsx";
@@ -98,7 +102,6 @@ function ReservationsScreen() {
       {contextHolder}
       <TopBar />
       <div className={styles.ordersList}>
-        <h2>Your orders</h2>
         {currentOrders.length === 0 ? (
           !loading ? (
             <NoData />
@@ -118,7 +121,48 @@ function ReservationsScreen() {
                   </li>
                   <li>Payment Method: {order.paymentMethod}</li>
                   <li>Order date: {formatDate(order.orderDate)}</li>
-
+                  <div className={styles.flightBar}>
+                    <div className={styles.infoBar}>
+                      <b> {order.tickets[0].departure_city}</b>
+                    </div>
+                    <div className={styles.line} />
+                    <div>
+                      <FlightIcon
+                        className={styles.flightIcon}
+                      />
+                    </div>
+                    <div className={styles.line} />
+                    <div className={styles.infoBar}>
+                      <b> {order.tickets[0].arrive_city}</b>
+                    </div>
+                  </div>
+                  <div className={styles.flightData}>
+                    <div className={styles.infoBar}>
+                      <p>
+                        <FlightTakeoffIcon
+                          className={styles.icon}
+                        />
+                        Departure Airport:{" "}
+                        {order.tickets[0].departure_airport}
+                      </p>
+                    </div>
+                    <div className={styles.infoBar}>
+                      <p>
+                        <FlightLandIcon className={styles.icon} />
+                        Arrival Airport:{" "}
+                        {order.tickets[0].arrive_airport}
+                      </p>
+                    </div>
+                    <div className={styles.infoBar}>
+                      <p>
+                        <CalendarMonthIcon
+                          className={styles.icon}
+                        />
+                        Flight Date:{" "}
+                        {formatDate(order.tickets[0].data_lotu)}
+                      </p>
+                    </div>
+                  </div>
                   {order.tickets.length === 0 ? (
                     <p>No tickets available</p>
                   ) : (
