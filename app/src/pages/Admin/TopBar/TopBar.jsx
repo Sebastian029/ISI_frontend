@@ -29,6 +29,9 @@ function TopBar() {
         <div className={styles.box} onClick={() => navigate("/privileges")}>
           Privilages
         </div>
+        <div className={styles.box} onClick={() => navigate("/role")}>
+          Role
+        </div>
         <div className={styles.box} onClick={() => handleLogout()}>
           Logout
         </div>
