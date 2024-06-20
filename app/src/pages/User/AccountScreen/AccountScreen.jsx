@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import styles from "./AccountScreen.module.css";
 import Footer from "../HomeScreen/Footer/Footer";
 import TopBar from "../HomeScreen/TopBar/TopBar";
 import { Button, Form, Input, Space, Switch } from "antd";
 import { InputOTP } from "antd-input-otp";
-import { Slider } from "antd";
 import { axiosPrivate } from "../../../hooks/useAxiosPrivate";
 import useAuth from "../../../hooks/useAuth";
 import { message } from "antd";
+import { Logout } from "../../../comp/Logout";
 
 function AccountScreen() {
   const appStyles = {
@@ -17,8 +16,6 @@ function AccountScreen() {
     flexDirection: "column",
   };
   const { auth } = useAuth();
-  const navigate = useNavigate();
-  const { setAuth } = useAuth();
   const [accountData, setAccountData] = useState({
     name: "",
     surname: "",
@@ -26,15 +23,7 @@ function AccountScreen() {
     notification: "",
   });
   const [phoneNumber, setPhoneNumber] = useState([]);
-  const [axiosResponse, setAxiosResponse] = useState(null);
   const [messageApi, contextHolder] = message.useMessage();
-
-  const handleLogout = () => {
-    console.log("logout");
-    localStorage.setItem("authData", null);
-    setAuth(null);
-    navigate("/");
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -202,11 +191,8 @@ function AccountScreen() {
                 </Form.Item>
               </Form>
 
-              <div
-                className={styles.logoutButton}
-                onClick={() => handleLogout()}
-              >
-                Logout
+              <div className={styles.logoutButton}>
+                <Logout />
               </div>
 
               {/*axiosResponse ? (

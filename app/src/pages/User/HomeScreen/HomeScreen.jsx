@@ -6,6 +6,7 @@ import Footer from "./Footer/Footer.jsx";
 import Welcome from "./Welcome/Welcome.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth.jsx";
+import { jwtDecode } from "jwt-decode";
 
 function HomeScreen() {
   const appStyles = {
@@ -20,23 +21,23 @@ function HomeScreen() {
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const accessToken = params.get("access_token");
-    const refreshToken = params.get("refresh_token");
-    const roles = [params.get("roles")];
+    const access_token = params.get("access_token");
+    const refresh_token = params.get("refresh_token");
 
-    if (accessToken && refreshToken) {
-      localStorage.setItem("access_token", accessToken);
-      localStorage.setItem("refresh_token", refreshToken);
+    if (access_token && refresh_token) {
+      console.log(refresh_token);
+      const token_decoded = jwtDecode(access_token);
       const authData = {
-        email: "emailInput",
-        password: "passwordInput",
-        roles,
-        accessToken,
-        refreshToken,
-        username: "a",
+        accessToken: access_token,
+        refreshToken: refresh_token,
+        roles: token_decoded.roles,
+        username: token_decoded.name + " " + token_decoded.surname,
       };
       setAuth(authData);
       localStorage.setItem("authData", JSON.stringify(authData));
+      if (token_decoded.roles.includes("admin")) {
+        navigate("/admin");
+      }
     }
   }, [location, setAuth]);
 
