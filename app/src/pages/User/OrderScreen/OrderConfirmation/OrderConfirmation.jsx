@@ -1,8 +1,7 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import TopBar from "../../HomeScreen/TopBar/TopBar.jsx";
 import styles from "./OrderConfirmation.module.css";
 import { useEffect, useState } from "react";
-import axios from "../../../../axiosInstance.js";
 import { axiosPrivate } from "../../../../hooks/useAxiosPrivate.jsx";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import FlightLandIcon from "@mui/icons-material/FlightLand";
@@ -49,8 +48,6 @@ const OrderConfirmation = () => {
       });
 
       if (response.data) {
-        const orderIdResponse = response.data.order_id;
-
         //console.log(response.data.order_id);
         // if(response.data.order_id==undefined){
         //   messageApi.open({
@@ -91,7 +88,7 @@ const OrderConfirmation = () => {
 
   const changePaymentMethod = (e) => {
     setPaymentMethod(e.target.value);
-  }
+  };
 
   return (
     <>
@@ -107,9 +104,7 @@ const OrderConfirmation = () => {
               </div>
               <div className={styles.line} />
               <div>
-                <FlightIcon
-                  className={styles.flightIcon}
-                />
+                <FlightIcon className={styles.flightIcon} />
               </div>
               <div className={styles.line} />
               <div className={styles.infoBar}>
@@ -119,9 +114,7 @@ const OrderConfirmation = () => {
             <div className={styles.flightData}>
               <div className={styles.infoBar}>
                 <p>
-                  <FlightTakeoffIcon
-                    className={styles.icon}
-                  />
+                  <FlightTakeoffIcon className={styles.icon} />
                   Departure Airport:{" "}
                   {flightDetails && flightDetails.departureAirport}
                 </p>
@@ -135,9 +128,7 @@ const OrderConfirmation = () => {
               </div>
               <div className={styles.infoBar}>
                 <p>
-                  <CalendarMonthIcon
-                    className={styles.icon}
-                  />
+                  <CalendarMonthIcon className={styles.icon} />
                   Flight Date:{" "}
                   {formatDate(flightDetails && flightDetails.flightDate)}
                 </p>
@@ -157,9 +148,7 @@ const OrderConfirmation = () => {
                         <div className={styles.cardContent}>
                           <div className={styles.info}>
                             <div className={styles.infoBar}>
-                              <AirplaneTicketIcon
-                                className={styles.icon}
-                              />
+                              <AirplaneTicketIcon className={styles.icon} />
                               Ticket {index + 1}
                             </div>
                             <div className={styles.ticketInfo}>
@@ -190,22 +179,22 @@ const OrderConfirmation = () => {
             <p className={styles.label}>Method of payment</p>
             <Radio.Group onChange={changePaymentMethod} value={paymentMethod}>
               <Space direction="vertical">
-                  <Radio
-                    name="paymentMethod"
-                    value="transfer"
-                    className={styles.radio}
-                    //onChange={() => setPaymentMethod("transfer")}
-                  >
-                    Przelew
-                  </Radio>
-                  <Radio
-                    name="paymentMethod"
-                    value="online"
-                    className={styles.radio}
-                    //onChange={() => setPaymentMethod("online")}
-                    >
-                    PayPal
-                  </Radio>
+                <Radio
+                  name="paymentMethod"
+                  value="transfer"
+                  className={styles.radio}
+                  //onChange={() => setPaymentMethod("transfer")}
+                >
+                  Przelew
+                </Radio>
+                <Radio
+                  name="paymentMethod"
+                  value="online"
+                  className={styles.radio}
+                  //onChange={() => setPaymentMethod("online")}
+                >
+                  PayPal
+                </Radio>
               </Space>
             </Radio.Group>
           </div>

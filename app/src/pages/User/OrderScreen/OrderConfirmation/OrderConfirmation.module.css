@@ -1,275 +1,269 @@
-
-.orderData{
-    width:90%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    font-size: 18px;
-    font-family: 'Lato';
-    font-weight: 600;
-    margin-bottom: 5%;
+.orderData {
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 18px;
+  font-family: "Lato";
+  font-weight: 600;
+  margin-bottom: 5%;
 }
 
-
-.flightBar{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1%;
+.flightBar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1%;
 }
 
-.line{
-    flex: 1;
-    height: 2px;
-    background-color: black;
-    margin: 10;
+.line {
+  flex: 1;
+  height: 2px;
+  background-color: black;
+  margin: 10;
 }
 
 .infoBar {
-    display: flex;
-    align-items: "center";
-    gap: 10;
-    font-size: 20px;
+  display: flex;
+  align-items: "center";
+  gap: 10;
+  font-size: 20px;
 }
 
 .infoTickets {
-    margin:1%;
-    font-size: 1.5em;
-    font-weight: 600;
+  margin: 1%;
+  font-size: 1.5em;
+  font-weight: 600;
 }
 
-.yourOrder{
-    width:80%;
-    border-radius: 10px;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
-    padding: 2%;
-    margin: 2%;
+.yourOrder {
+  width: 80%;
+  border-radius: 10px;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+  padding: 2%;
+  margin: 2%;
 }
 
-.img{
-    width: 50%;
-    border-radius: 10px;
-    
+.img {
+  width: 50%;
+  border-radius: 10px;
 }
 
-.ordersList{
-    width:100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    border: 1px solid black;
-    font-family: 'Lato';
-    font-size: 18px;
+.ordersList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  border: 1px solid black;
+  font-family: "Lato";
+  font-size: 18px;
 }
 
-.order{
-    list-style-type: none;
-    width:80%;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--main-color-2);
-    border-radius: 10px;
-    padding: 2%;
-    margin: 1%;
-
-
+.order {
+  list-style-type: none;
+  width: 80%;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--main-color-2);
+  border-radius: 10px;
+  padding: 2%;
+  margin: 1%;
 }
 
-.mainContainer{
-    width:90%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2%
+.mainContainer {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2%;
 }
 
-.ticketList{
-    width:100%;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    font-family: 'Lato';
-    font-size: 18px;
-    margin-left: 4%;
-    gap: 20px
-
+.ticketList {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-family: "Lato";
+  font-size: 18px;
+  margin-left: 4%;
+  gap: 20px;
 }
 
-.ticket{
-    background-color:rgba(var(--main-color-rgb),0.4);
-    border: 2px solid var(--main-color);
-    border-radius: 10px;
-    padding: 1%;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: flex-start;
+.ticket {
+  background-color: rgba(var(--main-color-rgb), 0.4);
+  border: 2px solid var(--main-color);
+  border-radius: 10px;
+  padding: 1%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
 }
 
-.ticketC{
-    width: 40%;
+.ticketC {
+  width: 40%;
 }
 
-.ticketInfo{
-    margin-left: 10%;
-    margin-top: 1%;
-    font-size: 17px;
-    font-weight: 500;
+.ticketInfo {
+  margin-left: 10%;
+  margin-top: 1%;
+  font-size: 17px;
+  font-weight: 500;
 }
 
-.info{
-    width: 100%;
+.info {
+  width: 100%;
 }
 
-.cardContent{
-    width: 23vw;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+.cardContent {
+  width: 23vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.button{
-    padding: 8px 16px;
-    border: 1px solid var(--main-color-2);
-    color: var(--main-color-2);
-    cursor: pointer;
-    text-decoration: none;
-    bottom: 0px;
-    border-radius: 20px;
-    background-color: white;
+.button {
+  padding: 8px 16px;
+  border: 1px solid var(--main-color-2);
+  color: var(--main-color-2);
+  cursor: pointer;
+  text-decoration: none;
+  bottom: 0px;
+  border-radius: 20px;
+  background-color: white;
+  transition: background-color 0.3s ease;
 }
 
 .button:hover {
-    background-color: var(--main-color-2);
-    color: white;
-    cursor:pointer;
+  background-color: var(--main-color-2);
+  color: white;
+  cursor: pointer;
 }
 
-.active{
-    background-color: var(--main-color-2);
-    color: white;
-    border-color: var(--main-color-2);
+.active {
+  background-color: var(--main-color-2);
+  color: white;
+  border-color: var(--main-color-2);
 }
 
-.payment{
-    width:50%;
-    display: flex;
-    flex-direction: column;
-    font-size: 18px;
-    font-family: 'Lato';
-    align-items: flex-start;
+.payment {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+  font-family: "Lato";
+  align-items: flex-start;
 }
 
-.label{
-    font-family: 'Lato';
-    font-size: 18px;
-    font-weight: 600;
+.label {
+  font-family: "Lato";
+  font-size: 2rem;
+  font-weight: 600;
 }
 
-.radio{
-    margin-left: 2%;
-    font-family: 'Lato';
-    font-size: 18px;
+.radio {
+  margin-left: 2%;
+  font-family: "Lato";
+  font-size: 1.5rem;
 }
 
-li{
-    list-style-type: none;
+li {
+  list-style-type: none;
 }
 
 .flightIcon {
-    font-size: 2em !important;
-    margin-bottom: -5px !important;
-    transform: rotate(90deg) !important;
-  }
-  
+  font-size: 2em !important;
+  margin-bottom: -5px !important;
+  transform: rotate(90deg) !important;
+}
+
 .icon {
-    font-size: 1.5em !important;
-    margin-bottom: -5px !important;
+  font-size: 1.5em !important;
+  margin-bottom: -5px !important;
 }
 
 @media screen and (max-width: 1200px) {
-    .img{
-        display: none;
-    }
+  .img {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 700px) {
-    .img{
-        display: none;
-    }
+  .img {
+    display: none;
+  }
 
-    .ticketC{
-        width: 55vw;
-    }
-    
-    .cardContent{
-        width: 40vw;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        margin: -0.7em
-    }
+  .ticketC {
+    width: 55vw;
+  }
 
-    .ticketInfo{
-        margin-left: 10%;
-        margin-top: 1%;
-        font-size: 1em;
-        font-weight: 500;
-    }
+  .cardContent {
+    width: 40vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: -0.7em;
+  }
 
-    .infoBar {
-        display: flex;
-        align-items: "center";
-        gap: 10;
-        font-size: 1.17em;
-    }
+  .ticketInfo {
+    margin-left: 10%;
+    margin-top: 1%;
+    font-size: 1em;
+    font-weight: 500;
+  }
 
-    .ticketIcon{
-        font-size: 1.2em !important;
-        margin-bottom: -7px !important;
-        margin-right: 4px !important;
-    }
+  .infoBar {
+    display: flex;
+    align-items: "center";
+    gap: 10;
+    font-size: 1.17em;
+  }
 
-    .orderData{
-        margin-left: 5%;
-        width:95%;
-        font-size: 1.4em;
-    }
+  .ticketIcon {
+    font-size: 1.2em !important;
+    margin-bottom: -7px !important;
+    margin-right: 4px !important;
+  }
 
-    .yourOrder {
-        width: 95%;
-        border-radius: 10px;
-        font-size: 0.8em;
-    }
-    
-    .flightData {
-        width: 95%;
-        border-radius: 10px;
-        padding: 2%;
-        margin: 2%;
-    }
+  .orderData {
+    margin-left: 5%;
+    width: 95%;
+    font-size: 1.4em;
+  }
 
-    .payment{
-        width:80%;
-        display: flex;
-        flex-direction: column;
-        font-size: 18px;
-        font-family: 'Lato';
-        align-items: flex-start;
-        margin-top: 0.3em;
-        margin-bottom: 0.3em;
+  .yourOrder {
+    width: 95%;
+    border-radius: 10px;
+    font-size: 0.8em;
+  }
 
-    }
-    
-    .infoTickets {
-        margin:1%;
-        font-size: 1.3em;
-        font-weight: 600;
-    }
+  .flightData {
+    width: 95%;
+    border-radius: 10px;
+    padding: 2%;
+    margin: 2%;
+  }
+
+  .payment {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    font-family: "Lato";
+    align-items: flex-start;
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+  }
+
+  .infoTickets {
+    margin: 1%;
+    font-size: 1.3em;
+    font-weight: 600;
+  }
 }
