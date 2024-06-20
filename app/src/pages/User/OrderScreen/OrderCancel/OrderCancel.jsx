@@ -1,8 +1,6 @@
-import { useParams } from "react-router-dom";
 import TopBar from "../../HomeScreen/TopBar/TopBar.jsx";
 import styles from "./OrderCancel.module.css";
-import { useEffect, useState } from "react";
-import { axiosPrivate } from "../../../../hooks/useAxiosPrivate.jsx";
+
 const OrderCancel = () => {
   const appStyles = {
     height: "100vh",
@@ -16,7 +14,7 @@ const OrderCancel = () => {
       <TopBar />
       <div style={appStyles}>
         <div className={styles.orderData}>
-          <p>Cancelled!!</p>
+          <p>Cancelled!</p>
         </div>
       </div>
     </>

@@ -25,7 +25,7 @@ function HomeScreen() {
     const refresh_token = params.get("refresh_token");
 
     if (access_token && refresh_token) {
-      console.log(refresh_token);
+    //  console.log(refresh_token);
       const token_decoded = jwtDecode(access_token);
       const authData = {
         accessToken: access_token,

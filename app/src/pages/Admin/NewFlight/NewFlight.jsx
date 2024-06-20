@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import {
   TimePicker,
@@ -45,8 +45,8 @@ function NewFlight() {
         data_lotu: formatDate(values.departureDateInput),
       };
 
-      const response = await axiosPrivate.post("/flight_register", data);
-      console.log(response.data);
+      await axiosPrivate.post("/flight_register", data);
+      // console.log(response.data);
       messageApi.open({
         type: "success",
         content: "Flight registered successfully",
@@ -98,6 +98,10 @@ function NewFlight() {
     fetchAirports();
   }, [auth.auth]);
 
+  const disablePastDates = (current) => {
+    return current && current < dayjs().endOf("day");
+  };
+
   return (
     <>
       <TopBar />
@@ -108,9 +112,9 @@ function NewFlight() {
             form={form}
             layout="vertical"
             onFinish={saveFlightData}
-            onFinishFailed={(errorInfo) => {
-              console.log("Failed:", errorInfo);
-            }}
+            //</div>  onFinishFailed={(errorInfo) => {
+            //    console.log("Failed:", errorInfo);
+            //   }}
           >
             <Form.Item
               name="departureAirport"
@@ -158,6 +162,7 @@ function NewFlight() {
                 className={styles.inputContainer}
                 format="DD-MM-YYYY"
                 placeholder="Departure date"
+                disabledDate={disablePastDates}
               />
             </Form.Item>
 

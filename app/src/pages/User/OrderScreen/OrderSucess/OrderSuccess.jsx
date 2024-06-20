@@ -12,11 +12,6 @@ const OrderSuccess = () => {
   const [tickets, setTickets] = useState([{}]);
   const [flightDetails, setFlightDetails] = useState();
 
-
-  const appStyles = {
-    
-  };
-
   useEffect(()=>{
     
       setTickets(JSON.parse(localStorage.getItem("cart")));

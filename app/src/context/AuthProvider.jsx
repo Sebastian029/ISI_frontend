@@ -1,10 +1,12 @@
 import { createContext, useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({});
   const [modal, setModal] = useState(false);
+
   useEffect(() => {
     const storedAuthData = localStorage.getItem("authData");
     if (storedAuthData) {
@@ -14,7 +16,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    console.log("Auth state changed:", auth);
+    // console.log("Auth state changed:", auth);
   }, [auth]);
 
   return (
@@ -22,6 +24,10 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
+};
+
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default AuthContext;

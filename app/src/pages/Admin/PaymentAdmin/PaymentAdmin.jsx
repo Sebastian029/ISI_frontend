@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { axiosPrivate } from "../../../hooks/useAxiosPrivate.jsx";
 import { Table, Button, Space, Input, message } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
@@ -12,7 +12,6 @@ import useAuth from "../../../hooks/useAuth.jsx";
 
 const PaymentAdmin = () => {
   const [orders, setOrders] = useState([]);
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const ordersPerPage = 11;
@@ -29,11 +28,11 @@ const PaymentAdmin = () => {
         setOrders(response.data);
       } catch (error) {
         if (error.response) {
-          setError(`Error: ${error.response.data.error}`);
+          // setError(`Error: ${error.response.data.error}`);
         } else if (error.request) {
-          setError("Error: No response from server");
+          // setError("Error: No response from server");
         } else {
-          setError(`Error: ${error.message}`);
+          //  setError(`Error: ${error.message}`);
         }
       } finally {
         setLoading(false);
@@ -67,10 +66,6 @@ const PaymentAdmin = () => {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-  };
-
-  const handleTableChange = (pagination, filters, sorter) => {
-    console.log(pagination, filters, sorter);
   };
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -290,7 +285,6 @@ const PaymentAdmin = () => {
               current: currentPage,
               onChange: handlePageChange,
             }}
-            onChange={handleTableChange}
           />
         )}
       </div>

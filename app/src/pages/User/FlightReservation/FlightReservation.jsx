@@ -3,7 +3,6 @@ import TopBar from "../HomeScreen/TopBar/TopBar.jsx";
 import styles from "./FlightReservation.module.css";
 import { useEffect, useState } from "react";
 import axios from "../../../axiosInstance.js";
-import { axiosPrivate } from "../../../hooks/useAxiosPrivate.jsx";
 import Deck from "./components/Deck.jsx";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import FlightLandIcon from "@mui/icons-material/FlightLand";

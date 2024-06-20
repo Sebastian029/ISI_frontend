@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./AccountScreen.module.css";
 import Footer from "../HomeScreen/Footer/Footer";
 import TopBar from "../HomeScreen/TopBar/TopBar";
@@ -36,7 +36,7 @@ function AccountScreen() {
           }
         }
       } catch (err) {
-        console.log(err);
+        //    console.log(err);
       }
     };
 
@@ -66,7 +66,7 @@ function AccountScreen() {
         });
       }
     } catch (err) {
-      console.log(err);
+      //  console.log(err);
     }
   };
 
@@ -85,7 +85,7 @@ function AccountScreen() {
         notification: checked,
       }));
     } catch (err) {
-      console.log(err);
+      //console.log(err);
     }
   };
 

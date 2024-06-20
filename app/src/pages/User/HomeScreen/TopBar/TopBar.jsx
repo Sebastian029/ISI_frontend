@@ -24,8 +24,8 @@ function TopBar() {
     switch (location.pathname) {
       case "/":
         return "home";
-      case "/help":
-        return "help";
+      case "/recommended":
+        return "recommended";
       case "/favourites":
         return "favourites";
       case "/reservations":
@@ -51,11 +51,14 @@ function TopBar() {
     },
     {
       label: (
-        <a href="/help" className={selectedOption === "help" ? "active" : ""}>
-          Help
+        <a
+          href="/recommended"
+          className={selectedOption === "recommended" ? "active" : ""}
+        >
+          Recommended
         </a>
       ),
-      key: "help",
+      key: "recommended",
     },
     {
       type: "divider",
@@ -137,11 +140,11 @@ function TopBar() {
           </div>
           <div
             className={`${styles.box} ${
-              selectedOption === "help" ? styles.selected : ""
+              selectedOption === "recommended" ? styles.selected : ""
             }`}
-            onClick={() => navigate("/help")}
+            onClick={() => navigate("/recommended")}
           >
-            Help
+            Recommended
           </div>
           <div
             className={`${styles.box} ${
