@@ -17,6 +17,7 @@ import OrderConfirmation from "./pages/User/OrderScreen/OrderConfirmation/OrderC
 import OrderCancel from "./pages/User/OrderScreen/OrderCancel/OrderCancel.jsx";
 import OrderSuccess from "./pages/User/OrderScreen/OrderSucess/OrderSuccess.jsx";
 import TransferDetails from "./pages/User/OrderScreen/OrderConfirmation/TransferDetails/TransferDetails.jsx";
+import Role from "./pages/Admin/Role/Role.jsx";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/newflight" element={<NewFlight />} />
           <Route path="/paymentadmin" element={<PaymentAdmin />} />
           <Route path="/privileges" element={<Privileges />} />
+          <Route path="/role" element={<Role />} />
         </Route>
         <Route element={<RequireAuth allowedRoles={["user"]} />}>
           <Route path="/account" element={<AccountScreen />} />

@@ -1,0 +1,106 @@
+.privilegesList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  font-family: "Lato";
+  padding: 1%;
+}
+
+.privileges {
+  list-style-type: none;
+  width: 80%;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  border: 1px solid orange;
+  border-radius: 10px;
+  padding: 2%;
+  margin: 1%;
+}
+
+.fullWidthTable {
+  width: 100%;
+}
+
+.privilegesData {
+  width: 95%;
+}
+
+.mainList {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  padding: 8px 16px;
+  border: 1px solid orange;
+  color: orange;
+  cursor: pointer;
+  text-decoration: none;
+  bottom: 0px;
+  margin-top: 2%;
+  border-radius: 20px;
+  background-color: white;
+}
+
+.button:hover {
+  background-color: orange;
+  color: white;
+  cursor: pointer;
+}
+
+.active {
+  background-color: orange;
+  color: white;
+  border-color: orange;
+}
+
+li {
+  list-style-type: none;
+}
+
+.search {
+  padding: 8px 16px;
+  width: 50%;
+  border: 1px solid orange;
+  text-decoration: none;
+  bottom: 0px;
+  border-radius: 20px;
+  background-color: white;
+}
+
+body {
+  overflow: auto !important; /* Ensure body can scroll */
+}
+
+.imput {
+  padding: 8px 16px;
+  width: 50%;
+  text-decoration: none;
+  font-family: "Lato";
+  bottom: 0px;
+}
+/* Ensure the modal does not overflow */
+.modal {
+  width: 50%; /* Set the desired width */
+  max-width: 600px; /* Optionally set a maximum width */
+  height: 60%; /* Set the desired height */
+  max-height: 40%; /* Optionally set a maximum height */
+  margin: auto; /* Center the modal horizontally */
+  padding: 20px; /* Add some padding */
+  background-color: white; /* Background color */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow */
+  overflow: auto; /* Allow scrolling inside the modal if content overflows */
+  position: relative; /* Set position relative */
+  top: 20%; /* Adjust this value to move the modal down */
+}
+
+overlay {
+  overflow: auto; /* Ensure the overlay itself can be scrolled if necessary */
+}
