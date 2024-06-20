@@ -209,13 +209,14 @@ function AccountScreen() {
               >
                 Logout
               </div>
-              {axiosResponse ? (
+
+              {/*axiosResponse ? (
                 <p className={styles.axiosResponseStyle}>
                   {JSON.stringify(axiosResponse.data.message, null, 2)}
                 </p>
               ) : (
                 <p className={styles.axiosResponseBlankStyle}></p>
-              )}
+              )*/}
             </div>
           </div>
         </div>
