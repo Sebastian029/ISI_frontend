@@ -4,6 +4,7 @@ import "./global.css";
 
 import HomeScreen from "./pages/User/HomeScreen/HomeScreen.jsx";
 import FavouritesScreen from "./pages/User/Favourites/Favourites.jsx";
+import RecommendedScreen from "./pages/User/Recommended/Recommended.jsx";
 import AccountScreen from "./pages/User/AccountScreen/AccountScreen.jsx";
 import ReservationsScreen from "./pages/User/ReservationsScreen/ReservationsScreen.jsx";
 import UnauthorizedScreen from "./pages/UnauthorizedScreen/UnauthorizedScreen.jsx";
@@ -33,6 +34,7 @@ function App() {
         <Route element={<RequireAuth allowedRoles={["user"]} />}>
           <Route path="/account" element={<AccountScreen />} />
           <Route path="/favourites" element={<FavouritesScreen />} />
+          <Route path="/recommended" element={<RecommendedScreen />} />
           <Route path="/checkout" element={<OrderConfirmation />} />
           <Route path="/transferdetails" element={<TransferDetails />} />
           <Route path="/cancell" element={<OrderCancel />} />
