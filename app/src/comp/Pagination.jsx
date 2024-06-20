@@ -7,7 +7,8 @@ import AirlineSeatReclineExtraIcon from "@mui/icons-material/AirlineSeatReclineE
 import AirlineStopsIcon from "@mui/icons-material/AirlineStops";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import { axiosPrivate } from "../hooks/useAxiosPrivate";
+
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import PropTypes from "prop-types";
@@ -16,7 +17,6 @@ import NoData from "./NoData";
 function Items({
   currentItems,
   handleFlightSelection,
-  axiosPrivate,
   currentFlights,
   setCurrentFlights,
 }) {
@@ -153,7 +153,6 @@ function Items({
 Items.propTypes = {
   currentItems: PropTypes.array.isRequired,
   handleFlightSelection: PropTypes.func.isRequired,
-  axiosPrivate: PropTypes.object.isRequired,
   currentFlights: PropTypes.array.isRequired,
   setCurrentFlights: PropTypes.func.isRequired,
 };
@@ -163,8 +162,6 @@ export default function PaginatedItems({
   itemsPerPage,
   handleFlightSelection,
 }) {
-  const axiosPrivate = useAxiosPrivate();
-
   const [currentFlights, setCurrentFlights] = useState(flights);
   const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
@@ -188,7 +185,6 @@ export default function PaginatedItems({
           <Items
             currentItems={currentItems}
             handleFlightSelection={handleFlightSelection}
-            axiosPrivate={axiosPrivate}
             currentFlights={currentFlights}
             setCurrentFlights={setCurrentFlights}
           />

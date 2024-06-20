@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import TopBar from "../HomeScreen/TopBar/TopBar";
 import styles from "./Favourites.module.css";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate.jsx";
+import { axiosPrivate } from "../../../hooks/useAxiosPrivate.jsx";
 import Pagination from "../../../comp/Pagination.jsx";
 import Footer from "../HomeScreen/Footer/Footer.jsx";
 import useAuth from "../../../hooks/useAuth.jsx";
@@ -12,7 +12,6 @@ import { useEffect, useState } from "react";
 function FavouritesScreen() {
   const navigate = useNavigate();
 
-  const axiosPrivate = useAxiosPrivate();
   const auth = useAuth();
 
   const [flights, setFlights] = useState([{}]);

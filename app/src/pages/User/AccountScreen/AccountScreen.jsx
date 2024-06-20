@@ -6,7 +6,7 @@ import TopBar from "../HomeScreen/TopBar/TopBar";
 import { Button, Form, Input, Space, Switch } from "antd";
 import { InputOTP } from "antd-input-otp";
 import { Slider } from "antd";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { axiosPrivate } from "../../../hooks/useAxiosPrivate";
 import useAuth from "../../../hooks/useAuth";
 import { message } from "antd";
 
@@ -16,7 +16,6 @@ function AccountScreen() {
     display: "flex",
     flexDirection: "column",
   };
-  const axiosPrivate = useAxiosPrivate();
   const { auth } = useAuth();
   const navigate = useNavigate();
   const { setAuth } = useAuth();

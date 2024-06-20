@@ -1,22 +1,14 @@
 import { useState, useEffect } from "react";
 import TopBar from "../HomeScreen/TopBar/TopBar.jsx";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate.jsx";
+import { axiosPrivate } from "../../../hooks/useAxiosPrivate.jsx";
 import useAuth from "../../../hooks/useAuth.jsx";
 import styles from "./ReservationsScreen.module.css";
-import AirplaneTicketIcon from '@mui/icons-material/AirplaneTicket';
-import { Card } from 'antd';
-import Loading from '../../../comp/Loading.jsx';
+import AirplaneTicketIcon from "@mui/icons-material/AirplaneTicket";
+import { Card } from "antd";
+import Loading from "../../../comp/Loading.jsx";
 import NoData from "../../../comp/NoData.jsx";
 
-
 function ReservationsScreen() {
-  const appStyles = {
-    height: "100vh",
-    display: "flex",
-    flexDirection: "column",
-  };
-
-  const axiosPrivate = useAxiosPrivate();
   const [orders, setOrders] = useState([]);
   const auth = useAuth();
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,7 +23,6 @@ function ReservationsScreen() {
         console.log("Data posted successfully:", response.data);
         if (response.data) {
           setOrders(response.data);
-          
         }
       } catch (error) {
         //console.error("Error posting data: elements not found");
@@ -94,14 +85,17 @@ function ReservationsScreen() {
     return `${day}-${month}-${year}`;
   };
 
-
   return (
     <>
       <TopBar />
       <div className={styles.ordersList}>
         <h2>Your orders</h2>
         {currentOrders.length === 0 ? (
-          !loading ? <NoData/> : <Loading/>
+          !loading ? (
+            <NoData />
+          ) : (
+            <Loading />
+          )
         ) : (
           <ul className={styles.mainList}>
             {currentOrders.map((order, index) => (
@@ -125,7 +119,16 @@ function ReservationsScreen() {
                           <Card hoverable className={styles.ticket}>
                             <div className={styles.cardContent}>
                               <div className={styles.info}>
-                                <div className={styles.infoBar}><AirplaneTicketIcon style={{fontSize:30, marginBottom:-7, marginRight: 4}}/>Ticket {index + 1}</div>
+                                <div className={styles.infoBar}>
+                                  <AirplaneTicketIcon
+                                    style={{
+                                      fontSize: 30,
+                                      marginBottom: -7,
+                                      marginRight: 4,
+                                    }}
+                                  />
+                                  Ticket {index + 1}
+                                </div>
                                 <div className={styles.ticketInfo}>
                                   <div>Class: {ticket.ticket_class}</div>
                                   <div>Row: {ticket.row}</div>
@@ -133,11 +136,14 @@ function ReservationsScreen() {
                                   <div>Price: {ticket.price} $</div>
                                 </div>
                               </div>
-                              <img 
+                              <img
                                 className={styles.img}
-                                src={ticket.ticket_class == "economy"
-                                  ? "https://www.travelguys.fr/wp-content/uploads/2023/06/IMG_7191-scaled.jpg"
-                                  : "https://upload.wikimedia.org/wikipedia/commons/7/72/Philippine_Airlines_business_class_A330-300.png"} />
+                                src={
+                                  ticket.ticket_class == "economy"
+                                    ? "https://www.travelguys.fr/wp-content/uploads/2023/06/IMG_7191-scaled.jpg"
+                                    : "https://upload.wikimedia.org/wikipedia/commons/7/72/Philippine_Airlines_business_class_A330-300.png"
+                                }
+                              />
                             </div>
                           </Card>
                         </li>
@@ -149,7 +155,8 @@ function ReservationsScreen() {
             ))}
           </ul>
         )}
-        { loading ? <div className={styles.pagination}>
+        {loading ? (
+          <div className={styles.pagination}>
             <button
               className={styles.button}
               onClick={handlePrevPage}
@@ -165,8 +172,10 @@ function ReservationsScreen() {
             >
               Next
             </button>
-          </div> : ''
-          }
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </>
   );

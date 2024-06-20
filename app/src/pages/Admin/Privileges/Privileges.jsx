@@ -11,7 +11,7 @@ import {
 } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { axiosPrivate } from "../../../hooks/useAxiosPrivate.jsx";
 import TopBar from "../TopBar/TopBar";
 import Loading from "../../../comp/Loading";
 import styles from "./Privileges.module.css";
@@ -27,7 +27,6 @@ const Privileges = () => {
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
   const auth = useAuth();
-  const axiosPrivate = useAxiosPrivate();
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);

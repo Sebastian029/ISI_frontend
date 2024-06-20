@@ -3,30 +3,27 @@ import TopBar from "../../HomeScreen/TopBar/TopBar.jsx";
 import styles from "./OrderConfirmation.module.css";
 import { useEffect, useState } from "react";
 import axios from "../../../../axiosInstance.js";
-import useAxiosPrivate from "../../../../hooks/useAxiosPrivate.jsx";
+import { axiosPrivate } from "../../../../hooks/useAxiosPrivate.jsx";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import FlightLandIcon from "@mui/icons-material/FlightLand";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import FlightIcon from "@mui/icons-material/Flight";
-import AirplaneTicketIcon from '@mui/icons-material/AirplaneTicket';
-import { Card, message } from 'antd';
-
+import AirplaneTicketIcon from "@mui/icons-material/AirplaneTicket";
+import { Card, message } from "antd";
 
 const OrderConfirmation = () => {
   const [tickets, setTickets] = useState([{}]);
   const [flightDetails, setFlightDetails] = useState();
   const [paymentMethod, setPaymentMethod] = useState("");
-  const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const [messageApi, contextHolder] = message.useMessage();
-
 
   const appStyles = {
     height: "100vh",
     width: "100vw",
     display: "flex",
     flexDirection: "column",
-    alignItems: 'center',
+    alignItems: "center",
   };
 
   useEffect(() => {
@@ -60,7 +57,7 @@ const OrderConfirmation = () => {
         //     type: 'error',
         //     content: "You don't have permission to make a purchase!",
         //   });
-        // } else 
+        // } else
         if (paymentMethod == "transfer") {
           console.log("Transfer Payment");
           navigate(
@@ -83,10 +80,9 @@ const OrderConfirmation = () => {
       // localStorage.setItem("flightDetails",null)
     } catch (error) {
       //console.error("Error buying tickets:", error);
-      if(error.response && error.response.status == 403)
-      {  
+      if (error.response && error.response.status == 403) {
         messageApi.open({
-          type: 'error',
+          type: "error",
           content: "You don't have permission to make a purchase!",
         });
       }
@@ -105,31 +101,52 @@ const OrderConfirmation = () => {
               <div className={styles.infoBar}>
                 <b> {flightDetails && flightDetails.departureCity}</b>
               </div>
-              <div className={styles.line}/>
+              <div className={styles.line} />
               <div>
-                <FlightIcon style={{fontSize: 30, marginBottom:-5, transform: "rotate(90deg)"}} />
+                <FlightIcon
+                  style={{
+                    fontSize: 30,
+                    marginBottom: -5,
+                    transform: "rotate(90deg)",
+                  }}
+                />
               </div>
-              <div className={styles.line}/>
+              <div className={styles.line} />
               <div className={styles.infoBar}>
                 <b> {flightDetails && flightDetails.arrivalCity}</b>
               </div>
             </div>
             <div className={styles.flightData}>
               <div className={styles.infoBar}>
-                <p><FlightTakeoffIcon style={{fontSize:30, marginBottom:-5}} />
-                Departure Airport: {flightDetails && flightDetails.departureAirport}</p>
+                <p>
+                  <FlightTakeoffIcon
+                    style={{ fontSize: 30, marginBottom: -5 }}
+                  />
+                  Departure Airport:{" "}
+                  {flightDetails && flightDetails.departureAirport}
+                </p>
               </div>
               <div className={styles.infoBar}>
-                <p><FlightLandIcon style={{fontSize:30, marginBottom:-5}} />
-                Arrival Airport: {flightDetails && flightDetails.arrivalAirport}</p>
+                <p>
+                  <FlightLandIcon style={{ fontSize: 30, marginBottom: -5 }} />
+                  Arrival Airport:{" "}
+                  {flightDetails && flightDetails.arrivalAirport}
+                </p>
               </div>
               <div className={styles.infoBar}>
-                <p><CalendarMonthIcon style={{fontSize:30, marginBottom:-5}} />
-                Flight Date: {formatDate(flightDetails && flightDetails.flightDate)}</p>
+                <p>
+                  <CalendarMonthIcon
+                    style={{ fontSize: 30, marginBottom: -5 }}
+                  />
+                  Flight Date:{" "}
+                  {formatDate(flightDetails && flightDetails.flightDate)}
+                </p>
               </div>
             </div>
             <div className={styles.ticketData}>
-              <div className={styles.infoTickets}>Tickets you have chosen for this flight:</div>
+              <div className={styles.infoTickets}>
+                Tickets you have chosen for this flight:
+              </div>
               {tickets.length === 0 ? (
                 <p>No tickets available</p>
               ) : (
@@ -139,7 +156,16 @@ const OrderConfirmation = () => {
                       <Card hoverable className={styles.ticket}>
                         <div className={styles.cardContent}>
                           <div className={styles.info}>
-                            <div className={styles.infoBar}><AirplaneTicketIcon style={{fontSize:30, marginBottom:-7, marginRight: 4}}/>Ticket {index + 1}</div>
+                            <div className={styles.infoBar}>
+                              <AirplaneTicketIcon
+                                style={{
+                                  fontSize: 30,
+                                  marginBottom: -7,
+                                  marginRight: 4,
+                                }}
+                              />
+                              Ticket {index + 1}
+                            </div>
                             <div className={styles.ticketInfo}>
                               <div>Class: {ticket.ticket_class}</div>
                               <div>Row: {ticket.row}</div>
@@ -147,11 +173,14 @@ const OrderConfirmation = () => {
                               <div>Price: {ticket.price} $</div>
                             </div>
                           </div>
-                          <img 
+                          <img
                             className={styles.img}
-                            src={ticket.ticket_class == "economy"
-                              ? "https://www.travelguys.fr/wp-content/uploads/2023/06/IMG_7191-scaled.jpg"
-                              : "https://upload.wikimedia.org/wikipedia/commons/7/72/Philippine_Airlines_business_class_A330-300.png"} />
+                            src={
+                              ticket.ticket_class == "economy"
+                                ? "https://www.travelguys.fr/wp-content/uploads/2023/06/IMG_7191-scaled.jpg"
+                                : "https://upload.wikimedia.org/wikipedia/commons/7/72/Philippine_Airlines_business_class_A330-300.png"
+                            }
+                          />
                         </div>
                       </Card>
                     </li>
@@ -160,7 +189,7 @@ const OrderConfirmation = () => {
               )}
             </div>
           </div>
-          
+
           <div className={styles.payment}>
             <p className={styles.label}>Method of payment</p>
             <label className={styles.radio}>

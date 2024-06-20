@@ -1,53 +1,108 @@
-import { axiosPrivate } from "../axiosInstance.js";
-import { useEffect } from "react";
-import useRefreshToken from "./useRefreshToken";
+import axios from "axios";
 import useAuth from "./useAuth.jsx";
 
-const useAxiosPrivate = () => {
-  const refresh = useRefreshToken();
-  const { auth, setAuth } = useAuth();
+const BASE_URL = "http://127.0.0.1:5000/";
 
-  useEffect(() => {
+export const axiosPrivate = axios.create({
+  baseURL: BASE_URL,
+  headers: { "Content-Type": "application/json" },
+  //withCredentials: true,
+});
+
+axiosPrivate.interceptors.request.use(
+  (config) => {
     const authDataStr = localStorage.getItem("authData");
     const tmpAuth = authDataStr ? JSON.parse(authDataStr) : null;
 
-    const requestIntercept = axiosPrivate.interceptors.request.use(
-      (config) => {
-        if (!config.headers["x-access-tokens"]) {
-          config.headers["x-access-tokens"] = tmpAuth.accessToken;
-        }
-        return config;
-      },
-      (error) => Promise.reject(error)
-    );
+    const token = tmpAuth.accessToken;
+    if (token) {
+      config.headers["x-access-tokens"] = tmpAuth.accessToken;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
-    const responseIntercept = axiosPrivate.interceptors.response.use(
-      (response) => response,
-      async (error) => {
-        const prevRequest = error?.config;
-        if (error?.response?.status === 401 && !prevRequest?.sent) {
-          prevRequest.sent = true;
-          const newAccessToken = await refresh();
-          prevRequest.headers["x-access-tokens"] = newAccessToken;
-          setAuth({ ...auth, accessToken: newAccessToken });
-          const authData = {
-            ...tmpAuth,
-            accessToken: newAccessToken,
-          };
-          localStorage.setItem("authData", JSON.stringify(authData));
-          return axiosPrivate(prevRequest);
-        }
-        return Promise.reject(error);
-      }
-    );
+let isRefreshing = false;
+let failedQueue = [];
 
-    return () => {
-      axiosPrivate.interceptors.request.eject(requestIntercept);
-      axiosPrivate.interceptors.response.eject(responseIntercept);
-    };
-  }, [auth, refresh]);
+const processQueue = (error, token = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(token);
+    }
+  });
 
-  return axiosPrivate;
+  failedQueue = [];
 };
 
-export default useAxiosPrivate;
+axiosPrivate.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (err) => {
+    const originalRequest = err.config;
+
+    if (err.response.status === 401 && !originalRequest._retry) {
+      if (isRefreshing) {
+        return new Promise(function (resolve, reject) {
+          failedQueue.push({ resolve, reject });
+        })
+          .then((token) => {
+            originalRequest.headers["x-access-tokens"] = token;
+            return axiosPrivate(originalRequest);
+          })
+          .catch((err) => {
+            return Promise.reject(err);
+          });
+      }
+
+      originalRequest._retry = true;
+      isRefreshing = true;
+
+      return new Promise(function (resolve, reject) {
+        console.log("REEES ERRORRRRRR123");
+        const authDataStr = localStorage.getItem("authData");
+        const tmpAuth = authDataStr ? JSON.parse(authDataStr) : null;
+        const refreshToken = tmpAuth.refreshToken;
+        axiosPrivate
+          .post(
+            "/refresh",
+            {},
+            {
+              headers: {
+                "x-refresh-tokens": refreshToken,
+              },
+            }
+          )
+          .then(({ data }) => {
+            const authData = {
+              ...tmpAuth,
+              accessToken: data.access_token,
+            };
+            localStorage.setItem("authData", JSON.stringify(authData));
+            console.log("refresh");
+            axiosPrivate.defaults.headers.common[
+              "x-access-tokens"
+            ] = `${data.access_token}`;
+            processQueue(null, data.access_token);
+            resolve(axiosPrivate(originalRequest));
+          })
+          .catch((err) => {
+            console.log("refresh errorrrrrrr");
+            processQueue(err, null);
+            reject(err);
+          })
+          .then(() => {
+            isRefreshing = false;
+          });
+      });
+    }
+
+    return Promise.reject(err);
+  }
+);

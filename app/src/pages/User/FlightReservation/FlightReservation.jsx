@@ -3,7 +3,7 @@ import TopBar from "../HomeScreen/TopBar/TopBar.jsx";
 import styles from "./FlightReservation.module.css";
 import { useEffect, useState } from "react";
 import axios from "../../../axiosInstance.js";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate.jsx";
+import { axiosPrivate } from "../../../hooks/useAxiosPrivate.jsx";
 import Deck from "./components/Deck.jsx";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import FlightLandIcon from "@mui/icons-material/FlightLand";
@@ -23,10 +23,8 @@ const FlightReservation = () => {
   const [total_seats, setTotal_seatss] = useState();
   const [num_columns, setNum_columns] = useState();
   const [selectedTickets, setSelectedTickets] = useState([]);
-  const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const [messageApi, contextHolder] = message.useMessage();
-
 
   const appStyles = {
     height: "100vh",
@@ -38,9 +36,7 @@ const FlightReservation = () => {
   useEffect(() => {
     const getTickets = async () => {
       try {
-        const response = await axios.get("/tickets/" + flightId, {
-          
-        });
+        const response = await axios.get("/tickets/" + flightId, {});
 
         console.log("Data posted successfully:", response.data);
         if (response.data) {
@@ -56,7 +52,7 @@ const FlightReservation = () => {
 
     getTickets();
 
-    console.log("aasd"+tickets);
+    console.log("aasd" + tickets);
   }, []);
 
   const handleTicketReservation = (ticket) => {
@@ -68,14 +64,14 @@ const FlightReservation = () => {
         selectedTickets.filter((selectedTicket) => selectedTicket !== ticket)
       );
       messageApi.open({
-        type: 'error',
-        content: 'The ticket has been removed from the cart.',
+        type: "error",
+        content: "The ticket has been removed from the cart.",
       });
     } else {
       setSelectedTickets([...selectedTickets, ticket]);
       messageApi.open({
-        type: 'success',
-        content: 'The ticket has been added to the cart.',
+        type: "success",
+        content: "The ticket has been added to the cart.",
       });
     }
   };
@@ -87,7 +83,6 @@ const FlightReservation = () => {
     const day = parsedDate.getDate().toString().padStart(2, "0");
     return `${day}-${month}-${year}`;
   };
-
 
   const handleConfirmation = async () => {
     try {
@@ -122,38 +117,61 @@ const FlightReservation = () => {
       <div style={appStyles}>
         <div className={styles.mainContainer}>
           <div className={styles.ticketsList}>
-            <div className = {styles.flightData}>
+            <div className={styles.flightData}>
               <div className={styles.flightBar}>
                 <div className={styles.infoBar}>
                   <b> {departureCity}</b>
                 </div>
-                <div className={styles.line}/>
+                <div className={styles.line} />
                 <div>
-                  <FlightIcon style={{fontSize: 30, marginBottom:-5, transform: "rotate(90deg)"}} />
+                  <FlightIcon
+                    style={{
+                      fontSize: 30,
+                      marginBottom: -5,
+                      transform: "rotate(90deg)",
+                    }}
+                  />
                 </div>
-                <div className={styles.line}/>
+                <div className={styles.line} />
                 <div className={styles.infoBar}>
                   <b> {arrivalCity}</b>
                 </div>
               </div>
               <div className={styles.flightInfo}>
                 <div className={styles.infoBar}>
-                  <p><FlightTakeoffIcon style={{fontSize:30, marginBottom:-5}} />
-                  Departure Airport: {departureAirport}</p>
+                  <p>
+                    <FlightTakeoffIcon
+                      style={{ fontSize: 30, marginBottom: -5 }}
+                    />
+                    Departure Airport: {departureAirport}
+                  </p>
                 </div>
                 <div className={styles.infoBar}>
-                  <p><FlightLandIcon style={{fontSize:30, marginBottom:-5}} />
-                  Arrival Airport: {arrivalAirport}</p>
+                  <p>
+                    <FlightLandIcon
+                      style={{ fontSize: 30, marginBottom: -5 }}
+                    />
+                    Arrival Airport: {arrivalAirport}
+                  </p>
                 </div>
                 <div className={styles.infoBar}>
-                  <p><CalendarMonthIcon style={{fontSize:30, marginBottom:-5}} />
-                  Flight Date: {formatDate(flightDate)}</p>
+                  <p>
+                    <CalendarMonthIcon
+                      style={{ fontSize: 30, marginBottom: -5 }}
+                    />
+                    Flight Date: {formatDate(flightDate)}
+                  </p>
                 </div>
               </div>
             </div>
             <h2>Available Seats:</h2>
             <div className={styles.ticketMap}>
-              <Deck tickets={tickets} num_columns={num_columns} total_seats={total_seats} handleTicketReservation={handleTicketReservation} />
+              <Deck
+                tickets={tickets}
+                num_columns={num_columns}
+                total_seats={total_seats}
+                handleTicketReservation={handleTicketReservation}
+              />
             </div>
           </div>
           <div className={styles.reservationSummary}>
@@ -161,7 +179,8 @@ const FlightReservation = () => {
             <ul>
               {selectedTickets.map((ticket, index) => (
                 <li key={index}>
-                  Seat number: {ticket.column}-{ticket.row} Class: {ticket.ticket_class} Price: {ticket.price}
+                  Seat number: {ticket.column}-{ticket.row} Class:{" "}
+                  {ticket.ticket_class} Price: {ticket.price}
                 </li>
               ))}
             </ul>
