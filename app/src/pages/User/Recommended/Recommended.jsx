@@ -35,7 +35,7 @@ function RecommendedScreen() {
       try {
         const response = await axiosPrivate.get("/suggest_flights", {});
         //console.log("Data fetched successfully:", response.data);
-        console.log(response.data);
+     //  console.log(response.data);
         if (response.data) {
           setFlights(response.data);
         }

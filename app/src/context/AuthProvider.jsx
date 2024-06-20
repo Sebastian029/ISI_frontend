@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    console.log("Auth state changed:", auth);
+   // console.log("Auth state changed:", auth);
   }, [auth]);
 
   return (

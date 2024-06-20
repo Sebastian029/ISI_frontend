@@ -50,7 +50,7 @@ function MainFinder({ activateFinder, setFlights }) {
       if (departureDateInput) {
         params.data_lotu = dayjs(departureDateInput).format(sendDateFormat);
       }
-      console.log(params);
+    //  console.log(params);
 
       let response;
       if (auth && auth.accessToken) {
@@ -59,7 +59,7 @@ function MainFinder({ activateFinder, setFlights }) {
             params,
           });
         } catch (error) {
-          console.log("Get flights with token failed", error.message);
+        //  console.log("Get flights with token failed", error.message);
           response = await axios.get("/flights_with_airports", { params });
         }
       } else {

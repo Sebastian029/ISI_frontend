@@ -34,7 +34,7 @@ function AccountScreen() {
           setPhoneNumber(response.data.phone_number.split(""));
         }
       } catch (err) {
-        console.log(err);
+    //    console.log(err);
       }
     };
 
@@ -64,7 +64,7 @@ function AccountScreen() {
         });
       }
     } catch (err) {
-      console.log(err);
+    //  console.log(err);
     }
   };
 
@@ -83,7 +83,7 @@ function AccountScreen() {
         notification: checked,
       }));
     } catch (err) {
-      console.log(err);
+//console.log(err);
     }
   };
 

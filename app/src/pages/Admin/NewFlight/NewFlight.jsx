@@ -46,7 +46,7 @@ function NewFlight() {
       };
 
       const response = await axiosPrivate.post("/flight_register", data);
-      console.log(response.data);
+     // console.log(response.data);
       messageApi.open({
         type: "success",
         content: "Flight registered successfully",
@@ -108,9 +108,9 @@ function NewFlight() {
             form={form}
             layout="vertical"
             onFinish={saveFlightData}
-            onFinishFailed={(errorInfo) => {
-              console.log("Failed:", errorInfo);
-            }}
+          //</div>  onFinishFailed={(errorInfo) => {
+          //    console.log("Failed:", errorInfo);
+         //   }}
           >
             <Form.Item
               name="departureAirport"

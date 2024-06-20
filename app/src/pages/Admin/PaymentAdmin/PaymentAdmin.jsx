@@ -70,7 +70,7 @@ const PaymentAdmin = () => {
   };
 
   const handleTableChange = (pagination, filters, sorter) => {
-    console.log(pagination, filters, sorter);
+   // console.log(pagination, filters, sorter);
   };
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
