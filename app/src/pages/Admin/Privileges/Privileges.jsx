@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   Table,
   Button,
@@ -22,7 +22,6 @@ const Privileges = () => {
   const [users, setUsers] = useState([]);
   const [privileges, setPrivileges] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
@@ -43,8 +42,6 @@ const Privileges = () => {
 
         setUsers(usersResponse.data);
         setPrivileges(privilegesResponse.data);
-      } catch (err) {
-        setError(err.message);
       } finally {
         setLoading(false);
       }
@@ -184,7 +181,7 @@ const Privileges = () => {
       closeModal();
       message.success("Privileges updated successfully!");
     } catch (err) {
-      setError(err.message);
+      //setError(err.message);
     }
   };
 

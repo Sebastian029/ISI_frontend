@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import GoogleIcon from "@mui/icons-material/Google";
+import PropTypes from "prop-types";
+
+import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "../../../../axiosInstance";
 import useAuth from "../../../../hooks/useAuth";
@@ -85,7 +86,7 @@ const ModalLogin = ({ toggleModal, setLogin }) => {
           navigate("/admin");
         }
       })
-      .catch((error) => {
+      .catch(() => {
         //console.error("Login error:", error);
         messageApi.open({
           type: "error",
@@ -138,6 +139,10 @@ const ModalLogin = ({ toggleModal, setLogin }) => {
       </button>
     </div>
   );
+};
+ModalLogin.propTypes = {
+  toggleModal: PropTypes.func.isRequired,
+  setLogin: PropTypes.func.isRequired,
 };
 
 export default ModalLogin;

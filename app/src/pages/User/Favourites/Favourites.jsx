@@ -4,15 +4,12 @@ import styles from "./Favourites.module.css";
 import { axiosPrivate } from "../../../hooks/useAxiosPrivate.jsx";
 import Pagination from "../../../comp/Pagination.jsx";
 import Footer from "../HomeScreen/Footer/Footer.jsx";
-import useAuth from "../../../hooks/useAuth.jsx";
 import Loading from "../../../comp/Loading.jsx";
 
 import { useEffect, useState } from "react";
 
 function FavouritesScreen() {
   const navigate = useNavigate();
-
-  const auth = useAuth();
 
   const [flights, setFlights] = useState([{}]);
   const [loading, setLoading] = useState(true);

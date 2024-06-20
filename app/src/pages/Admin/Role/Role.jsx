@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   Table,
   Button,
@@ -22,7 +22,6 @@ const Role = () => {
   const [users, setUsers] = useState([]);
   const [roles, setRoles] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
@@ -42,8 +41,6 @@ const Role = () => {
 
         setUsers(usersResponse.data);
         setRoles(rolesResponse.data);
-      } catch (err) {
-        setError(err.message);
       } finally {
         setLoading(false);
       }
@@ -161,7 +158,6 @@ const Role = () => {
       closeModal();
       message.success("Roles updated successfully!");
     } catch (err) {
-      setError(err.message);
       message.error("Failed to update roles.");
     }
   };

@@ -4,15 +4,12 @@ import styles from "./Recommended.module.css";
 import { axiosPrivate } from "../../../hooks/useAxiosPrivate.jsx";
 import Pagination from "../../../comp/Pagination.jsx";
 import Footer from "../HomeScreen/Footer/Footer.jsx";
-import useAuth from "../../../hooks/useAuth.jsx";
 import Loading from "../../../comp/Loading.jsx";
 
 import { useEffect, useState } from "react";
 
 function RecommendedScreen() {
   const navigate = useNavigate();
-
-  const auth = useAuth();
 
   const [flights, setFlights] = useState([{}]);
   const [loading, setLoading] = useState(true);
@@ -35,7 +32,7 @@ function RecommendedScreen() {
       try {
         const response = await axiosPrivate.get("/suggest_flights", {});
         //console.log("Data fetched successfully:", response.data);
-     //  console.log(response.data);
+        //  console.log(response.data);
         if (response.data) {
           setFlights(response.data);
         }

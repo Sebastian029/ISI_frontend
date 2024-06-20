@@ -37,14 +37,14 @@ function Items({
   };
 
   const followFlight = async (flightId) => {
-   // console.log(flightId);
+    // console.log(flightId);
 
     try {
       const response = await axiosPrivate.post("/follow", {
         flight_id: flightId,
       });
       updateItemsFollow(flightId, response.data.follow_id);
-    //  console.log("Data posted successfully:", response.data);
+      //  console.log("Data posted successfully:", response.data);
     } catch (error) {
       console.error("Error following flight:", error);
     }
@@ -52,9 +52,9 @@ function Items({
 
   const unfollowFlight = async (follow_id) => {
     try {
-      const response = await axiosPrivate.delete(`/unfollow/${follow_id}`);
+      await axiosPrivate.delete(`/unfollow/${follow_id}`);
       updateItemsUnfollow(follow_id);
-  //    console.log("Unfollowed successfully:", response.data);
+      //    console.log("Unfollowed successfully:", response.data);
     } catch (error) {
       console.error("Error unfollowing flight:", error);
     }
@@ -212,7 +212,7 @@ export default function PaginatedItems({
           />
         </div>
       </div>
-      <style jsx="true">{`
+      <style jsx>{`
         .pagination {
           display: flex;
           list-style: none;
