@@ -10,20 +10,13 @@ export const Logout = () => {
     try {
       const authDataStr = localStorage.getItem("authData");
       const tmpAuth = authDataStr ? JSON.parse(authDataStr) : null;
-
-      const access_token = tmpAuth?.accessToken;
       const refresh_token = tmpAuth?.refreshToken;
 
-      axiosPrivate.delete(
-        "/logout",
-
-        {
-          headers: {
-            "x-access-tokens": access_token,
-            "x-refresh-tokens": refresh_token,
-          },
-        }
-      );
+      axiosPrivate.delete("/logout", {
+        headers: {
+          "x-refresh-tokens": refresh_token,
+        },
+      });
     } catch (error) {
       //console.error(error);
     }
