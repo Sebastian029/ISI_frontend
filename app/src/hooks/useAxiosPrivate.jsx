@@ -13,7 +13,7 @@ axiosPrivate.interceptors.request.use(
     const authDataStr = localStorage.getItem("authData");
     const tmpAuth = authDataStr ? JSON.parse(authDataStr) : null;
 
-    const token = tmpAuth.accessToken;
+    const token = tmpAuth?.accessToken;
     if (token) {
       config.headers["x-access-tokens"] = tmpAuth.accessToken;
     }
@@ -46,7 +46,7 @@ axiosPrivate.interceptors.response.use(
   (err) => {
     const originalRequest = err.config;
 
-    if (err.response.status === 401 && !originalRequest._retry) {
+    if (err?.response?.status === 401 && !originalRequest._retry) {
       if (isRefreshing) {
         return new Promise(function (resolve, reject) {
           failedQueue.push({ resolve, reject });
