@@ -65,7 +65,6 @@ axiosPrivate.interceptors.response.use(
       isRefreshing = true;
 
       return new Promise(function (resolve, reject) {
-        console.log("REEES ERRORRRRRR123");
         const authDataStr = localStorage.getItem("authData");
         const tmpAuth = authDataStr ? JSON.parse(authDataStr) : null;
         const refreshToken = tmpAuth.refreshToken;
@@ -85,7 +84,6 @@ axiosPrivate.interceptors.response.use(
               accessToken: data.access_token,
             };
             localStorage.setItem("authData", JSON.stringify(authData));
-            console.log("refresh");
             axiosPrivate.defaults.headers.common[
               "x-access-tokens"
             ] = `${data.access_token}`;
@@ -93,7 +91,6 @@ axiosPrivate.interceptors.response.use(
             resolve(axiosPrivate(originalRequest));
           })
           .catch((err) => {
-            console.log("refresh errorrrrrrr");
             processQueue(err, null);
             reject(err);
           })
