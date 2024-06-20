@@ -58,7 +58,6 @@ function AccountScreen() {
       const response = await axiosPrivate.patch("/update_user", params);
 
       if (response) {
-        setAxiosResponse(response);
         messageApi.open({
           type: "info",
           content: JSON.stringify(response.data.message, null, 2),
@@ -74,7 +73,6 @@ function AccountScreen() {
       const response = await axiosPrivate.patch("/notification");
 
       if (response) {
-        setAxiosResponse(response);
         messageApi.open({
           type: "info",
           content: JSON.stringify(response.data.message, null, 2),
