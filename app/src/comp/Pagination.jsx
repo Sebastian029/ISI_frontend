@@ -212,7 +212,7 @@ export default function PaginatedItems({
           />
         </div>
       </div>
-      <style jsx>{`
+      <style jsx="true">{`
         .pagination {
           display: flex;
           list-style: none;
