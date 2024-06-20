@@ -1,5 +1,4 @@
 import axios from "axios";
-import useAuth from "./useAuth.jsx";
 
 const BASE_URL = "http://127.0.0.1:5000/";
 
