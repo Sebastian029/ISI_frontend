@@ -98,6 +98,10 @@ function NewFlight() {
     fetchAirports();
   }, [auth.auth]);
 
+  const disablePastDates = (current) => {
+    return current && current < dayjs().endOf("day");
+  };
+
   return (
     <>
       <TopBar />
@@ -158,6 +162,7 @@ function NewFlight() {
                 className={styles.inputContainer}
                 format="DD-MM-YYYY"
                 placeholder="Departure date"
+                disabledDate={disablePastDates}
               />
             </Form.Item>
 
