@@ -25,6 +25,7 @@
 .orderData{
     margin-left: 5%;
     width:95%;
+    font-size: 1.1em;
 }
 
 .mainList{
@@ -50,19 +51,27 @@
 
 }
 
+.ticketIcon{
+    font-size: 1.5em !important;
+    margin-bottom: -7px !important;
+    margin-right: 4px !important;
+}
+
 .ticket{
     background-color:rgba(var(--main-color-rgb),0.4);
     border: 2px solid var(--main-color);
     border-radius: 10px;
-    padding: 1%;
+    padding: -1%;
     display: flex;
     flex-direction: column;
     width: 100%;
     align-items: flex-start;
+    
 }
 
 .ticketC{
     width: 40%;
+    
 }
 
 .info{
@@ -80,6 +89,7 @@
     align-items: "center";
     gap: 10;
     font-size: 20px;
+    
 }
 
 .cardContent{
@@ -126,4 +136,60 @@
 
 li{
     list-style-type: none;
+}
+
+@media screen and (max-width: 1200px) {
+    .img{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .img{
+        display: none;
+    }
+
+    .ticketC{
+        width: 55vw;
+    }
+    
+    .cardContent{
+        width: 40vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: -0.7em
+    }
+
+    .ticketInfo{
+        margin-left: 10%;
+        margin-top: 1%;
+        font-size: 1em;
+        font-weight: 500;
+    }
+
+    .infoBar {
+        display: flex;
+        align-items: "center";
+        gap: 10;
+        font-size: 1.2em;
+    }
+
+    .ticketIcon{
+        font-size: 1.3em !important;
+        margin-bottom: -7px !important;
+        margin-right: 4px !important;
+    }
+
+    .orderData{
+        margin-left: 5%;
+        width:95%;
+        font-size: 1.4em;
+    }
+    
+}
+
+@media screen and (min-width: 700px) {
+    
+
 }

@@ -49,7 +49,7 @@ const OrderSuccess = () => {
               </div>
               <div className={styles.line}/>
               <div>
-                <FlightIcon style={{fontSize: 30, marginBottom:-5, transform: "rotate(90deg)"}} />
+                <FlightIcon className={styles.flightIcon} />
               </div>
               <div className={styles.line}/>
               <div className={styles.infoBar}>
@@ -57,15 +57,15 @@ const OrderSuccess = () => {
               </div>
             </div>
             <div className={styles.infoBar}>
-              <p><FlightTakeoffIcon style={{fontSize:30, marginBottom:-5}} />
+              <p><FlightTakeoffIcon className={styles.icon} />
               Departure Airport: {flightDetails && flightDetails.departureAirport}</p>
             </div>
             <div className={styles.infoBar}>
-              <p><FlightLandIcon style={{fontSize:30, marginBottom:-5}} />
+              <p><FlightLandIcon className={styles.icon} />
               Arrival Airport: {flightDetails && flightDetails.arrivalAirport}</p>
             </div>
             <div className={styles.infoBar}>
-              <p><CalendarMonthIcon style={{fontSize:30, marginBottom:-5}} />
+              <p><CalendarMonthIcon className={styles.icon} />
               Flight Date: {formatDate(flightDetails && flightDetails.flightDate)}</p>
             </div>
             {tickets.length === 0 ? (
@@ -77,7 +77,7 @@ const OrderSuccess = () => {
                     <Card hoverable className={styles.ticket}>
                         <div className={styles.cardContent}>
                           <div className={styles.info}>
-                            <div className={styles.infoBar}><AirplaneTicketIcon style={{fontSize:30, marginBottom:-7, marginRight: 4}}/>Ticket {index + 1}</div>
+                            <div className={styles.infoBar}><AirplaneTicketIcon className={styles.icon}/>Ticket {index + 1}</div>
                             <div className={styles.ticketInfo}>
                               <div>Class: {ticket.ticket_class}</div>
                               <div>Row: {ticket.row}</div>

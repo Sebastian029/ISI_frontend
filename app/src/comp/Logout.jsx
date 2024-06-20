@@ -1,17 +1,27 @@
 import { useNavigate } from "react-router-dom";
-import { axiosPrivate } from "../axiosInstance.js";
+import { axiosPrivate } from "../hooks/useAxiosPrivate";
+import useAuth from "../hooks/useAuth";
 
 export const Logout = () => {
   const navigate = useNavigate();
+  const { setAuth } = useAuth();
 
   const handleLogout = () => {
     try {
-      axiosPrivate.delete("/logout");
-    } catch (error) {
-      console.error(error);
-    }
+      const authDataStr = localStorage.getItem("authData");
+      const tmpAuth = authDataStr ? JSON.parse(authDataStr) : null;
+      const refresh_token = tmpAuth?.refreshToken;
 
+      axiosPrivate.delete("/logout", {
+        headers: {
+          "x-refresh-tokens": refresh_token,
+        },
+      });
+    } catch (error) {
+      //console.error(error);
+    }
     localStorage.removeItem("authData");
+    setAuth(null);
     navigate("/");
   };
 

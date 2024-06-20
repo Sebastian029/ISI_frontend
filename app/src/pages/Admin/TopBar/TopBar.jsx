@@ -1,18 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./TopBar.module.css";
-import useAuth from "../../../hooks/useAuth";
+import { Logout } from "../../../comp/Logout";
 
 function TopBar() {
   const navigate = useNavigate();
-
-  const { setAuth } = useAuth();
-
-  const handleLogout = () => {
-    console.log("logout");
-    localStorage.setItem("authData", null);
-    setAuth(null);
-    navigate("/");
-  };
 
   return (
     <>
@@ -32,8 +23,8 @@ function TopBar() {
         <div className={styles.box} onClick={() => navigate("/role")}>
           Role
         </div>
-        <div className={styles.box} onClick={() => handleLogout()}>
-          Logout
+        <div className={styles.box}>
+          <Logout />
         </div>
       </div>
     </>

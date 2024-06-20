@@ -1,6 +1,8 @@
 .mainContainer {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  justify-items: center;
 }
 
 .yourOrder {
@@ -154,4 +156,149 @@ li {
 
 #deck {
   position: relative;
+}
+
+.deck {
+  width: var(--deck-width);
+  height: fit-content;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.seat {
+  background-color: var(--color);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  order: var(--row);
+  margin: 10px;
+  margin-left: var(--marginLeft);
+  width: 4em;
+  height: 4em;
+  border-radius: 10px;
+  align-items: center;
+  justify-items: center;
+  padding: 1%;
+  cursor: var(--pointer);
+  transition: background-color 0.3s;
+}
+
+.mapLabel{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+}
+
+.flightIcon {
+  font-size: 2em !important;
+  margin-bottom: -5px !important;
+  transform: rotate(90deg) !important;
+}
+
+.icon {
+  font-size: 1.5em !important;
+  margin-bottom: -5px !important;
+}
+
+.selectedTicket{
+  background-color: rgba(var(--main-color-rgb),0.5);
+  border: 2px solid var(--main-color);
+  border-radius: 10px;
+  padding: 2%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 1.1em;
+}
+
+
+@media screen and (max-width: 700px) {
+  .deck {
+    width: var(--deck-widthM);
+    height: fit-content;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 0.2em;
+  }
+
+  .seat {
+    background-color: var(--color);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    order: var(--row);
+    margin: 5px;
+    margin-left: var(--marginLeftM);
+    width: 2.8em;
+    height: 2.8em;
+    border-radius: 10px;
+    align-items: center;
+    justify-items: center;
+    padding: 1%;
+    cursor: var(--pointer);
+    transition: background-color 0.3s;
+  }
+
+  .ticketsList {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    font-family: "Lato";
+    font-size: 18px;
+    margin: 2.5%;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 1%;
+  }
+  
+  .reservationSummary {
+    width: 90%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    font-family: "Lato";
+    font-size: 18px;
+    margin: 2.5%;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 2%;
+    height: fit-content;
+  }
+
+  .flightData {
+    width: 95%;
+    border-radius: 10px;
+    font-size: 0.7em;
+  }
+
+  .flightInfo {
+    width: 95%;
+    border-radius: 10px;
+    padding: 2%;
+    margin: 2%;
+  }
+
+  .mapLabel{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+  }
+
+  .selectedTicket{
+    background-color: rgba(var(--main-color-rgb),0.5);
+    border: 2px solid var(--main-color);
+    border-radius: 10px;
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 0.9em;
+  }
 }

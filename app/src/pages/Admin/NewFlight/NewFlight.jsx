@@ -11,7 +11,7 @@ import {
 } from "antd";
 import "antd/dist/reset.css";
 import TopBar from "../TopBar/TopBar";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { axiosPrivate } from "../../../hooks/useAxiosPrivate";
 import styles from "./NewFlight.module.css";
 import dayjs from "dayjs";
 import useAuth from "../../../hooks/useAuth";
@@ -22,7 +22,6 @@ function NewFlight() {
   const [airlines, setAirlines] = useState([]);
   const [airports, setAirports] = useState([]);
   const [messageApi, contextHolder] = message.useMessage();
-  const axiosPrivate = useAxiosPrivate();
   const auth = useAuth();
 
   const formatDate = (date) => dayjs(date).format("YYYY-MM-DD");

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { axiosPrivate } from "../../../hooks/useAxiosPrivate.jsx";
 import { Table, Button, Space, Input, message } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
@@ -14,7 +14,6 @@ const PaymentAdmin = () => {
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const axiosPrivate = useAxiosPrivate();
   const [currentPage, setCurrentPage] = useState(1);
   const ordersPerPage = 11;
   const [searchText, setSearchText] = useState("");
